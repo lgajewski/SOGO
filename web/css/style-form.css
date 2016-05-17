@@ -57,6 +57,10 @@ img {
   margin-bottom: 25px;
 }
 
+#login .form-group input,
+#login .form-group select {
+  font-size: 13px;
+}
 #login h1 {
   color: #32A945;
   font-size: 18px;
