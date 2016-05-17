@@ -1,0 +1,552 @@
+/*** GLOBAL ADD-ONS ***/
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+.my-subordinates-tasks-toggle {
+    float: right;
+    margin-top: 1px;
+    margin-right: 30px;
+}
+
+.active-view {
+    background-color: #36D591 !important;
+}
+
+.range-icon {
+    float: left;
+    width: 2%;
+    overflow-x: hidden;
+    line-height: 34px !important;
+}
+
+.date-picker-group > ul > li {
+    min-width: 300px;
+}
+
+.date-picker-group > ul > li table {
+    margin: auto;
+}
+
+.dropdown-datepicker-item {
+    min-width: 400px;
+}
+
+body {
+    font-family: 'Open Sans';
+    margin-bottom: 250px; /* footer needs it */
+    padding-top: 50px; /* fixed header needs it */
+}
+
+a,
+a:hover,
+a:active,
+a:visited,
+.colored-green,
+.colored-green:hover,
+.colored-green:active,
+.colored-green:visited {
+	color: #57CA77;
+}
+
+.colored-black {
+    color: #333;
+}
+
+.btn-success {
+    background-color: #57CA77;
+}
+
+.btn-success:hover {
+    background-color: #42A55D;
+}
+
+.strong {
+    font-weight: 700;
+}
+
+.line-34px {
+    line-height: 34px;
+}
+
+.task-modal-description {
+    resize: none;
+}
+
+.task-modal-header {
+    overflow-wrap: break-word;
+}
+
+.task-modal-form {
+    width: 80%;
+    margin: auto;
+}
+
+.task-progress-bar .progress-bar{
+    background-color: #30AF78;
+}
+
+.task-progress-bar .progress-bar[aria-valuenow="0"] span,
+.task-progress-bar .progress-bar[aria-valuenow="1"] span {
+    margin-left: 3px;
+    font-weight: bold;
+    color: #333;
+}
+
+/*** IN-HEADER DIRECTIVE ***/
+
+in-header .navbar-fixed-top {
+    background-color: #36D591;
+}
+
+.in-header-button {
+    float: left;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.navbar-header a.navbar-brand,
+.navbar-header a.navbar-brand:hover,
+.navbar-nav.navbar-right li a,
+.navbar-nav.navbar-right li a:hover {
+    color: white;
+}
+.navbar-nav.navbar-right li a:hover {
+    background-color: #30BD80;
+}
+
+/*** ACTIVE TASK ***/
+
+.working-container {
+    padding-top: 20px;
+}
+
+.progress-bar-container {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/*** FILTERS ***/
+
+.nav, .pagination, .carousel, a, .panel-title a {
+    cursor: pointer;
+}
+
+h1 > span {
+    color: #79b879;
+}
+
+.content-container {
+    border-top: 1px solid #e6e6e6;
+    margin-top: 30px;
+}
+
+.filters-sidebar {
+    padding-top: 20px;
+	border-right: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;
+	background-color: #fafafa;
+    min-height: 340px;
+    overflow-wrap: break-word;
+}
+
+.filters-sidebar h3 {
+    margin-top: 0;
+}
+
+.filters-mainbar {
+    padding-top: 20px;
+    padding-bottom: 20px;
+	background-color: #fafafa;
+	border-bottom: 1px solid #e6e6e6;	
+}
+
+.filters-mainbar h3 {
+    margin-top: 0;
+}
+
+#group-cyclic-checkbox {
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+
+.filters-header {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fafafa;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+}
+
+.btn-tasks-list-sort {
+    padding: 0;
+    border: none;
+    text-align: left;
+    font-weight: bold;
+}
+
+.task-actions-btn {
+	border: none;
+	padding: 0;
+	background-color: inherit;
+}
+
+.task-actions-btn:hover,
+.task-actions-btn:visited,
+.task-actions-btn:active {
+	background-color: inherit;
+}
+
+.task-actions-btn > .caret {
+	visibility: hidden;
+}
+
+.task-actions-btn:hover > .caret {
+	visibility: visible;
+}
+
+.filter-search {
+    margin-top: 30px;
+}
+
+.filters-hr {
+    margin-bottom: 0;
+}
+
+.filter-dropdown-search {
+    margin: 0 5px;
+}
+
+.tasks-list-empty-text {
+    text-align: center;
+    color: #cccccc;
+}
+
+/*** TASK DETAILS ***/
+
+.details-page-header {
+    margin-bottom: 35px;
+}
+
+.details-container {
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.with-hr {
+    text-align: left;
+    position: relative;
+}
+
+.with-hr:after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    border-bottom: 1px solid #e6e6e6;
+    top: 50%;
+    width: 100%;
+    margin-left: 5px;
+}
+
+.task-actions-btns-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.task-actions-btns-container .btn {
+    margin-bottom: 5px;
+}
+
+.priority {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 5%;
+    background-color: rgb(0, 133, 255);
+    opacity: 0.3;
+}
+
+.nav-pills > li > a {
+    word-wrap: break-word;
+}
+
+#searchTasksInput {
+    display: block;
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+    background-color: #59C978;
+}
+
+.narrow {
+    width : 550px;
+}
+
+/*** COMMENTS ***/
+
+.comment-input-text {
+    width: 100%;
+    resize: none;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    color: #8fc28f;
+}
+
+.comments-button {
+    width: 200px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+input.percentage-input {
+    width: 20%;
+    display: inline;
+}
+
+/*** FOOTER ***/
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #477F67;
+    color: white;
+    text-align: center;
+}
+
+.footer-note {
+    margin: 10px auto;
+}
+
+/**** ADMINS PANEL ****/
+
+/* Sidebar */
+
+/* Hide for mobile, show later */
+.sidebar {
+    display: none;
+}
+@media (min-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 51px;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        display: block;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+        background-color: #fafafa;
+        border-right: 1px solid #eee;
+    }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+}
+.nav-sidebar > li > a {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.nav-sidebar > .active > a {
+    color: #fff;
+    background-color: #428bca;
+}
+
+.admin-panel-main {
+    padding: 20px;
+}
+@media (min-width: 768px) {
+    .admin-panel-main {
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+}
+.admin-panel-main .page-header {
+    margin-top: 0;
+}
+
+.sub-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.placeholders {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.placeholders h4 {
+    margin-bottom: 0;
+}
+.placeholder {
+    margin-bottom: 20px;
+}
+.placeholder img {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.deadline-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.fa-200px {
+    font-size: 200px;
+}
+
+.assigned-dropdown {
+    width: 200px;
+    padding: 10px;
+}
+
+
+.cyclic-task-details-deadline-container {
+    margin: 20px auto;
+}
+
+#cyclic-task-list-filters ul{
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+#cyclic-task-list-filters ul li, #cyclic-task-list-filters ul, #cyclic-task-list-filters p{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#cyclic-task-details-filters{
+    float: left;
+    margin-top: 4px;
+}
+
+#cyclic-task-details-filters ul{
+    list-style-type: none;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+#cyclic-task-details-filters ul li, #cyclic-task-details-filters ul, #cyclic-task-details-filters p{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+}
+
+#cyclic-task-details-instances h4{
+    float: left;
+}
+
+#cyclic-task-details-instances .panel-heading{
+    height: 58px;
+}
+
+.pad-top {
+    padding-top: 20px;
+}
+
+.new-cyclic-task-form-control-group {
+    width: 50%;
+    margin: auto;
+}
+
+.new-cyclic-task-form-textarea {
+    resize: none;
+}
+
+.new-cyclic-task-form {
+    margin: auto;
+}
+
+.cyclic-task-details ul li {
+    margin-bottom: 5px;
+}
+
+.cyclic-task-description {
+    margin-bottom: 30px;
+}
+
+.cyclic-task-instances-table {
+    clear: both;
+}
+
+/*** DATEPICKER-INPUT DIRCETIVE ***/
+
+.range-icon {
+    float: left;
+    width: 2%;
+    overflow-x: hidden;
+    line-height: 34px !important;
+}
+
+.date-picker-group > ul > li {
+    min-width: 300px;
+}
+
+.date-picker-group > ul > li table {
+    margin: auto;
+}
+
+.dropdown-datepicker-item {
+    min-width: 400px;
+}
+
+.dropdown-datepicker-item .dropdown-menu {
+    left: 100% !important;
+    top: 0 !important;
+}
+
+li.dropdown-datepicker-item > in-date-picker-input {
+    float: left;
+    clear: none !important;
+    width: 47%;
+    margin: 0 1%;
+}
+
+.monthly-days-picker {
+    padding: 0.5em;
+}
+
+.is-picked {
+    background-color: #28C221;
+}
+
+.monthly-day-tile {
+    margin: 0.3em;
+    text-align: center;
+    vertical-align: middle;
+    width: 2.5em;
+    height: 2.5em;
+    border: thin solid #28C221;
+    border-radius: 5px;
+}
+
+/*** IN-DURATION-PICKER DIRECTIVE ***/
+
+.chevron-hours {
+    position: relative;
+    left: -1.2em;
+}
+
+.chevron-minutes {
+    position: relative;
+    left: -1.3em;
+}
+.text-danger a,
+.text-danger a:hover,
+.text-danger a:active,
+.text-danger a:visited {
+    color: #a94442;
+}
+.tasks-grouped-list{
+    cursor: pointer;
+}
