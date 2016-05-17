@@ -26,8 +26,7 @@ body, html{
 /*icon*/
 
 img {
-  max-width: 50%;
-  margin: 20px;
+  max-width: 100%;
 }
 
 .panel-heading {
@@ -39,76 +38,6 @@ img {
 .container {
   max-width: 100%;
   max-height: 100%;
-}
-
-/*login*/
-
-#login {
-  padding-top: 50px;
-}
-
-#login .form-wrap {
-  width: 80%;
-  margin: 0 auto;
-}
-
-#login .form-group {
-  margin-bottom: 25px;
-}
-
-#login .form-group input,
-#login .form-group select {
-  font-size: 13px;
-}
-#login h1 {
-  color: #32A945;
-  font-size: 18px;
-  text-align: center;
-  font-weight: bold;
-  padding-bottom: 20px;
-}
-
-#login .btn {
-  display: inline-block;
-  max-width: 40%;
-  font-size: 14px;
-  /*margin-bottom: 20px;*/
-  color: #fff;
-  background-color: #32A945;
-  margin-top: 0;
-  margin: 0 15px 20px;
-}
-
-#login #btn-signup {
-  background-color: #9F9F9F;
-}
-
-.col-sm-12 {
-  margin-top: 50px;
-}
-
-#login .btn:hover,
-#login .btn:focus {
-  color: #fff;
-}
-
-.form-group .label {
-
-  font-size: 15px;
-  color: #6d6d6d;
-}
-
-#login .forget {
-  font-size: 13px;
-  text-align: center;
-  display: block;
-  color: #6d6d6d;
-}
-
-#login .forget a {
-  color: #6d6d6d;
-  float: right;
-  padding-bottom: 25px;
 }
 
 /*footer*/
@@ -157,16 +86,22 @@ img {
   margin: 0 auto;
   background-color: #353535;
   padding: 20px 0 20px 0;
-}   
-
-.nav-tabs > li {
-  margin: auto;
 }
 
 .nav-tabs > li > a {
   border: none;
   color: #ffffff;
   background-color: #353535;
+  margin: 5px;
+}
+
+.image {
+  border: none;
+  color: #ffffff;
+  background-color: #353535;
+  text-align: center;
+  margin: 10px;
+  margin-right: 20px;
 }
 
 .nav-tabs > .dropdown > a:hover,
