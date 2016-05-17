@@ -1,25 +1,24 @@
 'use strict';
 
 // main application module definition
-var app = angular.module('wishlist', [
+angular.module('sogo', [
     'ui.router',
-    'wishlist.services',
-    'wishlist.directives',
-    'wishlist.controllers'
-]);
+    'ngResource',
+    'sogo.services',
+    'sogo.directives',
+    'sogo.controllers'
+])
 
-app.config(function ($stateProvider, $urlRouterProvider) {
-
-    $urlRouterProvider.otherwise('/users');
+.config(function ($stateProvider, $httpProvider) {
 
     $stateProvider
-        .state('users', {
-            url: '/users',
-            templateUrl: 'partials/views/users.html',
-            controller: 'UserController',
-            service: 'UsersService'
+        .state('greeting', {
+            url: '/greeting',
+            templateUrl: 'partials/views/greeting.html',
+            controller: 'GreetingController',
+            service: 'GreetingService'
         });
 
-}).run(function ($rootScope) {
-    $rootScope.showView = true;
+}).run(function ($state) {
+   $state.go('greeting');
 });
