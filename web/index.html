@@ -1,59 +1,35 @@
 <!DOCTYPE html>
-<html ng-app="wishlist">
-
+<html ng-app="sogo">
 	<head>
 		<meta charset="utf-8"/>
-		<title>WishList</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title>SOGO - System Optymalizujacy Gospodarke Odpadami</title>
+    	<base href="/"/>
 
-		<!-- Google web fonts -->
-		<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel='stylesheet' />
+		<!-- Bootstrap -->
+		<link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 
-		<!-- The main CSS file -->
-		<link href="css/style.css" rel="stylesheet" />
-
-		<!--Angular-->
-		<script src="lib/angular/angular.js"></script>
-		<script src="lib/angular/angular-resource.js"></script>
-		<script src="lib/angular-ui-router.js"></script>
-		<script src="lib/angular-cookies.js"></script>
-		<script src="lib/angular-http-auth-interceptor.js"></script>
-		<script src="lib/angular/angular-sanitize.js"></script>
-		<script src="lib/angular-dialogs/dialogs.js"></script>
-
-		<!--Bootstrap-->
-		<script src="lib/jquery-1.11.0.min.js"></script>
-		<script src="lib/bootstrap-multiselect.js"></script>
-		<script src="lib/bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
-		<script src="lib/bootstrap/bootstrap.min.js"></script>
-		<script src="lib/date.js"></script>
-
-		<!--The main js file-->
-		<script src="js/app.js"></script>
-
-		<!--Angular services-->
-		<script src="js/services/services.js"></script>
-		<script src="js/services/RestService.js"></script>
-		<script src="js/services/UserService.js"></script>
-
-		<!--Angular controllers-->
-		<script src="js/controllers/controllers.js"></script>
-		<script src="js/controllers/UserController.js"></script>
-
-		<!--Angular directives-->
-		<script src="js/directives/directives.js"></script>
-		<script src="js/directives/inFooter.js"></script>
-
+		<!-- The main CSS files -->
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/style-form.css">
+    	<link rel="stylesheet" type="text/css" href="css/style-navbar.css">
 	</head>
 
 	<body>
 
-	<div ui-view ng-show="showView"></div>
+	<div ui-view></div>
 
-	<in-footer></in-footer>
+		<!-- Bower libs -->
+		<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+		<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+		<script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
 
-	<!--<div data-ng-init="getUsers()">-->
-		<!--<div data-ng-repeat="user in users">{{user}}</div>-->
-	<!--</div>-->
-
+		<!-- Angular-->
+		<script type="text/javascript" src="js/app.js"></script>
+		<script type="text/javascript" src="js/controllers.js"></script>
+		<script type="text/javascript" src="js/services.js"></script>
+		<script type="text/javascript" src="js/directives.js"></script>
+		<script type="text/javascript" src="js/filters.js"></script>
 	</body>
 </html>

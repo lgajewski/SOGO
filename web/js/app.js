@@ -1,25 +1,47 @@
 'use strict';
 
 // main application module definition
-var app = angular.module('wishlist', [
+angular.module('sogo', [
     'ui.router',
-    'wishlist.services',
-    'wishlist.directives',
-    'wishlist.controllers'
-]);
+    'ngResource',
+    'sogo.services',
+    'sogo.directives',
+    'sogo.controllers'
+])
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/users');
+    $urlRouterProvider.when('', '/login');
+
+    $urlRouterProvider.otherwise(function($injector, $location) {
+        $injector.invoke(['$state', function($state) {
+            $state.go('404');
+        }]);
+    }); 
 
     $stateProvider
-        .state('users', {
-            url: '/users',
-            templateUrl: 'partials/views/users.html',
-            controller: 'UserController',
-            service: 'UsersService'
+        .state('404', {
+            templateUrl: 'partials/404.html'
+        })
+        .state('greeting', {
+            url: '/greeting',
+            templateUrl: 'partials/views/greeting.html',
+            controller: 'GreetingController',
+            service: 'GreetingService'
+        })
+        .state('login', {
+            url: '/login',
+            templateUrl: 'partials/views/login.html'
+        })
+        .state('signup', {
+            url: '/signup',
+            templateUrl: 'partials/views/signup.html'
+        })
+        .state('home', {
+            url: '/home',
+            templateUrl: 'partials/views/home.html'
         });
 
-}).run(function ($rootScope) {
-    $rootScope.showView = true;
+}).run(function ($state) {
+   $state.go('login');
 });

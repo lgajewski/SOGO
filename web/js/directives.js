@@ -1,6 +1,10 @@
 'use strict';
 
-directives.directive('inFooter', [
+/* Directives */
+
+angular.module('sogo.directives', [])
+
+.directive('inFooter', [
     function () {
         return {
             restrict: 'E',

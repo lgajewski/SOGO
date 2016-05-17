@@ -1,17 +1,14 @@
 {
-  "private": true,
+  "name": "SOGO",
+  "namelower": "sogo",
+  "version": "0.0.1",
+  "description": "System optymalizujacy gospodarke odpadami",
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:lgajewski/SOGO.git"
+  },  
   "scripts": {
-    "test": "karma start test/config/karma.conf.js"
-  },
-  "dependencies": {
-    "angular": "^1.4.3",
-    "todomvc-common": "^1.0.0",
-    "todomvc-app-css": "^1.0.1",
-    "angular-route": "^ 1.4.3",
-    "angular-resource": "^1.4.3"
-  },
-  "devDependencies": {
-    "angular-mocks": "^1.3.12",
-    "karma": "^0.10.0"
+    "postinstall": "bower install"
   }
 }

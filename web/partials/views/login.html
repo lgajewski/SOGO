@@ -1,86 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
-
-    <!--jQuery-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-    <!-- Website CSS style -->
-    <link rel="stylesheet" type="text/css" href="../../css/style-form.css">
-
-    <!-- Website Font style -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-
-    <title>login</title>
-</head>
-<body>
-    <section id="login">
-        <div class="main-login main-center">
-            <div class="panel-heading">
-                <img src="../../assets/web_logo.png"/>
-            </div>
-            <div class="container">
-                <div class="form-wrap">
-                    <form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off">
-                        <div class="form-group">
-                            <label for="username" class="label">login</label>
-                            <input type="text" name="username" id="username" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="label">password</label>
-                            <input type="password" name="password" id="password" class="form-control">
-                        </div>
-                        <div class="col-sm-12 text-center">
-                            <input type="submit" id="btn-signup" class="btn btn-lg btn-block" value="Sign up" formaction="register.html">
-                            <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Log in" formaction="gifts.html">
-                        </div>
-                    </form>
-                    <div class="forget">
-                        <a href="javascript:;" data-toggle="modal" data-target=".forget-modal">forgot your password?</a>
-                    </div>
-                </div>
-            </div>
+<section id="login">
+    <div class="main-login main-center">
+        <div class="panel-heading">
+            <img src="/assets/web_logo.png"/>
         </div>
-    </section>
-
-    <div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">X</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    <h4 class="modal-title">Password recovery</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Type your email account</p>
-                    <input type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-custom" data-dismiss="modal">Recover</button>
+        <div class="container">
+            <div class="form-wrap">
+                <form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off">
+                    <div class="form-group">
+                        <label for="username" class="label">login</label>
+                        <input type="text" name="username" id="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="label">password</label>
+                        <input type="password" name="password" id="password" class="form-control">
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <input type="submit" id="btn-signup" class="btn btn-lg btn-block" value="Sign up" ui-sref="signup">
+                        <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Log in" ui-sref="home">
+                    </div>
+                </form>
+                <div class="forget">
+                    <a href="javascript:;" data-toggle="modal" data-target=".forget-modal">forgot your password?</a>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <footer id="footer">
-        <div class="container">
-            <div class="row">
-                <p><strong>Copyright: </strong> Chrzastek, Gajewski, Siatka, Wrona</p>
+<div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Password recovery</h4>
+            </div>
+            <div class="modal-body">
+                <p>Type your email account</p>
+                <input type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-custom" data-dismiss="modal">Recover</button>
             </div>
         </div>
-    </footer>
-
-    <script type="text/javascript" src="../../lib/bootstrap/bootstrap.js"></script>
-</body>
-</html>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <p><strong>Copyright: </strong> Chrzastek, Gajewski, Siatka, Wrona</p>
+        </div>
+    </div>
+</footer>
