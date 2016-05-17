@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
     <!-- Website CSS style -->
-    <link rel="stylesheet" type="text/css" href="../../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style-form.css">
 
     <!-- Website Font style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -25,9 +25,7 @@
     <section id="login">
         <div class="main-login main-center">
             <div class="panel-heading">
-                <div>
-                    <img src="../../assets/web_logo.png"/>
-                </div>
+                <img src="../../assets/web_logo.png"/>
             </div>
             <div class="container">
                 <div class="form-wrap">
@@ -41,12 +39,13 @@
                             <label for="password" class="label">password</label>
                             <input type="password" name="password" id="password" class="form-control">
                         </div>
-                        <input type="submit" id="btn-login" class="btn btn-lg btn-block btn-primary" value="Log in" formaction="gifts.html">
-                        <input type="submit" id="btn-signup" class="btn btn-lg btn-block btn-default" value="Sign up" formaction="gifts.html">
+                        <div class="col-sm-12 text-center">
+                            <input type="submit" id="btn-signup" class="btn btn-lg btn-block" value="Sign up" formaction="register.html">
+                            <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Log in" formaction="gifts.html">
+                        </div>
                     </form>
                     <div class="forget">
                         <a href="javascript:;" data-toggle="modal" data-target=".forget-modal">forgot your password?</a>
-                        <hr>
                     </div>
                 </div>
             </div>
@@ -78,7 +77,7 @@
     <footer id="footer">
         <div class="container">
             <div class="row">
-                <p><strong>Copyright: </strong> Gajewski, Siatka, Wrona</p>
+                <p><strong>Copyright: </strong> Chrzastek, Gajewski, Siatka, Wrona</p>
             </div>
         </div>
     </footer>

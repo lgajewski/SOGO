@@ -26,9 +26,13 @@ body, html{
 /*icon*/
 
 img {
-  max-width: 100%;
-  max-height: 100%;
-  margin-bottom: 10px;
+  max-width: 80%;
+  margin-bottom: 50px;
+  margin-top: 30px;
+}
+
+.panel-heading {
+    text-align: center;
 }
 
 /*container*/
@@ -65,9 +69,19 @@ img {
   display: inline-block;
   max-width: 40%;
   font-size: 14px;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   color: #fff;
   background-color: #32A945;
+  margin-top: 0;
+  margin: 0 15px 20px;
+}
+
+#login #btn-signup {
+  background-color: #9F9F9F;
+}
+
+.col-sm-12 {
+  margin-top: 50px;
 }
 
 #login .btn:hover,
@@ -128,6 +142,11 @@ img {
 .collapse {
   margin-left: 0px;
   font-size: x-large;
+}
+
+.row {
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .navbar {
