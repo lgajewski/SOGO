@@ -15,7 +15,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/nav_header_icon_height"
-        android:src="@drawable/icon_sogo"
+        android:src="@drawable/logo_sogo"
         android:scaleType="fitStart" />
 
     <TextView
@@ -23,13 +23,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Android Studio"
+        android:text="Username"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com" />
+        android:text="username@sogo.pl" />
 
 </LinearLayout>

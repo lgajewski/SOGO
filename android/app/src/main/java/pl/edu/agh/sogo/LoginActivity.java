@@ -114,7 +114,7 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
             progressDialog = new ProgressDialog(LoginActivity.this);
             progressDialog.setCancelable(false);
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Authenticating...");
+            progressDialog.setMessage(getResources().getString(R.string.logging));
             progressDialog.show();
         }
 

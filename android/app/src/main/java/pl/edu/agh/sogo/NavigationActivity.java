@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,8 +112,6 @@ public class NavigationActivity extends AppCompatActivity
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_content, fragment)
                 .commit();
-
-        Toast.makeText(getApplicationContext(), "Open: " + msg, Toast.LENGTH_SHORT).show();
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
