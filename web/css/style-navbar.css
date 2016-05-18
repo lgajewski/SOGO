@@ -23,19 +23,9 @@ body, html{
   max-width: 500px;
 }
 
-/*icon*/
-
-img {
-  max-width: 100%;
-}
-
-.panel-heading {
-    text-align: center;
-}
-
 /*container*/
 
-.container {
+.container-fluid {
   max-width: 100%;
   max-height: 100%;
 }
@@ -66,9 +56,31 @@ img {
 
 /*navigation bar*/
 
-#icon {
-  margin: 5px auto;
-  max-height: 30%;
+.navbar.navbar-default {
+  border-radius: 0px;
+  border-left: transparent;
+}
+
+#navbar-collapse {
+  border-bottom: 1px solid #266080;
+}
+
+#logo {
+  background-size: cover;
+  position: absolute;
+  z-index: 1;
+}
+
+#logo img {
+  width: 100%;
+  height: 256px;
+  min-width: 256px;
+  margin: 10px;
+}
+
+div.nopadding {
+  padding: 0;
+  /*margin: 0;*/
 }
 
 .collapse {
@@ -82,10 +94,15 @@ img {
 }
 
 .navbar {
-  width: 80%;
+  width: 100%;
+  height: 150px;
   margin: 0 auto;
   background-color: #353535;
-  padding: 20px 0 20px 0;
+  margin-top: 58px;
+}
+
+.nav-tabs > li {
+  float: right;
 }
 
 .nav-tabs > li > a {
@@ -95,13 +112,13 @@ img {
   margin: 5px;
 }
 
-.image {
-  border: none;
-  color: #ffffff;
-  background-color: #353535;
-  text-align: center;
-  margin: 10px;
-  margin-right: 20px;
+.col-md-10 {
+  width: 100%;
+  /*margin-top: 78.1667px;
+  margin-bottom: 78.1667px;*/
+  width: 95%;
+  float: right;
+  height: 70px;
 }
 
 .nav-tabs > .dropdown > a:hover,
