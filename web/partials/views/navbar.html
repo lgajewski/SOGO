@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<!-- TODO delete margin-bottom -->
+<div class="container-fluid" style="margin-bottom: 200px">
     <div class="row">
         <div id="logo">
             <div class="col-md-2 col-sm-2 hidden-xs nopadding">
@@ -14,11 +15,11 @@
                         <span class="icon-bar"></span>
                 </div>
                     <ul class="nav nav-tabs">
-                        <li><a href="#">Home</a></li>
+                        <li><a ui-sref="navbar.home">Home</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Containers</a></li>
                         <li class="divider"></li>
-                        <li><a href="#">Trucks</a></li>
+                        <li><a  ui-sref="navbar.trucks">Trucks</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Users</a></li>
                         <li class="divider"></li>
@@ -40,6 +41,7 @@
     </div>
 </div>
 
+<div ui-view></div>
 
 <!--<div class="row">
     <div class="list">
@@ -119,4 +121,4 @@
             </div>
         </div>
     </div>
-</div>-->
+</div>

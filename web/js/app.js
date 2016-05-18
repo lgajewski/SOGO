@@ -38,14 +38,13 @@ angular.module('sogo', [
             templateUrl: 'partials/views/signup.html'
         })
         .state('navbar', {
-            url: '/navbar',
             templateUrl: 'partials/views/navbar.html'
         })
-        .state('home', {
+        .state('navbar.home', {
             url: '/home',
             templateUrl: 'partials/views/home.html'
         })
-        .state('trucks', {
+        .state('navbar.trucks', {
             url: '/trucks',
             templateUrl: 'partials/views/trucks.html'
         });
