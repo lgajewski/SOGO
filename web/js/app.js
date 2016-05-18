@@ -40,6 +40,10 @@ angular.module('sogo', [
         .state('navbar', {
             url: '/navbar',
             templateUrl: 'partials/views/navbar.html'
+        })
+        .state('home', {
+            url: '/home',
+            templateUrl: 'partials/views/home.html'
         });
 
 }).run(function ($state) {
