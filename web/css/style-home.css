@@ -1,0 +1,14 @@
+.container {
+    margin: 20px auto;
+    width: 1000px;
+}
+
+.map {
+    float: left;
+}
+
+.bar {
+    width: 170px;
+    float: right;
+    padding: 10px;
+}
