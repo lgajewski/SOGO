@@ -37,9 +37,9 @@ angular.module('sogo', [
             url: '/signup',
             templateUrl: 'partials/views/signup.html'
         })
-        .state('home', {
-            url: '/home',
-            templateUrl: 'partials/views/home.html'
+        .state('navbar', {
+            url: '/navbar',
+            templateUrl: 'partials/views/navbar.html'
         });
 
 }).run(function ($state) {
