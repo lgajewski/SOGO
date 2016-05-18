@@ -44,6 +44,10 @@ angular.module('sogo', [
         .state('home', {
             url: '/home',
             templateUrl: 'partials/views/home.html'
+        })
+        .state('trucks', {
+            url: '/trucks',
+            templateUrl: 'partials/views/trucks.html'
         });
 
 }).run(function ($state) {
