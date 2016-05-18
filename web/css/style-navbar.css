@@ -18,7 +18,7 @@ body, html{
 }
 
 .main-center{
-  margin-top: 30px;
+  margin-top: 20px;
   margin: 0 auto;
   max-width: 500px;
 }
@@ -61,7 +61,7 @@ body, html{
   border-left: transparent;
 }
 
-#navbar-collapse {
+#navbar-nav {
   border-bottom: 1px solid #266080;
 }
 
@@ -83,11 +83,6 @@ div.nopadding {
   /*margin: 0;*/
 }
 
-.collapse {
-  margin-left: 0px;
-  font-size: x-large;
-}
-
 .row {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -101,8 +96,10 @@ div.nopadding {
   margin-top: 58px;
 }
 
-.nav-tabs > li {
+.nav-tabs {
   float: right;
+  margin-top: 43.025px;
+  font-size: x-large;
 }
 
 .nav-tabs > li > a {
@@ -110,6 +107,11 @@ div.nopadding {
   color: #ffffff;
   background-color: #353535;
   margin: 5px;
+  text-align: center;
+}
+
+.dropdown {
+  float: right;
 }
 
 .col-md-10 {
@@ -119,6 +121,11 @@ div.nopadding {
   width: 95%;
   float: right;
   height: 70px;
+}
+
+.divider {
+  width: 70px;
+  height: 50px;
 }
 
 .nav-tabs > .dropdown > a:hover,
