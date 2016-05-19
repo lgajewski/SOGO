@@ -1,14 +1,18 @@
 .container {
     margin: 20px auto;
     width: 1000px;
+	height: 600px;
 }
 
 .map {
-    float: left;
+	width: auto;
+	height: 100%;
+	overflow: hidden;
 }
 
 .bar {
-    width: 170px;
+    width: 200px;
+	height: 100%;
     float: right;
     padding: 10px;
 }
