@@ -5,7 +5,8 @@
         "angular":          "1.5.5",
         "angular-resource": "1.5.5",
         "angular-ui-router":"0.2.18",
-        "bootstrap":		"3.3.6"
+        "bootstrap":		"3.3.6",
+        "components-font-awesome": "4.6.3"
     },
     "analytics": false
 }
