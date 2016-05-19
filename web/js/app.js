@@ -47,6 +47,14 @@ angular.module('sogo', [
         .state('navbar.trucks', {
             url: '/trucks',
             templateUrl: 'partials/views/trucks.html'
+        })
+        .state('navbar.users', {
+            url: '/users',
+            templateUrl: 'partials/views/users.html'
+        })
+        .state('navbar.containers', {
+            url: '/containers',
+            templateUrl: 'partials/views/containers.html'
         });
 
 }).run(function ($state) {
