@@ -6,8 +6,8 @@ import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.persistence.TruckRepository;
 import pl.edu.agh.sogo.service.ITruckService;
-import pl.edu.agh.sogo.service.exceptions.TruckAlreadyExistsException;
-import pl.edu.agh.sogo.service.exceptions.TruckNotFoundException;
+import pl.edu.agh.sogo.service.exceptions.ObjectAlreadyExistsException;
+import pl.edu.agh.sogo.service.exceptions.ObjectNotFoundException;
 
 import java.util.Collection;
 
@@ -30,7 +30,7 @@ public class TruckService implements ITruckService {
     @Override
     public void add(Truck truck) {
         if (truckRepository.findByRegistration(truck.getRegistration()) != null){
-            throw new TruckAlreadyExistsException(truck.getRegistration());
+            throw new ObjectAlreadyExistsException("Truck", truck.getRegistration());
         } else {
             truckRepository.save(truck);
         }
@@ -39,7 +39,7 @@ public class TruckService implements ITruckService {
     @Override
     public void update(Truck truck) {
         if (truckRepository.findByRegistration(truck.getRegistration()) == null){
-            throw new TruckNotFoundException(truck.getRegistration());
+            throw new ObjectNotFoundException("Truck", truck.getRegistration());
         } else {
             truckRepository.save(truck);
         }
@@ -57,7 +57,7 @@ public class TruckService implements ITruckService {
     public void updateLocation(String registration, Location location) {
         Truck truck;
         if ((truck = truckRepository.findByRegistration(registration)) == null){
-            throw new TruckNotFoundException(registration);
+            throw new ObjectNotFoundException("Truck", registration);
         } else {
             truck.setLocation(location);
             truckRepository.save(truck);

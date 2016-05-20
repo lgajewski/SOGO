@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.sogo.domain.security.User;
 import pl.edu.agh.sogo.persistence.security.UserRepository;
 import pl.edu.agh.sogo.service.IUserService;
-import pl.edu.agh.sogo.service.exceptions.UserNotFoundException;
+import pl.edu.agh.sogo.service.exceptions.ObjectNotFoundException;
 
 import java.util.Collection;
 
@@ -20,9 +20,9 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public void update(User user) throws UserNotFoundException {
+    public void update(User user) throws ObjectNotFoundException {
         if (userRepository.findByEmail(user.getEmail()) == null) {
-            throw new UserNotFoundException(user.getEmail());
+            throw new ObjectNotFoundException("User", user.getEmail());
         }
         userRepository.save(user);
     }
@@ -64,7 +64,7 @@ public class UserService implements IUserService{
     public void enable(String username) {
         User user = userRepository.findByUsername(username);
         if(user == null){
-            throw new UserNotFoundException(username);
+            throw new ObjectNotFoundException("User", username);
         }
         user.setEnabled(true);
     }
@@ -73,7 +73,7 @@ public class UserService implements IUserService{
     public void disable(String username) {
         User user = userRepository.findByUsername(username);
         if(user == null){
-            throw new UserNotFoundException(username);
+            throw new ObjectNotFoundException("User", username);
         }
         user.setEnabled(false);
     }
