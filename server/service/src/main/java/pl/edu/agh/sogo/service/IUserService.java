@@ -1,14 +1,14 @@
 package pl.edu.agh.sogo.service;
 
 import pl.edu.agh.sogo.domain.security.User;
-import pl.edu.agh.sogo.service.exceptions.UserNotFoundException;
+import pl.edu.agh.sogo.service.exceptions.ObjectNotFoundException;
 
 import java.util.Collection;
 
 public interface IUserService {
     Collection<User> getUsers();
 
-    void update(User user) throws UserNotFoundException;
+    void update(User user) throws ObjectNotFoundException;
 
     User getUser(String username);
 

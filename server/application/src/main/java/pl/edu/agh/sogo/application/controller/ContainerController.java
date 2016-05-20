@@ -24,35 +24,35 @@ public class ContainerController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Container> getTruck(@PathVariable(value = "id") String id) {
+    public ResponseEntity<Container> getContainer(@PathVariable(value = "id") String id) {
         return new ResponseEntity<>(containerService.getContainer(id), HttpStatus.OK);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> addTruck(@RequestBody Container container) {
+    public ResponseEntity<String> addContainer(@RequestBody Container container) {
         containerService.add(container);
-        return new ResponseEntity<>("Truck added", HttpStatus.OK);
+        return new ResponseEntity<>("Conatiner added", HttpStatus.OK);
     }
 
     @ResponseBody
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public ResponseEntity<String> updateContainer(@RequestBody Container container) {
         containerService.update(container);
-        return new ResponseEntity<>("Truck updated", HttpStatus.OK);
+        return new ResponseEntity<>("Container updated", HttpStatus.OK);
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteContainer(@PathVariable(value = "id") String id) {
         containerService.delete(id);
-        return new ResponseEntity<>("Truck deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Container deleted", HttpStatus.OK);
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-    public ResponseEntity<String> addSensor(@PathVariable(value = "id") String id, @RequestBody Sensor sensor) {
-        containerService.addSensor(id, sensor);
-        return new ResponseEntity<>("Truck location updated", HttpStatus.OK);
+    public ResponseEntity<String> addSensor(@PathVariable(value = "id") String id, @RequestBody Sensor sensor, @RequestBody String sensorName) {
+        containerService.addSensor(id, sensorName, sensor);
+        return new ResponseEntity<>("Sensor added to container", HttpStatus.OK);
     }
 }
