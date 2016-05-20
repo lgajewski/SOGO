@@ -87,7 +87,7 @@ public class Application extends SpringBootServletInitializer implements Command
 
         Sensor deviceSensor = new Sensor<Integer>();
         deviceSensor.setErrorCode(1);
-        deviceSensor.setValue(123123);
+        deviceSensor    .setValue(123123);
         device.addSensor("device", deviceSensor);
 
         deviceRepository.save(device);

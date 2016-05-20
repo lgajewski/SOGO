@@ -18,13 +18,13 @@ public class RouteController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Map<Truck, Route>> getTrucks() {
+    public ResponseEntity<Map<Truck, Route>> getRoutes() {
         return new ResponseEntity<>(routeService.getRoutes(), HttpStatus.OK);
     }
 
     @ResponseBody
     @RequestMapping(value = "/{registration}", method = RequestMethod.GET)
-    public ResponseEntity<Route> getTruck(@PathVariable(value = "registration") String registration) {
+    public ResponseEntity<Route> getRoute(@PathVariable(value = "registration") String registration) {
         return new ResponseEntity<>(routeService.getRoute(registration), HttpStatus.OK);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.sogo.domain.Route;
 import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.persistence.RouteRepository;
+import pl.edu.agh.sogo.persistence.TruckRepository;
 import pl.edu.agh.sogo.service.IRouteService;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class RouteService implements IRouteService {
     @Autowired
     RouteRepository routeRepository;
 
+    @Autowired
+    TruckRepository truckRepository;
+
     @Override
     public Map<Truck, Route> getRoutes() {
         List<Route> routes = routeRepository.findAll();
@@ -26,6 +30,6 @@ public class RouteService implements IRouteService {
 
     @Override
     public Route getRoute(String registration) {
-        return routeRepository.findByTruckRegistration(registration);
+        return routeRepository.findByTruck(truckRepository.findByRegistration(registration));
     }
 }
