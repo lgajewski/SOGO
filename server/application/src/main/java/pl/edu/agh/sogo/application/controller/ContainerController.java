@@ -33,7 +33,7 @@ public class ContainerController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<String> addContainer(@RequestBody Container container) {
         containerService.add(container);
-        return new ResponseEntity<>("Conatiner added", HttpStatus.OK);
+        return new ResponseEntity<>("Container added", HttpStatus.OK);
     }
 
     @ResponseBody
