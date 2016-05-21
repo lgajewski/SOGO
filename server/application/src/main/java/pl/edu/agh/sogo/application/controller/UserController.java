@@ -9,6 +9,7 @@ import pl.edu.agh.sogo.service.IUserService;
 
 import java.util.Collection;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -23,8 +24,8 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@PathVariable(value = "username") String username) {
-        return new ResponseEntity<>(userService.findUserByUsername(username), HttpStatus.OK);
+    public User getUser(@PathVariable(value = "username") String username) {
+        return userService.findUserByUsername(username);
     }
 
     @ResponseBody

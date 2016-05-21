@@ -10,6 +10,7 @@ import pl.edu.agh.sogo.service.IContainerService;
 
 import java.util.Collection;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/containers")
 public class ContainerController {
