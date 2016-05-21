@@ -46,16 +46,24 @@ angular.module('sogo', [
         })
         .state('navbar.trucks', {
             url: '/trucks',
-            templateUrl: 'partials/views/trucks.html'
+            templateUrl: 'partials/views/trucks.html',
+            controller: 'TruckController',
+            service: 'TruckService'
         })
         .state('navbar.users', {
             url: '/users',
-            templateUrl: 'partials/views/users.html'
+            templateUrl: 'partials/views/users.html',
+            controller: 'UserController',
+            service: 'UserService'
         })
         .state('navbar.containers', {
             url: '/containers',
-            templateUrl: 'partials/views/containers.html'
+            templateUrl: 'partials/views/containers.html',
+            controller: 'ContainerController',
+            service: 'ContainerService'
         });
+
+
 
 }).run(function ($state) {
    $state.go('login');

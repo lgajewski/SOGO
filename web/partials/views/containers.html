@@ -1,4 +1,3 @@
-<script type="text/javascript" src="js/expand.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style-list.css">
 
 <div class="container">
@@ -7,12 +6,12 @@
             <h3 class="panel-title">Containers</h3>
         </div>
         <ul class="list-group">
-            <li class="list-group-item">
-                <div class="row toggle" id="dropdown-detail-1" data-toggle="detail-1">
-                    <div class="col-xs-10">Container 7</div>
+            <li class="list-group-item" ng-repeat="item in pagedItems[currentPage]">
+                <div class="row toggle" ng-click="showDetail(item)" ng-class-odd="'alt'">
+                    <div class="col-xs-10">Container {{item.id}}</div>
                     <div class="col-xs-2"><i class="fa fa-chevron-down"></i></div>
                 </div>
-                <div id="detail-1">
+                <div ng-show="active==item.id" ng-class-odd="'alt'">
                     <hr/>
                     <div class="container">
                         <div class="fluid-row">
@@ -20,141 +19,47 @@
                                 ID:
                             </div>
                             <div class="col-xs-10">
-                                7
+                                {{item.id}}
                             </div>
                             <div class="col-xs-2">
                                 Location:
                             </div>
                             <div class="col-xs-10">
-                                Nawojki Street, 49
+                                {{item.location.latitude + ', ' + item.location.longitude}}
                             </div>
                             <div class="col-xs-2">
                                 Capacity:
                             </div>
                             <div class="col-xs-10">
-                                80 kg
+                                {{item.capacity}} kg
                             </div>
                             <div class="col-xs-2">
                                 Filling percentage:
                             </div>
                             <div class="col-xs-10">
-                                20%
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row toggle" id="dropdown-detail-2" data-toggle="detail-2">
-                    <div class="col-xs-10">Container 11</div>
-                    <div class="col-xs-2"><i class="fa fa-chevron-down"></i></div>
-                </div>
-                <div id="detail-2">
-                    <hr/>
-                    <div class="container">
-                        <div class="fluid-row">
-                            <div class="col-xs-2">
-                                ID:
-                            </div>
-                            <div class="col-xs-10">
-                                11
-                            </div>
-                            <div class="col-xs-2">
-                                Location:
-                            </div>
-                            <div class="col-xs-10">
-                                Batorego Street, 18
-                            </div>
-                            <div class="col-xs-2">
-                                Capacity:
-                            </div>
-                            <div class="col-xs-10">
-                                50 kg
-                            </div>
-                            <div class="col-xs-2">
-                                Filling percentage:
-                            </div>
-                            <div class="col-xs-10">
-                                87%
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row toggle" id="dropdown-detail-3" data-toggle="detail-2">
-                    <div class="col-xs-10">Container 17</div>
-                    <div class="col-xs-2"><i class="fa fa-chevron-down"></i></div>
-                </div>
-                <div id="detail-3">
-                    <hr/>
-                    <div class="container">
-                        <div class="fluid-row">
-                            <div class="col-xs-2">
-                                ID:
-                            </div>
-                            <div class="col-xs-10">
-                                17
-                            </div>
-                            <div class="col-xs-2">
-                                Location:
-                            </div>
-                            <div class="col-xs-10">
-                                Kijowska Street, 34
-                            </div>
-                            <div class="col-xs-2">
-                                Capacity:
-                            </div>
-                            <div class="col-xs-10">
-                                55 kg
-                            </div>
-                            <div class="col-xs-2">
-                                Filling percentage:
-                            </div>
-                            <div class="col-xs-10">
-                                91%
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="row toggle" id="dropdown-detail-4" data-toggle="detail-3">
-                    <div class="col-xs-10">Container 28</div>
-                    <div class="col-xs-2"><i class="fa fa-chevron-down"></i></div>
-                </div>
-                <div id="detail-4">
-                    <hr/>
-                    <div class="container">
-                        <div class="fluid-row">
-                            <div class="col-xs-2">
-                                ID:
-                            </div>
-                            <div class="col-xs-10">
-                                28
-                            </div>
-                            <div class="col-xs-2">
-                                Location:
-                            </div>
-                            <div class="col-xs-10">
-                                Karmelicka Street, 23
-                            </div>
-                            <div class="col-xs-2">
-                                Capacity:
-                            </div>
-                            <div class="col-xs-10">
-                                55 kg
-                            </div>
-                            <div class="col-xs-2">
-                                Filling percentage:
-                            </div>
-                            <div class="col-xs-10">
-                                13%
+                                {{item.device.sensors.load.value}}%
                             </div>
                         </div>
                     </div>
                 </div>
             </li>
         </ul>
+        <div class="pagination pull-right">
+            <ul>
+                <li ng-class="{disabled: currentPage == 0}">
+                    <a href ng-click="prevPage()">« Prev</a>
+                </li>
+
+                <li ng-repeat="n in range(pagedItems.length, currentPage, currentPage + gap) "
+                    ng-class="{active: n == currentPage}"
+                    ng-click="setPage()">
+                    <a href ng-bind="n + 1">1</a>
+                </li>
+
+                <li ng-class="{disabled: (currentPage) == pagedItems.length - 1}">
+                    <a href ng-click="nextPage()">Next »</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
