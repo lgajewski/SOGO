@@ -10,9 +10,10 @@ angular.module('sogo.controllers', [])
         console.log((GreetingService.query()));
 
     })
-    .controller('ContainerController',function($scope, $filter, ContainerService) {
+    .controller('ContainerController',function($scope, $filter, Restangular) {
 
-        $scope.items = ContainerService.query(function() {
+        Restangular.all('containers').getList().then(function(data) {
+            $scope.items = data;
             
         $scope.showDetail = function (item) {
             if ($scope.active != item.id) {
@@ -34,37 +35,22 @@ angular.module('sogo.controllers', [])
         $scope.pagedItems = [];
         $scope.currentPage = 0;
 
-        var searchMatch = function (haystack, needle) {
-            if (!needle) {
-                return true;
-            }
-            return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
-        };
-
         // init the filtered items
         $scope.search = function () {
-            $scope.filteredItems = $filter('filter')($scope.items, function (item) {
-                for(var attr in item) {
-                    if (searchMatch(item[attr], $scope.query))
-                        return true;
-                }
-                return false;
-            });
+
             $scope.currentPage = 0;
             // now group by pages
             $scope.groupToPages();
         };
 
-
         // calculate page in place
         $scope.groupToPages = function () {
             $scope.pagedItems = [];
-
-            for (var i = 0; i < $scope.filteredItems.length; i++) {
+            for (var i = 0; i < $scope.items.length; i++) {
                 if (i % $scope.itemsPerPage === 0) {
-                    $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                    $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.items[i] ];
                 } else {
-                    $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                    $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.items[i]);
                 }
             }
         };
@@ -110,9 +96,10 @@ angular.module('sogo.controllers', [])
         });
     })
 
-    .controller('TruckController',function($scope, $filter, TruckService) {
+    .controller('TruckController',function($scope, $filter, Restangular) {
 
-        $scope.items = TruckService.query(function() {
+        Restangular.all('trucks').getList().then(function(data) {
+            $scope.items = data;
 
             $scope.showDetail = function (item) {
                 if ($scope.active != item.registration) {
@@ -134,37 +121,24 @@ angular.module('sogo.controllers', [])
             $scope.pagedItems = [];
             $scope.currentPage = 0;
 
-            var searchMatch = function (haystack, needle) {
-                if (!needle) {
-                    return true;
-                }
-                return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
-            };
 
             // init the filtered items
             $scope.search = function () {
-                $scope.filteredItems = $filter('filter')($scope.items, function (item) {
-                    for(var attr in item) {
-                        if (searchMatch(item[attr], $scope.query))
-                            return true;
-                    }
-                    return false;
-                });
+
                 $scope.currentPage = 0;
                 // now group by pages
                 $scope.groupToPages();
             };
 
-
             // calculate page in place
             $scope.groupToPages = function () {
                 $scope.pagedItems = [];
 
-                for (var i = 0; i < $scope.filteredItems.length; i++) {
+                for (var i = 0; i < $scope.items.length; i++) {
                     if (i % $scope.itemsPerPage === 0) {
-                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.items[i] ];
                     } else {
-                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.items[i]);
                     }
                 }
             };
@@ -210,9 +184,16 @@ angular.module('sogo.controllers', [])
         });
     })
 
-    .controller('UserController',function($scope, $filter, UserService) {
+    .controller('UserController',function($scope, $filter, Restangular) {
 
-        $scope.items = UserService.query(function() {
+        // $scope.acceptUser = function (idx) {
+        //     var userToAccept = $scope.items[idx];
+        //
+        //     UserService.save();
+        // }
+
+        Restangular.all('users').getList().then(function(data) {
+            $scope.items = data;
 
             $scope.showDetail = function (item) {
                 if ($scope.active != item.id) {
@@ -237,24 +218,16 @@ angular.module('sogo.controllers', [])
             $scope.currentPage = 0;
             $scope.currentPage2 = 0;
 
-            var searchMatch = function (haystack, needle) {
-                if (!needle) {
-                    return true;
-                }
-                return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
-            };
 
             // init the filtered items
             $scope.search = function () {
                 $scope.filteredItems = $scope.items.filter(function(item){
-                    return item.enabled;
+                    return !item.enabled;
                 });
-
-
                 $scope.currentPage = 0;
 
                 $scope.filteredItems2 = $scope.items.filter(function(item){
-                    return !item.enabled;
+                    return item.enabled;
                 });
                 $scope.currentPage2 = 0;
                 // now group by pages
@@ -274,6 +247,8 @@ angular.module('sogo.controllers', [])
                     }
                 }
 
+
+                $scope.pagedItems2 = [];
                 for (var i = 0; i < $scope.filteredItems2.length; i++) {
                     if (i % $scope.itemsPerPage === 0) {
                         $scope.pagedItems2[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems2[i] ];
@@ -317,6 +292,22 @@ angular.module('sogo.controllers', [])
 
             $scope.setPage = function () {
                 $scope.currentPage = this.n;
+            };
+
+            $scope.prevPage2 = function () {
+                if ($scope.currentPage2 > 0) {
+                    $scope.currentPage2--;
+                }
+            };
+
+            $scope.nextPage2 = function () {
+                if ($scope.currentPage2 < $scope.pagedItems2.length - 1) {
+                    $scope.currentPage2++;
+                }
+            };
+
+            $scope.setPage2 = function () {
+                $scope.currentPage2 = this.n2;
             };
 
             // functions have been describe process the data for display

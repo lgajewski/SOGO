@@ -6,8 +6,15 @@ angular.module('sogo', [
     'ngResource',
     'sogo.services',
     'sogo.directives',
-    'sogo.controllers'
+    'sogo.controllers',
+    'restangular'
 ])
+
+    .config(function(RestangularProvider) {
+        //set the base url for api calls on our RESTful services
+        var newBaseUrl = "http://localhost/";
+        RestangularProvider.setBaseUrl(newBaseUrl);
+    })
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
