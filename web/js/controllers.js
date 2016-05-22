@@ -186,11 +186,19 @@ angular.module('sogo.controllers', [])
 
     .controller('UserController',function($scope, $filter, Restangular) {
 
-        // $scope.acceptUser = function (idx) {
-        //     var userToAccept = $scope.items[idx];
-        //
-        //     UserService.save();
-        // }
+        $scope.acceptUser = function (item) {
+            Restangular.all('users').one(item.username).one('enable').post();
+
+        }
+
+        $scope.disableUser = function (item) {
+            Restangular.all('users').one(item.username).one('disable').post();
+
+        }
+
+        $scope.editUser = function (item) {
+        }
+     
 
         Restangular.all('users').getList().then(function(data) {
             $scope.items = data;

@@ -60,8 +60,7 @@ angular.module('sogo', [
         .state('navbar.users', {
             url: '/users',
             templateUrl: 'partials/views/users.html',
-            controller: 'UserController',
-            service: 'UserService'
+            controller: 'UserController'
         })
         .state('navbar.containers', {
             url: '/containers',

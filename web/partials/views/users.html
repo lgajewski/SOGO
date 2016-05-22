@@ -13,7 +13,7 @@
                 <div class="row toggle" ng-click="showDetail(item)" ng-class-odd="'alt'">
                     <div class="col-xs-9">{{item.firstName + ' ' + item.lastName + '-' + item.username}}</div>
                     <div class="col-xs-2">
-                        <button type="button" class="btn btn-default btn-xs" ng-click="acceptUser($index)">Accept</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="acceptUser(item);$event.stopPropagation()">Accept</button>
                     </div>
                     <div class="col-xs-1"><i class="fa fa-chevron-down"></i></div>
                 </div>
@@ -80,8 +80,8 @@
                 <div class="row toggle" ng-click="showDetail(item)" ng-class-odd="'alt'">
                     <div class="col-xs-9">{{item.firstName + ' ' + item.lastName + '-' + item.username}}</div>
                     <div class="col-xs-2">
-                        <button type="button" class="btn btn-default btn-xs">Edit</button>
-                        <button type="button" class="btn btn-default btn-xs">Delete</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="editUser(item);$event.stopPropagation()">Edit</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="disableUser(item);$event.stopPropagation()">Disable</button>
                     </div>
                     <div class="col-xs-1"><i class="fa fa-chevron-down"></i></div>
                 </div>
