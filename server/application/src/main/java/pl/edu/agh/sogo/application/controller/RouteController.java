@@ -1,8 +1,6 @@
 package pl.edu.agh.sogo.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Route;
 import pl.edu.agh.sogo.domain.Truck;
@@ -19,13 +17,13 @@ public class RouteController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Map<Truck, Route>> getRoutes() {
-        return new ResponseEntity<>(routeService.getRoutes(), HttpStatus.OK);
+    public Map<Truck, Route> getRoutes() {
+        return routeService.getRoutes();
     }
 
     @ResponseBody
     @RequestMapping(value = "/{registration}", method = RequestMethod.GET)
-    public ResponseEntity<Route> getRoute(@PathVariable(value = "registration") String registration) {
-        return new ResponseEntity<>(routeService.getRoute(registration), HttpStatus.OK);
+    public Route getRoute(@PathVariable(value = "registration") String registration) {
+        return routeService.getRoute(registration);
     }
 }

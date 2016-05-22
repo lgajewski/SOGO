@@ -1,8 +1,6 @@
 package pl.edu.agh.sogo.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Sensor;
@@ -19,41 +17,41 @@ public class ContainerController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<Container>> getTrucks() {
-        return new ResponseEntity<>(containerService.getContainers(), HttpStatus.OK);
+    public Collection<Container> getTrucks() {
+        return containerService.getContainers();
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Container> getContainer(@PathVariable(value = "id") String id) {
-        return new ResponseEntity<>(containerService.getContainer(id), HttpStatus.OK);
+    public Container getContainer(@PathVariable(value = "id") String id) {
+        return containerService.getContainer(id);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> addContainer(@RequestBody Container container) {
+    public void addContainer(@RequestBody Container container) {
         containerService.add(container);
-        return new ResponseEntity<>("Container added", HttpStatus.OK);
+        return;
     }
 
     @ResponseBody
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public ResponseEntity<String> updateContainer(@RequestBody Container container) {
+    public void updateContainer(@RequestBody Container container) {
         containerService.update(container);
-        return new ResponseEntity<>("Container updated", HttpStatus.OK);
+        return;
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteContainer(@PathVariable(value = "id") String id) {
+    public void deleteContainer(@PathVariable(value = "id") String id) {
         containerService.delete(id);
-        return new ResponseEntity<>("Container deleted", HttpStatus.OK);
+        return;
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-    public ResponseEntity<String> addSensor(@PathVariable(value = "id") String id, @RequestBody Sensor sensor, @RequestBody String sensorName) {
+    public void addSensor(@PathVariable(value = "id") String id, @RequestBody Sensor sensor, @RequestBody String sensorName) {
         containerService.addSensor(id, sensorName, sensor);
-        return new ResponseEntity<>("Sensor added to container", HttpStatus.OK);
+        return;
     }
 }

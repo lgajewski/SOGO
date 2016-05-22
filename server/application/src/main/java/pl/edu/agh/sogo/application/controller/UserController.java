@@ -1,8 +1,6 @@
 package pl.edu.agh.sogo.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.security.User;
 import pl.edu.agh.sogo.service.IUserService;
@@ -18,35 +16,35 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<User>> getUsers() {
-        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
+    public Collection<User> getUsers() {
+        return userService.getUsers();
     }
 
     @ResponseBody
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@PathVariable(value = "username") String username) {
-        return new ResponseEntity<>(userService.findUserByUsername(username), HttpStatus.OK);
+    public User getUser(@PathVariable(value = "username") String username) {
+        return userService.findUserByUsername(username);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<String> updateUser(@RequestBody User user) {
+    public void updateUser(@RequestBody User user) {
         userService.update(user);
-        return new ResponseEntity<>("User updated", HttpStatus.OK);
+        return;
     }
 
     @ResponseBody
     @RequestMapping(value = "/{username}/enable", method = RequestMethod.POST)
-    public ResponseEntity<String> enableUser(@PathVariable(value = "username") String username) {
+    public void enableUser(@PathVariable(value = "username") String username) {
         userService.enable(username);
-        return new ResponseEntity<>("User enabled", HttpStatus.OK);
+        return;
     }
 
     @ResponseBody
     @RequestMapping(value = "/{username}/disable", method = RequestMethod.POST)
-    public ResponseEntity<String> disableUser(@PathVariable(value = "username") String username) {
+    public void disableUser(@PathVariable(value = "username") String username) {
         userService.disable(username);
-        return new ResponseEntity<>("User disabled", HttpStatus.OK);
+        return;
     }
 
 }
