@@ -49,7 +49,8 @@ angular.module('sogo', [
         })
         .state('navbar.home', {
             url: '/home',
-            templateUrl: 'partials/views/home.html'
+            templateUrl: 'partials/views/home.html',
+            controllers: 'HomeController'
         })
         .state('navbar.trucks', {
             url: '/trucks',

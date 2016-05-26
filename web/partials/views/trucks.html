@@ -10,8 +10,8 @@
                 <div class="row toggle" ng-click="showDetail(item)" ng-class-odd="'alt'">
                     <div class="col-xs-9">Truck {{item.registration}}</div>
                     <div class="col-xs-2">
-                        <button type="button" class="btn btn-default btn-xs">Edit</button>
-                        <button type="button" class="btn btn-default btn-xs">Delete</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="editTruck(item);$event.stopPropagation()">Edit</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="deleteTruck(item);$event.stopPropagation()">Delete</button>
                     </div>
                     <div class="col-xs-1"><i class="fa fa-chevron-down"></i></div>
                 </div>
