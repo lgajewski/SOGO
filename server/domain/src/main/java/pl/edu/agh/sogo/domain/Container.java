@@ -12,6 +12,8 @@ public class Container {
 
     private int capacity;
 
+    private String type;
+
     private Location location;
 
     public String getId() {
@@ -41,5 +43,13 @@ public class Container {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

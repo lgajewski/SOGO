@@ -67,6 +67,7 @@ public class UserService implements IUserService{
             throw new ObjectNotFoundException("User", username);
         }
         user.setEnabled(true);
+        userRepository.save(user);
     }
 
     @Override
@@ -76,5 +77,6 @@ public class UserService implements IUserService{
             throw new ObjectNotFoundException("User", username);
         }
         user.setEnabled(false);
+        userRepository.save(user);
     }
 }

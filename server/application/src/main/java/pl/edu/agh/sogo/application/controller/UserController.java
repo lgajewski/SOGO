@@ -37,14 +37,12 @@ public class UserController {
     @RequestMapping(value = "/{username}/enable", method = RequestMethod.POST)
     public void enableUser(@PathVariable(value = "username") String username) {
         userService.enable(username);
-        return;
     }
 
     @ResponseBody
     @RequestMapping(value = "/{username}/disable", method = RequestMethod.POST)
     public void disableUser(@PathVariable(value = "username") String username) {
         userService.disable(username);
-        return;
     }
 
 }

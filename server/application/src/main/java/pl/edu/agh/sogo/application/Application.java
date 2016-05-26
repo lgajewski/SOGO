@@ -107,9 +107,11 @@ public class Application extends SpringBootServletInitializer implements Command
 
     private void createContainers(){
         Random r = new Random();
+        String[] types = {"glass", "paper", "plastic", "electronic"};
         for(int i=0;i < 10; i++) {
             Container container = new Container();
             container.setCapacity(1300+i);
+            container.setType(types[r.nextInt(4)]);
             container.setDevice(deviceRepository.findAll().get(i));
             container.setLocation(new Location(50.06 + r.nextDouble() / 100, 19.9377967 + r.nextDouble() / 100));
             containerRepository.save(container);
