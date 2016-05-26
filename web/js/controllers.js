@@ -10,7 +10,16 @@ angular.module('sogo.controllers', [])
         console.log((GreetingService.query()));
 
     })
-    .controller('HomeController',function($scope,$state, Restangular) {
+    .controller('HomeController',function($scope,$state, Restangular, uiGmapGoogleMapApi) {
+        uiGmapGoogleMapApi.then(function(maps) {
+
+        });
+
+        $scope.map = {
+            center: { latitude: 50.0613357, longitude: 19.9379844 },
+            zoom: 14
+
+        };
 
         $scope.getData = function() {
             Restangular.all('containers').getList().then(function (data) {
@@ -19,7 +28,12 @@ angular.module('sogo.controllers', [])
             Restangular.all('trucks').getList().then(function (data) {
                 $scope.trucks = data;
             });
+        
+            function onGoogleReady() {
+                angular.bootstrap(document.getElementById("map"), ['app.ui-map']);
+            }
         };
+        $scope.getData();
 
     })
     .controller('ContainerController',function($scope, $filter, Restangular) {
