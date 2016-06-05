@@ -17,7 +17,7 @@ public class ContainerController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public Collection<Container> getTrucks() {
+    public Collection<Container> getContainers() {
         return containerService.getContainers();
     }
 
