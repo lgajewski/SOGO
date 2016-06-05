@@ -14,16 +14,18 @@ angular.module('sogo.controllers', [])
         uiGmapGoogleMapApi.then(function(maps) {
 
         });
-
+        $scope.collectionsAvailable = ['trucks', 'yellow', 'green', 'blue'];
+        $scope.items = [];
+        $scope.selection = [];
         $scope.map = {
             center: { latitude: 50.0613357, longitude: 19.9379844 },
             zoom: 14
 
         };
-        $scope.showTrucks = function(){
+        $scope.loadTrucks = function(){
             Restangular.all('trucks').getList().then(function (resp) {
                 console.log(resp);
-                $scope.trucks = [];
+                $scope.items['trucks'] = [];
                 for (var i =0; i < resp.length; i++) {
                     var truck = {
                         id: 0,
@@ -36,15 +38,17 @@ angular.module('sogo.controllers', [])
                     truck.id = resp[i].id;
                     truck.coords.latitude = resp[i].location.latitude;
                     truck.coords.longitude = resp[i].location.longitude;
-                    $scope.trucks.push(truck);
+                    $scope.items['trucks'].push(truck);
                 }
 
             })
         };
-        $scope.showContainers = function(){
+        $scope.loadContainers = function(){
             Restangular.all('containers').getList().then(function (resp) {
                 console.log(resp);
-                $scope.containers = [];
+                $scope.items["blue"] = [];
+                $scope.items["yellow"] = [];
+                $scope.items["green"] = [];
                 for (var i =0; i < resp.length; i++) {
                     var container = {
                         id: 0,
@@ -57,18 +61,28 @@ angular.module('sogo.controllers', [])
                     container.id = resp[i].id;
                     container.coords.latitude = resp[i].location.latitude;
                     container.coords.longitude = resp[i].location.longitude;
-                    $scope.containers.push(container);
+                    $scope.items[resp[i].type].push(container);
                 }
 
             })
         };
-        $scope.showData = function() {
-            $scope.showContainers();
-            $scope.showTrucks();
-
+        $scope.loadData = function() {
+            $scope.loadContainers();
+            $scope.loadTrucks();
         };
-        $scope.showData();
+        $scope.loadData();
 
+        $scope.toggleSelection = function toggleSelection(collectionName) {
+            var idx = $scope.selection.indexOf(collectionName);
+            // is currently selected
+            if (idx > -1) {
+                $scope.selection.splice(idx, 1);
+            }
+            // is newly selected
+            else {
+                $scope.selection.push(collectionName);
+            }
+        };
 
     })
     .controller('ContainerController',function($scope, $filter, Restangular) {
