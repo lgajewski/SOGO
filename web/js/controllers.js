@@ -20,20 +20,55 @@ angular.module('sogo.controllers', [])
             zoom: 14
 
         };
+        $scope.showTrucks = function(){
+            Restangular.all('trucks').getList().then(function (resp) {
+                console.log(resp);
+                $scope.trucks = [];
+                for (var i =0; i < resp.length; i++) {
+                    var truck = {
+                        id: 0,
+                        coords: {},
+                        options: {
+                            draggable: false,
+                            icon: 'assets/truck.png'
+                        }
+                    };
+                    truck.id = resp[i].id;
+                    truck.coords.latitude = resp[i].location.latitude;
+                    truck.coords.longitude = resp[i].location.longitude;
+                    $scope.trucks.push(truck);
+                }
 
-        $scope.getData = function() {
-            Restangular.all('containers').getList().then(function (data) {
-                $scope.containers = data;
-            });
-            Restangular.all('trucks').getList().then(function (data) {
-                $scope.trucks = data;
-            });
-        
-            function onGoogleReady() {
-                angular.bootstrap(document.getElementById("map"), ['app.ui-map']);
-            }
+            })
         };
-        $scope.getData();
+        $scope.showContainers = function(){
+            Restangular.all('containers').getList().then(function (resp) {
+                console.log(resp);
+                $scope.containers = [];
+                for (var i =0; i < resp.length; i++) {
+                    var container = {
+                        id: 0,
+                        coords: {},
+                        options: {
+                            draggable: false,
+                            icon: 'assets/ic_map_trash_' + resp[i].type + '.png'
+                        }
+                    };
+                    container.id = resp[i].id;
+                    container.coords.latitude = resp[i].location.latitude;
+                    container.coords.longitude = resp[i].location.longitude;
+                    $scope.containers.push(container);
+                }
+
+            })
+        };
+        $scope.showData = function() {
+            $scope.showContainers();
+            $scope.showTrucks();
+
+        };
+        $scope.showData();
+
 
     })
     .controller('ContainerController',function($scope, $filter, Restangular) {
