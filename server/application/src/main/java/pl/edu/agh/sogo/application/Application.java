@@ -73,7 +73,7 @@ public class Application extends SpringBootServletInitializer implements Command
         Random r = new Random();
         for(int i=0;i < 6; i++) {
             Truck truck = new Truck("KRA "+r.nextInt(10)+r.nextInt(10)+r.nextInt(10)+r.nextInt(10), r.nextInt(1000)+1000);
-            truck.setLocation(new Location(50.06+r.nextDouble()/100, 19.9377967+r.nextDouble()/100));
+            truck.setLocation(new Location(50.047+(r.nextDouble()*24/1000), 19.915+(r.nextDouble()*54/1000)));
             truck.setUser(userRepository.findByUsername("janek"+i));
 //            truck.setCapacity(1000+i);
             truck.setLoad(r.nextInt(1000));
@@ -113,7 +113,7 @@ public class Application extends SpringBootServletInitializer implements Command
             container.setCapacity(1300+i);
             container.setType(types[r.nextInt(3)]);
             container.setDevice(deviceRepository.findAll().get(i));
-            container.setLocation(new Location(50.06 + r.nextDouble() / 100, 19.9377967 + r.nextDouble() / 100));
+            container.setLocation(new Location(50.047+(r.nextDouble()*24/1000), 19.915+(r.nextDouble()*54/1000)));
             containerRepository.save(container);
         }
     }
