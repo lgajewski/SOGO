@@ -1,20 +1,12 @@
-.container {
-    width: 85%;
-	height: 600px;
-	float: right;
+
+@media (min-width : 768px) {
+	/* Make Navigation Toggle on Desktop Hover */
+	.dropdown:hover .dropdown-menu {
+		display: block;
+	}
 }
 
-.map {
-	width: auto;
-	height: 100%;
-	overflow: hidden;
+.angular-google-map-container {
+	height: 400px;
+	min-width: 450px;
 }
-
-.bar {
-    width: 300px;
-	height: 100%;
-    float: right;
-    padding: 10px;
-}
-
-.angular-google-map-container { height: 400px; }
