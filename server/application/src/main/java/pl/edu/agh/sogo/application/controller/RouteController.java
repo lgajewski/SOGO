@@ -8,7 +8,7 @@ import pl.edu.agh.sogo.service.IRouteService;
 
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 @RestController
 @RequestMapping("/routes")
 public class RouteController {

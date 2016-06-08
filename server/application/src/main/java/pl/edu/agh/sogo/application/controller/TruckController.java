@@ -8,7 +8,7 @@ import pl.edu.agh.sogo.service.ITruckService;
 
 import java.util.Collection;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 @RestController
 @RequestMapping("/trucks")
 public class TruckController {
