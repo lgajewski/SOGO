@@ -11,9 +11,10 @@ angular.module('sogo.controllers', [])
 
     })
     .controller('HomeController',function($scope,$state, Restangular, uiGmapGoogleMapApi) {
-        uiGmapGoogleMapApi.then(function(maps) {
+        $scope.loadMap = function() {uiGmapGoogleMapApi.then(function(maps) {
 
         });
+		};
         $scope.collectionsAvailable = ['trucks', 'yellow', 'green', 'blue'];
         $scope.items = [];
         $scope.selection = [];
@@ -67,6 +68,7 @@ angular.module('sogo.controllers', [])
             })
         };
         $scope.loadData = function() {
+			$scope.loadMap();
             $scope.loadContainers();
             $scope.loadTrucks();
         };
