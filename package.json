@@ -66,6 +66,6 @@
   },
   "scripts": {
     "test": "gulp test",
-    "postinstall": "webdriver-manager update"
+    "postinstall": "bower install"
   }
 }
