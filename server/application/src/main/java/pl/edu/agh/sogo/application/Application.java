@@ -83,7 +83,7 @@ public class Application extends SpringBootServletInitializer implements Command
 
     private void createDevices(){
         Random r = new Random();
-        for(int i=0;i < 10; i++) {
+        for(int i=0;i < 100; i++) {
             Device device = new Device();
             Sensor loadSensor = new Sensor<Double>();
             loadSensor.setErrorCode(0);
@@ -108,7 +108,7 @@ public class Application extends SpringBootServletInitializer implements Command
     private void createContainers(){
         Random r = new Random();
         String[] types = {"blue", "green", "yellow"};
-        for(int i=0;i < 10; i++) {
+        for(int i=0;i < 100; i++) {
             Container container = new Container();
             container.setCapacity(1300+i);
             container.setType(types[r.nextInt(3)]);
