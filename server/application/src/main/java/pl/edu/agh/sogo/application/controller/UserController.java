@@ -7,7 +7,7 @@ import pl.edu.agh.sogo.service.IUserService;
 
 import java.util.Collection;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
