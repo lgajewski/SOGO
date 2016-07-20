@@ -14,10 +14,12 @@ import pl.edu.agh.sogo.persistence.DeviceRepository;
 import pl.edu.agh.sogo.persistence.RouteRepository;
 import pl.edu.agh.sogo.persistence.TruckRepository;
 import pl.edu.agh.sogo.persistence.security.UserRepository;
+import pl.edu.agh.sogo.service.impl.RouteService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 @ImportResource("classpath:pl/edu/agh/sogo/application/beans.xml")
@@ -37,6 +39,9 @@ public class Application extends SpringBootServletInitializer implements Command
     @Autowired
     RouteRepository routeRepository;
 
+    @Autowired
+    RouteService routeService;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -53,7 +58,11 @@ public class Application extends SpringBootServletInitializer implements Command
         createTrucks();
         createDevices();
         createContainers();
-        createRoutes();
+//        createRoutes();
+
+        List<String> availableContainers = containerRepository.findAll().stream().map(Container::getId).collect(Collectors.toList());
+        routeService.generateRoutes(availableContainers);
+
     }
 
     private void createUsers(){
@@ -110,7 +119,7 @@ public class Application extends SpringBootServletInitializer implements Command
         String[] types = {"blue", "green", "yellow"};
         for(int i=0;i < 100; i++) {
             Container container = new Container();
-            container.setCapacity(1300+i);
+            container.setCapacity(100+i);
             container.setType(types[r.nextInt(3)]);
             container.setDevice(deviceRepository.findAll().get(i));
             container.setLocation(new Location(50.047+(r.nextDouble()*24/1000), 19.915+(r.nextDouble()*54/1000)));

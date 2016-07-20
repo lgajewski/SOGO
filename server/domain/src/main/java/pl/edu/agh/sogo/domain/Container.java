@@ -1,6 +1,7 @@
 package pl.edu.agh.sogo.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class Container {
@@ -13,7 +14,7 @@ public class Container {
     private int capacity;
 
     private String type;
-
+    @GeoSpatialIndexed
     private Location location;
 
     public String getId() {
