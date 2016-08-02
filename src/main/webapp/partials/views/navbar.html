@@ -1,0 +1,31 @@
+<!-- TODO delete margin-bottom -->
+<div id="site">
+    <nav class="navbar navbar-inverse navbar-fixed">
+        <div id="headerRibbon">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="brand" id="homeButton" href="http://localhost:8080/"><span>SOGO</span></a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.home">Home</a></li>
+                        <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.containers">Containers</a></li>
+                        <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.trucks">Trucks</a></li>
+                        <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.users">Users</a></li>
+                        <li><a href="#">Profile</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div ui-view></div>
+</div>

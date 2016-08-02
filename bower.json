@@ -10,15 +10,19 @@
     "angular-resource": "1.5.5",
     "ngstorage": "0.3.10",
     "jquery": "2.2.4",
-    "bootstrap": "3.3.6"
+    "bootstrap": "3.3.6",
+    "components-font-awesome": "4.6.3",
+    "restangular": "1.5.2",
+    "angular-simple-logger": "0.1.7",
+    "angular-google-maps": "2.3.3"
   },
   "overrides": {
-    "angular" : {
+    "angular": {
       "dependencies": {
         "jquery": "2.2.4"
       }
     },
-    "angular-cache-buster" : {
+    "angular-cache-buster": {
       "dependencies": {
         "angular": "1.5.5"
       }

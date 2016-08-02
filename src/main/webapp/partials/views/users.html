@@ -1,0 +1,137 @@
+<div class="container">
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <h3 class="panel-title">Requests</h3>
+        </div>
+
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="item in pagedItems[currentPage]">
+                <div class="row toggle" ng-click="showDetail(item)" ng-class-odd="'alt'">
+                    <div class="col-xs-1"><i class="fa fa-chevron-down"></i></div>
+                    <div class="col-xs-11 col-sm-9">{{item.firstName + ' ' + item.lastName + '-' + item.username}}</div>
+                    <div class="col-xs-12 col-sm-2">
+                        <button type="button" class="btn btn-default btn-xs" ng-click="acceptUser(item);$event.stopPropagation()">Accept</button>
+                    </div>
+                </div>
+                <div ng-show="active==item.id" ng-class-odd="'alt'">
+                    <hr/>
+                    <div class="container">
+                        <div class="fluid-row">
+                            <div class="col-xs-12 col-sm-3">
+                                <b>Name:</b>
+                            </div>
+                            <div class="col-xs-12 col-sm-9">
+                                {{item.firstName + ' ' + item.lastName}}
+                            </div>
+                            <div class="col-xs-12 col-sm-3">
+                                <b>Login:</b>
+                            </div>
+                            <div class="col-xs-12 col-sm-9">
+                                {{item.username}}
+                            </div>
+                            <div class="col-xs-12 col-sm-3">
+                                <b>Email:</b>
+                            </div>
+                            <div class="col-xs-12 col-sm-9">
+                                {{item.email}}
+                            </div>
+                            <div class="col-xs-12 col-sm-3">
+                                <b>Role:</b>
+                            </div>
+                            <div class="col-xs-12 col-sm-9">
+                                {{item.role}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="pagination pull-right">
+            <ul>
+                <li ng-class="{disabled: currentPage == 0}">
+                    <a href ng-click="prevPage()">« Prev</a>
+                </li>
+
+                <li ng-repeat="n in range(pagedItems.length, currentPage, currentPage + gap) "
+                    ng-class="{active: n == currentPage}"
+                    ng-click="setPage()">
+                    <a href ng-bind="n + 1">1</a>
+                </li>
+
+                <li ng-class="{disabled: (currentPage) == pagedItems.length - 1}">
+                    <a href ng-click="nextPage()">Next »</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Users</h3>
+        </div>
+        <ul class="list-group" style="margin-top: 30px;">
+            <li class="list-group-item" ng-repeat="item in pagedItems2[currentPage2]">
+                <div class="row toggle" ng-click="showDetail(item)" ng-class-odd="'alt'">
+                    <div class="col-xs-1"><i class="fa fa-chevron-down"></i></div>
+                    <div class="col-xs-11 col-sm-9">{{item.firstName + ' ' + item.lastName + '-' + item.username}}</div>
+                    <div class="col-xs-12 col-sm-2">
+                        <button type="button" class="btn btn-default btn-xs" ng-click="editUser(item);$event.stopPropagation()">Edit</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="disableUser(item);$event.stopPropagation()">Disable</button>
+                    </div>
+                </div>
+                <div ng-show="active==item.id" ng-class-odd="'alt'">
+                    <hr/>
+                    <div class="container">
+                        <div class="fluid-row">
+                            <div class="col-xs-12 col-sm-3">
+                                <b>Name:</b>
+                            </div>
+                            <div class="col-xs-12 col-sm-9">
+                                {{item.firstName + ' ' + item.lastName}}
+                            </div>
+                            <div class="col-xs-12 col-sm-3">
+                                <b>Login:</b>
+                            </div>
+                            <div class="col-xs-12 col-sm-9">
+                                {{item.username}}
+                            </div>
+                            <div class="col-xs-12 col-sm-3">
+                                <b>Email:</b>
+                            </div>
+                            <div class="col-xs-12 col-sm-9">
+                                {{item.email}}
+                            </div>
+                            <div class="col-xs-12 col-sm-3">
+                                <b>Role:</b>
+                            </div>
+                            <div class="col-xs-12 col-sm-9">
+                                {{item.role}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="pagination pull-right">
+            <ul>
+                <li ng-class="{disabled: currentPage2 == 0}">
+                    <a href ng-click="prevPage2()">« Prev</a>
+                </li>
+
+                <li ng-repeat="n2 in range(pagedItems2.length, currentPage2, currentPage2 + gap) "
+                    ng-class="{active: n2 == currentPage2}"
+                    ng-click="setPage2()">
+                    <a href ng-bind="n2 + 1">1</a>
+                </li>
+
+                <li ng-class="{disabled: (currentPage2) == pagedItems2.length - 1}">
+                    <a href ng-click="nextPage2()">Next »</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
