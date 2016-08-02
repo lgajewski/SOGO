@@ -1,12 +1,15 @@
 # Intellij
-.idea/**
+.idea/
 *.iml
 
 # Gradle
-.gradle/**
+.gradle/
 
 # Gradle Wrapper
 !gradle/wrapper/gradle-wrapper.jar
 
 # Directories
-build/**
+build/
+
+# Bower components
+src/main/webapp/bower_components/
