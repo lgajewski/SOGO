@@ -38,6 +38,7 @@
         }
 
         function authorize (force) {
+            console.error("asd");
             var authReturn = Principal.identity(force).then(authThen);
 
             return authReturn;
