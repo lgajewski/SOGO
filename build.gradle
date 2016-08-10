@@ -45,6 +45,8 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-devtools"
 
+    compile "javax.inject:javax.inject:1"
+
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
