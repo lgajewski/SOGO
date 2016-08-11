@@ -10,11 +10,15 @@ angular.module('sogo.controllers', [])
         console.log((GreetingService.query()));
 
     })
-    .controller('HomeController',function($scope,$state, Restangular, uiGmapGoogleMapApi) {
-        $scope.loadMap = function() {uiGmapGoogleMapApi.then(function(maps) {
+    .controller('HomeController',function($scope,$state, Restangular, uiGmapGoogleMapApi, ActiveItemService) {
 
+        $scope.activeObject = ActiveItemService.getObject();
+
+
+        $scope.loadMap = function() {uiGmapGoogleMapApi.then(function(maps) {
         });
 		};
+
         $scope.collectionsAvailable = ['trucks', 'yellow', 'green', 'blue'];
         $scope.items = [];
         $scope.selection = [];
@@ -73,7 +77,6 @@ angular.module('sogo.controllers', [])
             $scope.loadTrucks();
         };
         $scope.loadData();
-
         $scope.toggleSelection = function toggleSelection(collectionName) {
             var idx = $scope.selection.indexOf(collectionName);
             // is currently selected
@@ -87,13 +90,24 @@ angular.module('sogo.controllers', [])
         };
 
     })
-    .controller('ContainerController',function($scope, $filter, Restangular) {
+    .controller('ContainerController',function($scope, $filter, Restangular, ActiveItemService) {
+
+        $scope.activeObject = ActiveItemService.getObject();
+        $scope.setActiveObject = function(item) {
+            $scope.activeObject.id = item.id;
+            $scope.activeObject.coords = item.location;
+            $scope.activeObject.options.icon = 'assets/ic_map_trash_' + item.type + '.png';
+            $scope.activeObject.map.center.latitude = item.location.latitude;
+            $scope.activeObject.map.center.longitude = item.location.longitude
+
+        };
+
+
         $scope.deleteContainer = function (container) {
             Restangular.all('containers').one(container.id).remove().then(function () {
                 $scope.getContainers();
             })
         };
-
 
         $scope.getContainers = function() {
             Restangular.all('containers').getList().then(function (data) {
@@ -178,8 +192,17 @@ angular.module('sogo.controllers', [])
 
     })
 
-    .controller('TruckController',function($scope, $filter, Restangular) {
+    .controller('TruckController',function($scope, $filter, Restangular, ActiveItemService) {
 
+        $scope.activeObject = ActiveItemService.getObject();
+        $scope.setActiveObject = function(item) {
+            $scope.activeObject.id = item.id;
+            $scope.activeObject.coords = item.location;
+            $scope.activeObject.options.icon = 'assets/truck.png';
+            $scope.activeObject.map.center.latitude = item.location.latitude;
+            $scope.activeObject.map.center.longitude = item.location.longitude
+
+        };
         $scope.getTrucks = function(){
             Restangular.all('trucks').getList().then(function(data) {
                 $scope.items = data;

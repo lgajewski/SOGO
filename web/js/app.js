@@ -57,13 +57,20 @@ angular.module('sogo', [
         .state('navbar.home', {
             url: '/home',
             templateUrl: 'partials/views/home.html',
-            controller: 'HomeController'
+            controller: 'HomeController',
+            service: 'sharedProperties'
         })
         .state('navbar.trucks', {
             url: '/trucks',
             templateUrl: 'partials/views/trucks.html',
             controller: 'TruckController',
             service: 'TruckService'
+        })
+        .state('navbar.trucks-user', {
+            url: '/trucks-user',
+            templateUrl: 'partials/views/trucks-user.html',
+            controller: 'TruckController',
+            service: 'ActiveItemService'
         })
         .state('navbar.users', {
             url: '/users',
@@ -75,7 +82,13 @@ angular.module('sogo', [
             templateUrl: 'partials/views/containers.html',
             controller: 'ContainerController',
             service: 'ContainerService'
-        });
+        })
+        .state('navbar.containers-user', {
+            url: '/containers-user',
+            templateUrl: 'partials/views/containers-user.html',
+            controller: 'ContainerController',
+            service: 'ActiveItemService'
+    });
 
 
 

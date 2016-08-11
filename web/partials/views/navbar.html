@@ -17,8 +17,21 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.home">Home</a></li>
-                        <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.containers">Containers</a></li>
-                        <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.trucks">Trucks</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Containers<span class="caret"></span></a>
+                            <ul class="dropdown-menu" style="background-color:black;">
+                                <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.containers">Containers(Admin)</a></li>
+                                <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.containers-user">Containers(User)</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Trucks<span class="caret"></span></a>
+                            <ul class="dropdown-menu" style="background-color:black;">
+                                <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.trucks">Trucks(Admin)</a></li>
+                                <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.trucks-user">Trucks(User)</a></li>
+                            </ul>
+                        </li>
+
                         <li data-toggle="collapse" data-target="#myNavbar"><a ui-sref="navbar.users">Users</a></li>
                         <li><a href="#">Profile</a></li>
                     </ul>
