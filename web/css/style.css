@@ -73,10 +73,8 @@ img {
     display: inline-block;
     max-width: 40%;
     font-size: 14px;
-    /*margin-bottom: 20px;*/
     color: #fff;
     background-color: #32A945;
-    margin-top: 0;
     margin: 0 15px 20px;
 }
 
@@ -85,7 +83,7 @@ img {
 }
 
 .col-sm-12 {
-    margin-top: 50px;
+    margin-top: 15px;
 }
 
 #login .btn:hover,
@@ -94,7 +92,6 @@ img {
 }
 
 .form-group .label {
-
     font-size: 15px;
     color: #6d6d6d;
 }
@@ -104,13 +101,14 @@ img {
     text-align: center;
     display: block;
     color: #6d6d6d;
+    margin-bottom: 20px;
 }
 
-#login .forget a {
-    color: #6d6d6d;
-    float: right;
-    padding-bottom: 25px;
-}
+/*#login .forget a {*/
+    /*color: #6d6d6d;*/
+    /*float: right;*/
+    /*padding-bottom: 25px;*/
+/*}*/
 
 /*footer*/
 
@@ -129,11 +127,19 @@ img {
 
 /*recovery*/
 
+.modal-content {
+    text-align: left;
+}
+
 .modal-content .btn {
     display: inline;
     font-size: 14px;
     color: #fff;
     background-color: #32A945;
+}
+
+.modal-content #btn-cancel {
+    background-color: #9F9F9F;
 }
 
 /*navigation bar*/
