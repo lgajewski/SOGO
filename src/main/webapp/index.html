@@ -1,17 +1,45 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html ng-app="sogo">
 <head>
-    <meta charset="utf-8">
-    <title>SOGO</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
+    <title>SOGO - System Optymalizujacy Gospodarke Odpadami</title>
+    <base href="/"/>
+
+    <!-- Bootstrap -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+
+    <!-- The main CSS files -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+
+
 </head>
-<body>
 
-The best application in the world.
+<body>
+<div ui-view></div>
+
+    <!-- Bower libs -->
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="bower_components/restangular/src/restangular.js"></script>
+    <script type="text/javascript" src="bower_components/lodash/dist/lodash.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.css">
+
+    <!-- Angular-->
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/controllers.js"></script>
+    <script type="text/javascript" src="app/services.js"></script>
+    <script type="text/javascript" src="app/directives.js"></script>
+    <script type="text/javascript" src="app/filters.js"></script>
+
+    <!--Google Maps -->
+    <script src='bower_components/angular-simple-logger/dist/angular-simple-logger.js'></script>
+    <script src='bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
 
 </body>
 </html>
