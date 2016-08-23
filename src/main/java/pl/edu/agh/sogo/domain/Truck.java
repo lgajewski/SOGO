@@ -1,8 +1,6 @@
 package pl.edu.agh.sogo.domain;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import pl.edu.agh.sogo.domain.security.User;
 
 public class Truck {
     @Id
@@ -14,13 +12,13 @@ public class Truck {
 
     private String registration;
 
-    @DBRef
-    private User user;
+//    @DBRef
+//    private User user;
 
     private Location location;
 
 
-    public Truck(String registration, int capacity){
+    public Truck(String registration, int capacity) {
         this.registration = registration;
         this.capacity = capacity;
         this.load = 0;
@@ -46,13 +44,13 @@ public class Truck {
         this.load = load;
     }
 
-    public User getUser() {
-        return user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     public String getRegistration() {
         return registration;
