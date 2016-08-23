@@ -14,7 +14,7 @@ angular.module('sogo', [
     .config(function(RestangularProvider) {
         //set the base url for api calls on our RESTful services
         var newBaseUrl = "http://localhost/";
-        RestangularProvider.setBaseUrl(newBaseUrl);
+        RestangularProvider.setBaseUrl("api/");
     })
     .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
@@ -31,7 +31,7 @@ angular.module('sogo', [
         $injector.invoke(['$state', function($state) {
             $state.go('404');
         }]);
-    }); 
+    });
 
     $stateProvider
         .state('404', {

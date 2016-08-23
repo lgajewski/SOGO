@@ -81,10 +81,10 @@ public class RouteService implements IRouteService {
             } while (i < nearestContainersToStartingLocation.size());
         }
         if(container!=null) {
-            while (truckCapacity - truck.getLoad() >  (container.getCapacity () * ((double)container.getDevice().getSensors().get("load").getValue())/100) && !availableContainers.isEmpty()){
+            while (truckCapacity - truck.getLoad() >  (container.getCapacity () * ((double)container.getSensors().get("load").getValue())/100) && !availableContainers.isEmpty()){
                 availableContainers.remove(container.getId());
                 locations.add(container.getLocation());
-                truckCapacity -= (container.getCapacity () * ((double)container.getDevice().getSensors().get("load").getValue())/100);
+                truckCapacity -= (container.getCapacity () * ((double)container.getSensors().get("load").getValue())/100);
                 List<Container> nearestContainers = containerRepository.findByLocationNear(new Point(container.getLocation().getLongitude(), container.getLocation().getLatitude()));
                 i=0;
                 if(nearestContainers != null) {

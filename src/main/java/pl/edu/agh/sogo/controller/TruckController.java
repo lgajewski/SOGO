@@ -12,9 +12,8 @@ import pl.edu.agh.sogo.service.ITruckService;
 
 import java.util.Collection;
 
-@CrossOrigin
 @RestController
-@RequestMapping("/trucks")
+@RequestMapping("/api/trucks")
 public class TruckController {
     @Autowired
     private ITruckService truckService;
