@@ -19,6 +19,7 @@ public class Truck {
 
     private Location location;
 
+    public Truck(){}
 
     public Truck(String registration, int capacity){
         this.registration = registration;

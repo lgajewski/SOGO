@@ -56,7 +56,6 @@ public class Application extends SpringBootServletInitializer implements Command
 
         createUsers();
         createTrucks();
-        createDevices();
         createContainers();
 //        createRoutes();
 
@@ -90,30 +89,6 @@ public class Application extends SpringBootServletInitializer implements Command
         }
     }
 
-    private void createDevices(){
-        Random r = new Random();
-        for(int i=0;i < 100; i++) {
-            Device device = new Device();
-            Sensor loadSensor = new Sensor<Double>();
-            loadSensor.setErrorCode(0);
-            loadSensor.setValue(r.nextDouble()*100);
-            device.addSensor("load", loadSensor);
-
-            Sensor smellSensor = new Sensor<Double>();
-            smellSensor.setErrorCode(0);
-            smellSensor.setValue(r.nextInt(10));
-            device.addSensor("smell", smellSensor);
-
-            Sensor deviceSensor = new Sensor<Integer>();
-            deviceSensor.setErrorCode(1);
-            deviceSensor.setValue(r.nextInt(100));
-            device.addSensor("device", deviceSensor);
-
-            deviceRepository.save(device);
-        }
-
-    }
-
     private void createContainers(){
         Random r = new Random();
         String[] types = {"blue", "green", "yellow"};
@@ -121,7 +96,21 @@ public class Application extends SpringBootServletInitializer implements Command
             Container container = new Container();
             container.setCapacity(100+i);
             container.setType(types[r.nextInt(3)]);
-            container.setDevice(deviceRepository.findAll().get(i));
+            Sensor loadSensor = new Sensor<Double>();
+            loadSensor.setErrorCode(0);
+            loadSensor.setValue(r.nextDouble()*100);
+            container.addSensor("load", loadSensor);
+
+            Sensor smellSensor = new Sensor<Double>();
+            smellSensor.setErrorCode(0);
+            smellSensor.setValue(r.nextInt(10));
+            container.addSensor("smell", smellSensor);
+
+            Sensor deviceSensor = new Sensor<Integer>();
+            deviceSensor.setErrorCode(1);
+            deviceSensor.setValue(r.nextInt(100));
+            container.addSensor("device", deviceSensor);
+
             container.setLocation(new Location(50.047+(r.nextDouble()*24/1000), 19.915+(r.nextDouble()*54/1000)));
             containerRepository.save(container);
         }

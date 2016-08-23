@@ -35,7 +35,7 @@ public class ContainerController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public void updateContainer(@RequestBody Container container) {
         containerService.update(container);
         return;

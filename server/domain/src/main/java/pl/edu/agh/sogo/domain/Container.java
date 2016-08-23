@@ -2,14 +2,13 @@ package pl.edu.agh.sogo.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Container {
     @Id
     private String id;
-
-    @DBRef
-    private Device device;
 
     private int capacity;
 
@@ -17,17 +16,14 @@ public class Container {
     @GeoSpatialIndexed
     private Location location;
 
+    private Map<String, Sensor> sensors;
+
+    public Container(){
+        this.sensors = new HashMap<>();
+    }
+
     public String getId() {
         return id;
-    }
-
-
-    public Device getDevice() {
-        return device;
-    }
-
-    public void setDevice(Device device) {
-        this.device = device;
     }
 
     public int getCapacity() {
@@ -52,5 +48,17 @@ public class Container {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Map<String, Sensor> getSensors() {
+        return sensors;
+    }
+
+    public void setSensors(Map<String, Sensor> sensors) {
+        this.sensors = sensors;
+    }
+
+    public void addSensor(String sensorType, Sensor sensor){
+        sensors.put(sensorType, sensor);
     }
 }

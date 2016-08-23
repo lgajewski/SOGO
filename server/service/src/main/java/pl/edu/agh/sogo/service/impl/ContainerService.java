@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Sensor;
 import pl.edu.agh.sogo.persistence.ContainerRepository;
+import pl.edu.agh.sogo.persistence.DeviceRepository;
 import pl.edu.agh.sogo.service.IContainerService;
-import pl.edu.agh.sogo.service.exceptions.ObjectAlreadyExistsException;
 import pl.edu.agh.sogo.service.exceptions.ObjectNotFoundException;
 
 import java.util.Collection;
@@ -15,6 +15,9 @@ import java.util.Collection;
 public class ContainerService implements IContainerService {
     @Autowired
     ContainerRepository containerRepository;
+
+    @Autowired
+    DeviceRepository deviceRepository;
 
     @Override
     public Collection<Container> getContainers() {
@@ -28,18 +31,13 @@ public class ContainerService implements IContainerService {
 
     @Override
     public void add(Container container) {
-        if (containerRepository.findByDevice(container.getDevice()) != null){
-            throw new ObjectAlreadyExistsException("Conatiner", container.getId());
-        } else {
-            containerRepository.save(container);
-        }
-
+        containerRepository.save(container);
     }
 
     @Override
     public void update(Container container) {
-        if (containerRepository.findByDevice(container.getDevice()) == null){
-            throw new ObjectNotFoundException("Conatiner", " with device " + container.getDevice());
+        if (containerRepository.findOne(container.getId()) == null){
+            throw new ObjectNotFoundException("Container", " with device " + container);
         } else {
             containerRepository.save(container);
         }
@@ -48,7 +46,7 @@ public class ContainerService implements IContainerService {
     @Override
     public void delete(String id) {
         Container container;
-        if ((container =containerRepository.findOne(id)) != null){
+        if ((container = containerRepository.findOne(id)) != null){
             containerRepository.delete(container);
         }
     }
@@ -57,10 +55,11 @@ public class ContainerService implements IContainerService {
     public void addSensor(String id, String sensorName, Sensor sensor) {
         Container container;
         if ((container = containerRepository.findOne(id)) == null){
-            throw new ObjectNotFoundException("Conatiner", id);
+            throw new ObjectNotFoundException("Container", id);
         } else {
-            container.getDevice().addSensor(sensorName, sensor);
+            container.addSensor(sensorName, sensor);
             containerRepository.save(container);
         }
     }
+
 }
