@@ -8,6 +8,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import pl.edu.agh.simulator.domain.Location;
@@ -30,7 +31,31 @@ public class TruckSimulator implements Runnable {
         this.serverAddress = serverAddress;
         this.isRunning = false;
     }
+    public void createTrucks(List<Truck> trucks){
+        try {
+            Gson gson = new Gson();
+            HttpClient client = HttpClientBuilder.create().build();
 
+            HttpPost request = new HttpPost(serverAddress+"trucks");
+            request.addHeader("Content-type", "application/json");
+
+            for (Truck truck : trucks) {
+                StringEntity params = new StringEntity(gson.toJson(truck));
+                System.out.println(gson.toJson(truck));
+                request.setEntity(params);
+                HttpResponse response = client.execute(request);
+
+                BufferedReader rd = new BufferedReader (new InputStreamReader(response.getEntity().getContent()));
+
+                String line = "";
+                while((line = rd.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void run() {
@@ -89,10 +114,6 @@ public class TruckSimulator implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setServerAddress(String serverAddress) {
-        this.serverAddress = serverAddress;
     }
 
     public boolean isRunning() {

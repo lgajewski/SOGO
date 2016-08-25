@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -31,23 +32,43 @@ public class ContainerSimulator implements Runnable {
         this.isRunning = false;
     }
 
+    public void createContainers(List<Container> containers){
+        try {
+            Gson gson = new Gson();
+            HttpClient client = HttpClientBuilder.create().build();
+
+            HttpPost request = new HttpPost(serverAddress+"containers");
+            request.addHeader("Content-type", "application/json");
+
+             for (Container container : containers) {
+                StringEntity params = new StringEntity(gson.toJson(container));
+                System.out.println(gson.toJson(container));
+                request.setEntity(params);
+                HttpResponse response = client.execute(request);
+
+                BufferedReader rd = new BufferedReader (new InputStreamReader(response.getEntity().getContent()));
+                String line = "";
+                while((line = rd.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void run() {
         try {
             Gson gson = new Gson();
             HttpClient client = HttpClientBuilder.create().build();
-
             HttpGet request = new HttpGet(serverAddress+"containers");
-
             request.addHeader("Content-type", "application/json");
 
             while(true) {
                 if(isRunning) {
                     HttpResponse response = client.execute(request);
-
                     BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
                     String line = "";
                     List<Container> containers = new ArrayList<>();
                     while ((line = rd.readLine()) != null) {
@@ -63,7 +84,6 @@ public class ContainerSimulator implements Runnable {
                     }
                     Random rand = new Random();
                     for (Container container : containers) {
-
                         HttpPut updateLocationRequest = new HttpPut(serverAddress + "containers");
                         for (String sensorType : container.getSensors().keySet()) {
                             Sensor sensor = container.getSensors().get(sensorType);
@@ -79,13 +99,11 @@ public class ContainerSimulator implements Runnable {
                                 }
                             }
                         }
-
                         StringEntity params = new StringEntity(gson.toJson(container));
                         System.out.println(gson.toJson(container));
                         updateLocationRequest.addHeader("Content-type", "application/json");
                         updateLocationRequest.setEntity(params);
                         HttpResponse updateLocationResponse = client.execute(updateLocationRequest);
-
                         rd = new BufferedReader(new InputStreamReader(updateLocationResponse.getEntity().getContent()));
 
                         while ((line = rd.readLine()) != null) {
@@ -95,17 +113,11 @@ public class ContainerSimulator implements Runnable {
                 }
                 Thread.sleep(2000);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void setServerAddress(String serverAddress) {
-        this.serverAddress = serverAddress;
     }
 
     public boolean isRunning() {
