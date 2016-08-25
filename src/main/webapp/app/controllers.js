@@ -35,6 +35,9 @@ angular.module('sogo.controllers', [])
                     var truck = {
                         id: 0,
                         coords: {},
+                        capacity: 0,
+                        load: 0,
+                        type: "truck",
                         options: {
                             draggable: false,
                             icon: 'assets/truck.png'
@@ -43,6 +46,8 @@ angular.module('sogo.controllers', [])
                     truck.id = resp[i].id;
                     truck.coords.latitude = resp[i].location.latitude;
                     truck.coords.longitude = resp[i].location.longitude;
+                    truck.capacity = resp[i].capacity;
+                    truck.load = resp[i].load + ' kg';
                     $scope.items['trucks'].push(truck);
                 }
 
@@ -58,6 +63,9 @@ angular.module('sogo.controllers', [])
                     var container = {
                         id: 0,
                         coords: {},
+                        capacity: 0,
+                        load: 0,
+                        type: "",
                         options: {
                             draggable: false,
                             icon: 'assets/ic_map_trash_' + resp[i].type + '.png'
@@ -66,6 +74,9 @@ angular.module('sogo.controllers', [])
                     container.id = resp[i].id;
                     container.coords.latitude = resp[i].location.latitude;
                     container.coords.longitude = resp[i].location.longitude;
+                    container.type = resp[i].type;
+                    container.capacity = resp[i].capacity;
+                    container.load = resp[i].sensors.load.value.toFixed(2) + '%';
                     $scope.items[resp[i].type].push(container);
                 }
 
