@@ -21,4 +21,9 @@ public class Sensor <T> {
     public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }
+
+    public String toString(){
+        return "{value = " + value +
+            ", errorCode = " + errorCode + "}";
+    }
 }

@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ImportResource;
 import pl.edu.agh.sogo.domain.*;
 //import pl.edu.agh.sogo.domain.security.User;
 import pl.edu.agh.sogo.persistence.ContainerRepository;
-import pl.edu.agh.sogo.persistence.DeviceRepository;
 import pl.edu.agh.sogo.persistence.RouteRepository;
 import pl.edu.agh.sogo.persistence.TruckRepository;
 //import pl.edu.agh.sogo.persistence.security.UserRepository;
@@ -27,8 +26,6 @@ public class CommandLineRunnerApp extends SpringBootServletInitializer implement
 //    @Autowired
 //    UserRepository userRepository;
 
-    @Autowired
-    DeviceRepository deviceRepository;
 
     @Autowired
     ContainerRepository containerRepository;

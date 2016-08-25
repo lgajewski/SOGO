@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Sensor;
 import pl.edu.agh.sogo.persistence.ContainerRepository;
-import pl.edu.agh.sogo.persistence.DeviceRepository;
 import pl.edu.agh.sogo.service.IContainerService;
 import pl.edu.agh.sogo.service.exceptions.ObjectNotFoundException;
 
@@ -15,9 +14,6 @@ import java.util.Collection;
 public class ContainerService implements IContainerService {
     @Autowired
     ContainerRepository containerRepository;
-
-    @Autowired
-    DeviceRepository deviceRepository;
 
     @Override
     public Collection<Container> getContainers() {

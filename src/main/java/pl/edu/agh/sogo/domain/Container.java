@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Container {
     @Id
@@ -60,5 +61,13 @@ public class Container {
 
     public void addSensor(String sensorType, Sensor sensor){
         sensors.put(sensorType, sensor);
+    }
+
+    public String toString(){
+        return "{id = " + id +
+            ", type = " + type +
+            ", capacity = " + capacity +
+            ", location = "+location +
+            ", sensors = {" + sensors.entrySet().stream().map(a ->a.getValue().toString()).collect(Collectors.joining(", ")) + "}}";
     }
 }

@@ -1,5 +1,7 @@
 package pl.edu.agh.sogo.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class RouteService implements IRouteService {
+
+    private static final Logger log = LoggerFactory.getLogger(RouteService.class);
+
     @Autowired
     RouteRepository routeRepository;
 
@@ -29,10 +34,12 @@ public class RouteService implements IRouteService {
     @Autowired
     ContainerRepository containerRepository;
 
+
     @Override
     public Map<Truck, Route> getRoutes() {
         List<Route> routes = routeRepository.findAll();
         Map<Truck, Route> result = routes.stream().collect(Collectors.toMap(Route::getTruck, Function.identity()));
+        log.info("getRoutes()");
         return result;
     }
 
@@ -48,11 +55,11 @@ public class RouteService implements IRouteService {
             Location startingLocation = new Location(50.0690377, 20.0064407);
             Route route = generateRoute(startingLocation, truck, availableContainers);
             if(route != null) {
-                System.out.println("Truck[" + (route.getTruck().getRegistration() + "]: capacity: " + route.getTruck().getCapacity() + " load: " +route.getTruck().getLoad()));
+                log.info("Truck = " + route.getTruck());
                 int i=0;
                 for (Location location : route.getRoute()) {
                     i++;
-                    System.out.println("Location " + i + " [" + location.getLongitude()+","+location.getLatitude()+"]");
+                    log.info("Location " + i + " = " + location);
                 }
                 routeRepository.save(route);
             }

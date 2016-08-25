@@ -64,4 +64,12 @@ public class Truck {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+    public String toString(){
+        return "{id = " + id +
+            ", registration = " + registration +
+            ", capacity = " + capacity +
+            ", load = " + load +
+            "}";
+    }
 }

@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Route {
     @Id
@@ -30,12 +31,17 @@ public class Route {
         route.add(containerLocation);
     }
 
-
     public Truck getTruck() {
         return truck;
     }
 
     public void setTruck(Truck truck) {
         this.truck = truck;
+    }
+
+    public String toString(){
+        return "{id + " +
+            ", route = " + route.stream().map(Location::toString).collect(Collectors.joining(",\n")) +
+            "}";
     }
 }
