@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 
-import javax.annotation.PostConstruct;
 import java.net.UnknownHostException;
 
 @SpringBootApplication
@@ -24,14 +23,9 @@ public class App {
         SpringApplication app = new SpringApplication(App.class);
         Environment env = app.run(args).getEnvironment();
         log.info("\n----------------------------------------------------------\n\t" +
-                        "Application '{}' is running! Access URLs:\n\t" +
-                        "Local: \t\thttp://127.0.0.1:{}\n----------------------------------------------------------",
-                env.getProperty("spring.application.name"),
-                env.getProperty("server.port"));
-    }
-
-    @PostConstruct
-    public void onStartup() {
-        // TODO init mongodb here
+                "Application '{}' is running! Access URLs:\n\t" +
+                "Local: \t\thttp://127.0.0.1:{}\n----------------------------------------------------------",
+            env.getProperty("spring.application.name"),
+            env.getProperty("server.port"));
     }
 }

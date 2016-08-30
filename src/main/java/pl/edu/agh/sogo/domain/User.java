@@ -3,6 +3,7 @@ package pl.edu.agh.sogo.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import pl.edu.agh.sogo.security.SecurityConstants;
@@ -28,6 +29,7 @@ public class User implements Serializable {
     private String id;
 
     @NotNull
+    @Indexed
     @Pattern(regexp = SecurityConstants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     private String login;
@@ -45,15 +47,12 @@ public class User implements Serializable {
     @Field("last_name")
     private String lastName;
 
+    @Indexed
     @Email
     @Size(max = 100)
     private String email;
 
     private boolean activated = false;
-
-    @Size(min = 2, max = 5)
-    @Field("lang_key")
-    private String langKey;
 
     @Size(max = 20)
     @Field("activation_key")
@@ -151,14 +150,6 @@ public class User implements Serializable {
         this.resetDate = resetDate;
     }
 
-    public String getLangKey() {
-        return langKey;
-    }
-
-    public void setLangKey(String langKey) {
-        this.langKey = langKey;
-    }
-
     public Set<Authority> getAuthorities() {
         return authorities;
     }
@@ -194,7 +185,6 @@ public class User implements Serializable {
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
             ", activated='" + activated + '\'' +
-            ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
             "}";
     }

@@ -43,10 +43,12 @@ repositories {
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-mongodb"
-    compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-devtools"
+
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.security.oauth:spring-security-oauth2:${spring_security_oauth2_version}"
 
     compile "javax.inject:javax.inject:1"
 
