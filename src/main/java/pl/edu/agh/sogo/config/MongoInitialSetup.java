@@ -8,6 +8,7 @@ import pl.edu.agh.sogo.domain.Authority;
 import pl.edu.agh.sogo.domain.User;
 import pl.edu.agh.sogo.persistence.AuthorityRepository;
 import pl.edu.agh.sogo.persistence.UserRepository;
+import pl.edu.agh.sogo.security.SecurityConstants;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
@@ -20,8 +21,8 @@ public class MongoInitialSetup {
 
     private static final Logger log = LoggerFactory.getLogger(MongoInitialSetup.class);
 
-    private static final Authority USER_AUTHORITY = new Authority("ROLE_USER");
-    private static final Authority ADMIN_AUTHORITY = new Authority("ROLE_ADMIN");
+    private static final Authority USER_AUTHORITY = new Authority(SecurityConstants.USER);
+    private static final Authority ADMIN_AUTHORITY = new Authority(SecurityConstants.ADMIN);
 
     private static final Set<Authority> userAuthorities = new HashSet<>(Collections.singletonList(USER_AUTHORITY));
     private static final Set<Authority> adminAuthorities = new HashSet<>(Arrays.asList(USER_AUTHORITY, ADMIN_AUTHORITY));

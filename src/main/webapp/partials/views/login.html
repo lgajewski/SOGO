@@ -5,21 +5,26 @@
         <div class="panel-heading">
             <img src="/assets/web_logo.png"/>
         </div>
+        <div class="col-md-12">
+            <div class="alert alert-danger" ng-show="vm.authenticationError">
+                <strong>Failed to sign in!</strong> Please check your credentials and try again.
+            </div>
+        </div>
         <div class="container">
             <div class="form-wrap">
-                <form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off">
+                <form class="form" role="form" id="login-form" autocomplete="off" ng-submit="vm.login($event)">
                     <div class="form-group">
                         <label for="username" class="label">login</label>
-                        <input type="text" name="username" id="username" class="form-control">
+                        <input type="text" name="username" id="username" class="form-control" ng-model="vm.username">
 
                     </div>
                     <div class="form-group">
                         <label for="password" class="label">password</label>
-                        <input type="password" name="password" id="password" class="form-control">
+                        <input type="password" name="password" id="password" class="form-control" ng-model="vm.password">
                     </div>
                     <div class="col-sm-12 text-center">
-                        <input type="submit" id="btn-signup" class="btn btn-lg btn-block" value="Sign up" ui-sref="signup">
-                        <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Log in" ui-sref="navbar.home">
+                        <!--<input type="submit" id="btn-signup" class="btn btn-lg btn-block" value="Sign up" ui-sref="signup">-->
+                        <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Log in">
                     </div>
                 </form>
                 <div class="forget">

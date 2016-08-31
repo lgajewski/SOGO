@@ -6,6 +6,7 @@ apply plugin: 'idea'
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 
 defaultTasks 'bootRun'
 
@@ -44,17 +45,16 @@ repositories {
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-mongodb"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
+    compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-devtools"
 
-    compile "org.springframework.boot:spring-boot-starter-security"
-    compile "org.springframework.security.oauth:spring-security-oauth2:${spring_security_oauth2_version}"
 
     compile "javax.inject:javax.inject:1"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile "junit:junit"
+    testCompile "org.mockito:mockito-core"
 }
 
 task wrapper(type: Wrapper) {
