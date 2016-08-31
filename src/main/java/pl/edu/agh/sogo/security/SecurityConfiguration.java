@@ -14,10 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import pl.edu.agh.sogo.security.filter.CsrfCookieGeneratorFilter;
-import pl.edu.agh.sogo.security.handler.AjaxAuthenticationFailureHandler;
-import pl.edu.agh.sogo.security.handler.AjaxAuthenticationSuccessHandler;
-import pl.edu.agh.sogo.security.handler.AjaxLogoutSuccessHandler;
-import pl.edu.agh.sogo.security.handler.Http401UnauthorizedEntryPoint;
+import pl.edu.agh.sogo.security.handler.*;
 
 import javax.inject.Inject;
 
@@ -41,9 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Inject
     private UserDetailsService userDetailsService;
 
-//    @Inject
-//    private RememberMeServices rememberMeServices;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -62,28 +56,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.OPTIONS, "/**")
             .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/bower_components/**")
-            .antMatchers("/i18n/**")
+            .antMatchers("/assets/**")
+            .antMatchers("/css/**")
+            .antMatchers("/partials/**")
             .antMatchers("/content/**")
-            .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
         http
             .csrf()
-//            .ignoringAntMatchers("/websocket/**")
+            .ignoringAntMatchers("/websocket/**")
         .and()
             .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .exceptionHandling()
-//            .accessDeniedHandler(new CustomAccessDeniedHandler())
+            .accessDeniedHandler(new CustomAccessDeniedHandler())
             .authenticationEntryPoint(authenticationEntryPoint)
         .and()
-//            .rememberMe()
-//            .rememberMeServices(rememberMeServices)
-//            .rememberMeParameter("remember-me")
-//            .key(jHipsterProperties.getSecurity().getRememberMe().getKey())
-//        .and()
             .formLogin()
             .loginProcessingUrl("/api/authentication")
             .successHandler(ajaxAuthenticationSuccessHandler)
@@ -91,17 +82,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .usernameParameter("username")
             .passwordParameter("password")
             .permitAll()
-            .and()
+        .and()
             .logout()
             .logoutUrl("/api/logout")
             .logoutSuccessHandler(ajaxLogoutSuccessHandler)
             .deleteCookies("JSESSIONID", "CSRF-TOKEN")
             .permitAll()
-            .and()
+        .and()
             .headers()
             .frameOptions()
             .disable()
-            .and()
+        .and()
             .authorizeRequests()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
@@ -112,15 +103,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/**").authenticated()
             .antMatchers("/websocket/tracker").hasAuthority(SecurityConstants.ADMIN)
             .antMatchers("/websocket/**").permitAll()
-            .antMatchers("/management/**").hasAuthority(SecurityConstants.ADMIN)
-            .antMatchers("/v2/api-docs/**").permitAll()
-            .antMatchers("/configuration/ui").permitAll()
-            .antMatchers("/swagger-ui/index.html").hasAuthority(SecurityConstants.ADMIN);
-
+            .antMatchers("/management/**").hasAuthority(SecurityConstants.ADMIN);
+        // @formatter: on
     }
 
-//    @Bean
-//    public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
-//        return new SecurityEvaluationContextExtension();
-//    }
 }
