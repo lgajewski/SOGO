@@ -6,10 +6,11 @@
     "angular": "1.5.5",
     "angular-resource": "1.5.5",
     "angular-ui-router": "0.2.18",
+    "angular-simple-logger": "0.1.7",
+    "angular-google-maps": "2.3.3",
+    "ngstorage": "0.3.10",
     "bootstrap": "3.3.6",
     "components-font-awesome": "4.6.3",
-    "restangular": "1.5.2",
-    "angular-simple-logger": "0.1.7",
-    "angular-google-maps": "2.3.3"
+    "restangular": "1.5.2"
   }
 }

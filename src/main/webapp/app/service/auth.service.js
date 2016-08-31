@@ -5,15 +5,24 @@
         .module('sogo')
         .factory('Auth', Auth);
 
-    Auth.$inject = ['$q'];
+    Auth.$inject = ['$q', '$localStorage', 'Restangular'];
 
-    function Auth($q) {
+    function Auth($q, $localStorage, Restangular) {
         var service = {
             login: login,
             authorize: authorize
         };
 
         return service;
+
+        // function getToken () {
+        //     return $localStorage.authenticationToken;
+        // }
+
+        // function hasValidToken () {
+        //     var token = this.getToken();
+        //     return !!token;
+        // }
 
         function authorize() {
             var deferred = $q.defer();
@@ -22,7 +31,7 @@
             setTimeout(function() {
                 console.log("after timeout");
                 deferred.resolve("123");
-            }, 2000);
+            }, 500);
 
             return deferred.promise;
         }
@@ -30,14 +39,58 @@
         function login(credentials) {
             var deferred = $q.defer();
 
-            console.log("authorize()");
-            setTimeout(function() {
-                console.log("after timeout");
-                deferred.reject("asd");
-            }, 2000);
+            var data = 'username=' + encodeURIComponent(credentials.username) +
+                '&password=' + encodeURIComponent(credentials.password) + '&submit=Login';
+
+            Restangular.all("authentication").post(data, undefined, {'Content-Type': "application/x-www-form-urlencoded"})
+                .then(function() {
+                    console.log("LOGGED IN");
+                    deferred.resolve();
+                })
+                .catch(function() {
+                    console.log("ERROR DURING LOGIN!");
+                    deferred.reject();
+                });
+            // $http.post('api/authentication', data, {
+            //     headers: {
+            //         'Content-Type': 'application/x-www-form-urlencoded'
+            //     }
+            // }).success(function (response) {
+            //     return response;
+            // });
+
+            // AuthServerProvider.login(credentials)
+            //     .then(loginThen)
+            //     .catch(function (err) {
+            //         this.logout();
+            //         deferred.reject(err);
+            //         return cb(err);
+            //     }.bind(this));
+            //
+            // function loginThen(data) {
+            //     Principal.identity(true).then(function (account) {
+            //         JhiTrackerService.sendActivity();
+            //         deferred.resolve(data);
+            //     });
+            //     return cb();
+            // }
 
             return deferred.promise;
         }
+
+/*        function logout () {
+            JhiTrackerService.disconnect();
+
+
+            // logout from the server
+            $http.post('api/logout').success(function (response) {
+                delete $localStorage.authenticationToken;
+                // to get a new csrf token call the api
+                $http.get('api/account');
+                return response;
+            });
+
+        }*/
     }
 
 })();

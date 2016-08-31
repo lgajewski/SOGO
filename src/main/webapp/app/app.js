@@ -5,6 +5,7 @@
         .module('sogo', [
             'ui.router',
             'ngResource',
+            'ngStorage',
             'sogo.services',
             'sogo.directives',
             'sogo.controllers',
