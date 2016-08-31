@@ -7,28 +7,27 @@
     <title>SOGO - System Optymalizujacy Gospodarke Odpadami</title>
     <base href="/"/>
 
-    <!-- Bootstrap -->
+    <!-- Bower css -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+    <link href="bower_components/components-font-awesome/css/font-awesome.css" rel="stylesheet"/>
 
     <!-- The main CSS files -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-
-
 </head>
 
 <body>
 <div ui-view></div>
 
     <!-- Bower libs -->
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
     <script type="text/javascript" src="bower_components/restangular/src/restangular.js"></script>
     <script type="text/javascript" src="bower_components/lodash/dist/lodash.js"></script>
-    <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.css">
+    <script type="text/javascript" src='bower_components/angular-simple-logger/dist/angular-simple-logger.js'></script>
+    <script type="text/javascript" src='bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
 
     <!-- Angular-->
     <script type="text/javascript" src="app/app.js"></script>
@@ -37,14 +36,11 @@
     <script type="text/javascript" src="app/directives.js"></script>
     <script type="text/javascript" src="app/filters.js"></script>
 
-    <script type="text/javascript" src="app/service/auth.service.js"></script>
     <script type="text/javascript" src="app/config/googlemap.config.js"></script>
     <script type="text/javascript" src="app/config/restangular.config.js"></script>
+    <script type="text/javascript" src="app/controller/login.controller.js"></script>
+    <script type="text/javascript" src="app/service/auth.service.js"></script>
     <script type="text/javascript" src="app/state/login.state.js"></script>
-
-    <!--Google Maps -->
-    <script src='bower_components/angular-simple-logger/dist/angular-simple-logger.js'></script>
-    <script src='bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
 
 </body>
 </html>

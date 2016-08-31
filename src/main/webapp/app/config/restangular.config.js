@@ -3,11 +3,10 @@
 
     angular
         .module('sogo')
-        .config(function (uiGmapGoogleMapApiProvider) {
-            uiGmapGoogleMapApiProvider.configure({
-                key: 'AIzaSyB5nmqhScXjuLEpFhwwszBVsKmb2OWSoQ4',
-                libraries: 'weather,geometry,visualization'
-            });
+        .config(function (RestangularProvider) {
+            //set the base url for api calls on our RESTful services
+            var newBaseUrl = "http://localhost/";
+            RestangularProvider.setBaseUrl("api/");
         })
 
 })();

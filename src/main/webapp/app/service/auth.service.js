@@ -9,6 +9,7 @@
 
     function Auth($q) {
         var service = {
+            login: login,
             authorize: authorize
         };
 
@@ -21,7 +22,19 @@
             setTimeout(function() {
                 console.log("after timeout");
                 deferred.resolve("123");
-            }, 5000);
+            }, 2000);
+
+            return deferred.promise;
+        }
+
+        function login(credentials) {
+            var deferred = $q.defer();
+
+            console.log("authorize()");
+            setTimeout(function() {
+                console.log("after timeout");
+                deferred.reject("asd");
+            }, 2000);
 
             return deferred.promise;
         }

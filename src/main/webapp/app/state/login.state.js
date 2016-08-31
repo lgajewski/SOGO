@@ -8,6 +8,8 @@
                 .state('login', {
                     url: '/login',
                     templateUrl: 'partials/views/login.html',
+                    controller: 'LoginController',
+                    controllerAs: 'vm',
                     resolve: {
                         authorize: ['Auth',
                             function (Auth) {
