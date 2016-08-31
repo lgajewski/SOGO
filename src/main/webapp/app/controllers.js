@@ -10,23 +10,53 @@ angular.module('sogo.controllers', [])
         console.log((GreetingService.query()));
 
     })
-    .controller('HomeController',function($scope,$state, Restangular, uiGmapGoogleMapApi, ActiveItemService) {
+    .controller('HomeController',function($scope, $state, Restangular, uiGmapIsReady, uiGmapGoogleMapApi, ActiveItemService, $timeout) {
+
+        $scope.map = {
+            control: {},
+            center: {
+                latitude: 50.0613356,
+                longitude: 19.9379844
+            },
+            zoom: 14,
+            options: {
+                scrollwheel: true,
+                panControl: false,
+                scaleControl: false,
+                draggable: true,
+                maxZoom: 22,
+                minZoom: 0
+            },
+            clusterOptions: {},
+            clusterEvents: {},
+            refresh : false,
+            bounds: {},
+            events: {
+                idle: function() {
+                    console.log('idle');
+                }
+            }
+        };
+        uiGmapGoogleMapApi.then(function(maps) {
+                $scope.directionsDisplay = new maps.DirectionsRenderer();
+                uiGmapIsReady.promise().then(function(instances) {
+                    directions(maps, '50.0613358', '19.9379845');
+                    // $timeout(function() {
+                    //     directions(maps, '50.0614336', '19.9379844');
+                    // }, 1000)
+                });
+            });
 
         $scope.activeObject = ActiveItemService.getObject();
-
-
-        $scope.loadMap = function() {uiGmapGoogleMapApi.then(function(maps) {
-        });
-		};
 
         $scope.collectionsAvailable = ['trucks', 'yellow', 'green', 'blue'];
         $scope.items = [];
         $scope.selection = [];
-        $scope.map = {
-            center: { latitude: 50.0613357, longitude: 19.9379844 },
-            zoom: 14
-
-        };
+        // $scope.mapInit = {
+        //     center: { latitude: 50.0613357, longitude: 19.9379844 },
+        //     zoom: 14
+        //
+        // };
         $scope.loadTrucks = function(){
             Restangular.all('trucks').getList().then(function (resp) {
                 console.log(resp);
@@ -83,7 +113,7 @@ angular.module('sogo.controllers', [])
             })
         };
         $scope.loadData = function() {
-			$scope.loadMap();
+			// $scope.loadMap();
             $scope.loadContainers();
             $scope.loadTrucks();
         };
@@ -99,6 +129,45 @@ angular.module('sogo.controllers', [])
                 $scope.selection.push(collectionName);
             }
         };
+
+
+        // $scope.origin = {location: {lat:50.0613358, lng: 19.9379845}};
+        // $scope.destination = {location: {lat:50.0613356, lng: 19.9379842}};
+        // $scope.wayPoints = [
+        //     {location: {lat:50.0613367, lng: 19.9379841}, stopover: true},
+        //     {location: {lat:50.0613359, lng: 19.9379849}, stopover: true}
+        // ];
+
+
+        function directions(maps, newLat, newLong) {
+            console.log('getting directions');
+            var directionsService = new maps.DirectionsService();
+            $scope.directionsDisplay.setMap($scope.map.control.getGMap());
+
+            var origin = $scope.map.center.latitude + ", " + $scope.map.center.longitude;
+            var waypts = [];
+            waypts.push({
+                location: 50.0714336 + ', ' + 19.9279844,
+                stopover: false
+            });
+            var request = {
+                origin: origin,
+                destination: newLat + ", " + newLong,
+                travelMode: maps.TravelMode['DRIVING'],
+                waypoints: waypts,
+                optimizeWaypoints: true
+            };
+
+            directionsService.route(request, function (response, status) {
+                console.log('directions found');
+                if (status === google.maps.DirectionsStatus.OK) {
+                    $scope.directionsDisplay.setDirections(response);
+                } else {
+                    console.log('Directions request failed due to ' + status);
+                }
+            });
+
+        }
 
     })
     .controller('ContainerController',function($scope, $filter, Restangular, ActiveItemService) {

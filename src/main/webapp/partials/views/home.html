@@ -3,7 +3,7 @@
 <div class="container">
 
     <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
-        <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+        <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options" bounds="map.bounds" control="map.control">
             <div ng-repeat="collectionName in selection">
                 <ui-gmap-marker ng-repeat="marker in items[collectionName]"  coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
                     <ui-gmap-window>

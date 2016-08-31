@@ -16,12 +16,12 @@ angular.module('sogo', [
         var newBaseUrl = "http://localhost/";
         RestangularProvider.setBaseUrl("api/");
     })
-    .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
+    .config(['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
+        uiGmapGoogleMapApiProvider.configure({
        key: 'AIzaSyB5nmqhScXjuLEpFhwwszBVsKmb2OWSoQ4',
-        libraries: 'weather,geometry,visualization'
+        libraries: 'weather,geometry,visualization,places'
     });
-})
+}])
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -57,8 +57,7 @@ angular.module('sogo', [
         .state('navbar.home', {
             url: '/home',
             templateUrl: 'partials/views/home.html',
-            controller: 'HomeController',
-            service: 'sharedProperties'
+            controller: 'HomeController'
         })
         .state('navbar.trucks', {
             url: '/trucks',

@@ -7,7 +7,7 @@
         </div>
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="item in pagedItems[currentPage]">
-                <div class="row toggle" ng-click="showDetail(item)" ng-class-odd="'alt'">
+                <div class="row toggle" ng-click="showDetail(item);" ng-class-odd="'alt'">
                     <div class="col-xs-1"><i class="fa fa-chevron-down"></i></div>
                     <div class="col-xs-11 col-sm-9">Container {{item.id}}
                     </div>
@@ -36,6 +36,17 @@
                                 <b>Location:</b>
                             </div>
                             <div class="col-xs-12 col-sm-9">
+                                <div ng-if="active==item.id" ng-class-odd="'alt'">
+                                    <div ng-controller="HomeController" >
+                                        <ui-gmap-google-map center='activeObject.map.center' zoom='activeObject.map.zoom'>
+                                            <div>
+                                                <ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">
+                                                </ui-gmap-marker>
+                                            </div>
+                                        </ui-gmap-google-map>
+
+                                    </div>
+                                </div>
                                 {{item.location.latitude + ', ' + item.location.longitude}}
                             </div>
                             <div class="col-xs-12 col-sm-3">
@@ -48,7 +59,7 @@
                                 <b>Filling percentage:</b>
                             </div>
                             <div class="col-xs-12 col-sm-9">
-                                {{item.sensors.load.value}}%
+                                {{item.sensors.load.value.toFixed(2)}}%
                             </div>
                         </div>
                     </div>
