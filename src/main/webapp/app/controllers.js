@@ -59,6 +59,11 @@ angular.module('sogo.controllers', [])
         //     zoom: 14
         //
         // };
+        $scope.showRoute = function(registration){
+            if(registration){
+                $scope.loadRoute(registration, displayRoute);
+            }
+        }
         $scope.loadRoute = function(registration, callback){
             Restangular.all('routes/'+registration).getList().then(function (resp) {
                 console.log(resp);
@@ -67,7 +72,12 @@ angular.module('sogo.controllers', [])
             })
         };
 
-
+        $scope.isTruck = function(marker){
+            // alert(marker.type === 'truck');
+            if(marker.type === 'truck')
+                return 1;
+            return 0;
+        }
 
         $scope.loadTrucks = function(){
             Restangular.all('trucks').getList().then(function (resp) {
@@ -90,6 +100,7 @@ angular.module('sogo.controllers', [])
                     truck.coords.longitude = resp[i].location.longitude;
                     truck.capacity = resp[i].capacity;
                     truck.load = resp[i].load + ' kg';
+                    truck.registration = resp[i].registration;
                     $scope.items['trucks'].push(truck);
                 }
 
@@ -139,7 +150,7 @@ angular.module('sogo.controllers', [])
             // is newly selected
             else {
                 $scope.selection.push(collectionName);
-                $scope.loadRoute('KRA 6479', displayRoute);
+                // $scope.loadRoute('KRA 6479', displayRoute);
             }
         };
 
