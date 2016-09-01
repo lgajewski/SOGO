@@ -2,7 +2,7 @@
  * Copyright © 2016 and Confidential to Pegasystems Inc. All rights reserved.
  */
 
-package pl.edu.agh.sogo.controller;
+package pl.edu.agh.sogo.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

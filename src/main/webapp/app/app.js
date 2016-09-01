@@ -29,7 +29,11 @@
                     templateUrl: 'partials/views/signup.html'
                 })
                 .state('navbar', {
-                    templateUrl: 'partials/views/navbar.html'
+                    templateUrl: 'partials/views/navbar.html',
+                    controller: function (Auth) {
+                        this.logout = Auth.logout;
+                    },
+                    controllerAs: 'co'
                 })
                 .state('navbar.home', {
                     url: '/home',
