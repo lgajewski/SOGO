@@ -7,6 +7,10 @@ exports.config = {
 
     framework: 'jasmine2',
 
+    capabilities: {
+        'browserName': 'firefox'
+    },
+
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 30000
