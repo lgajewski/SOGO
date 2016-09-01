@@ -21,10 +21,12 @@ before_install:
     - nvm install $NODE_VERSION
     - npm install -g npm
     - npm install -g bower
+    - npm install -g protractor
     - node -v
     - npm -v
     - bower -v
     - java -version
+install: npm install
 script:
   - ./gradlew clean
   - ./gradlew test
