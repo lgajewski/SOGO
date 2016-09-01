@@ -1,0 +1,19 @@
+{
+  "name": "sogo",
+  "version": "0.0.1",
+  "description": "System optymalizujacy gospodarke odpadami",
+  "private": true,
+  "cacheDirectories": [
+    "node_modules",
+    "src/main/webapp/bower_components"
+  ],
+  "devDependencies": {
+    "bower": "1.7.9",
+    "protractor": "4.0.4",
+    "protractor-jasmine2-html-reporter": "0.0.6"
+  },
+  "scripts": {
+    "test": "protractor src/test/javascript/protractor.conf.js",
+    "postinstall": "webdriver-manager update"
+  }
+}

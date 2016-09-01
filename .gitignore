@@ -13,3 +13,6 @@ build/
 
 # Bower components
 src/main/webapp/bower_components/
+
+# Node modules
+node_modules/
