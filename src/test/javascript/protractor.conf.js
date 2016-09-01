@@ -1,6 +1,11 @@
 var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
 
+var prefix = 'src/test/javascript/'.replace(/[^/]+/g,'..');
+
 exports.config = {
+    seleniumServerJar: prefix + 'node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-2.53.1.jar',
+    chromeDriver: prefix + 'node_modules/protractor/selenium/chromedriver',
+
     suites: {
         auth: './protractor/*.js'
     },
