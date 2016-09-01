@@ -4,13 +4,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Route {
     @Id
     private String id;
 
-    private List<Location> route;
+    private List<Location> locations;
 
     @DBRef
     private Truck truck;
@@ -20,15 +19,15 @@ public class Route {
     }
 
     public List<Location> getRoute() {
-        return route;
+        return locations;
     }
 
     public void setRoute(List<Location> route) {
-        this.route = route;
+        this.locations = route;
     }
 
     public void addContainer(Location containerLocation){
-        route.add(containerLocation);
+        locations.add(containerLocation);
     }
 
     public Truck getTruck() {
@@ -39,9 +38,9 @@ public class Route {
         this.truck = truck;
     }
 
-    public String toString(){
-        return "{id + " +
-            ", route = " + route.stream().map(Location::toString).collect(Collectors.joining(",\n")) +
-            "}";
-    }
+//    public String toString(){
+//        return "{id + " + id +
+//            ", route = " + route.stream().map(Location::toString).collect(Collectors.joining(",\n")) +
+//            "}";
+//    }
 }

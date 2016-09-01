@@ -11,7 +11,8 @@ angular.module('sogo.controllers', [])
 
     })
     .controller('HomeController',function($scope, $state, Restangular, uiGmapIsReady, uiGmapGoogleMapApi, ActiveItemService, $timeout) {
-
+        $scope.route = [];
+        $scope.maps = {};
         $scope.map = {
             control: {},
             center: {
@@ -40,7 +41,8 @@ angular.module('sogo.controllers', [])
         uiGmapGoogleMapApi.then(function(maps) {
                 $scope.directionsDisplay = new maps.DirectionsRenderer();
                 uiGmapIsReady.promise().then(function(instances) {
-                    directions(maps, '50.0613358', '19.9379845');
+                    $scope.maps = maps;
+                    // directions(maps, '50.0613358', '19.9379845');
                     // $timeout(function() {
                     //     directions(maps, '50.0614336', '19.9379844');
                     // }, 1000)
@@ -57,6 +59,16 @@ angular.module('sogo.controllers', [])
         //     zoom: 14
         //
         // };
+        $scope.loadRoute = function(registration, callback){
+            Restangular.all('routes/'+registration).getList().then(function (resp) {
+                console.log(resp);
+                var response = resp.plain();
+                callback(response);
+            })
+        };
+
+
+
         $scope.loadTrucks = function(){
             Restangular.all('trucks').getList().then(function (resp) {
                 console.log(resp);
@@ -127,6 +139,7 @@ angular.module('sogo.controllers', [])
             // is newly selected
             else {
                 $scope.selection.push(collectionName);
+                $scope.loadRoute('KRA 6479', displayRoute);
             }
         };
 
@@ -138,21 +151,34 @@ angular.module('sogo.controllers', [])
         //     {location: {lat:50.0613359, lng: 19.9379849}, stopover: true}
         // ];
 
+        function displayRoute(route){
+            console.log(route);
+            var origin = route[0];
+            var destination = route[route.length-1];
+            var waypts = [];
+            console.log(origin);
+            console.log(destination);
 
-        function directions(maps, newLat, newLong) {
+            for(var i = 1; i<route.length-1;i++){
+                waypts.push({
+                    location: route[i].latitude + ", " + route[i].longitude,
+                    stopover: false
+                });
+            }
+            console.log(waypts);
+            directions($scope.maps, origin.latitude + ", " + origin.longitude, destination.latitude + ", " + destination.longitude, waypts);
+
+
+        };
+
+        function directions(maps, origin, destination, waypts) {
             console.log('getting directions');
             var directionsService = new maps.DirectionsService();
             $scope.directionsDisplay.setMap($scope.map.control.getGMap());
-
-            var origin = $scope.map.center.latitude + ", " + $scope.map.center.longitude;
-            var waypts = [];
-            waypts.push({
-                location: 50.0714336 + ', ' + 19.9279844,
-                stopover: false
-            });
+            // console.log(waypts);
             var request = {
                 origin: origin,
-                destination: newLat + ", " + newLong,
+                destination: destination,
                 travelMode: maps.TravelMode['DRIVING'],
                 waypoints: waypts,
                 optimizeWaypoints: true

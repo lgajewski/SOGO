@@ -44,8 +44,8 @@ public class RouteService implements IRouteService {
     }
 
     @Override
-    public Route getRoute(String registration) {
-        return routeRepository.findByTruck(truckRepository.findByRegistration(registration));
+    public List<Location> getRoute(String registration) {
+        return routeRepository.findByTruck(truckRepository.findByRegistration(registration)).getRoute();
     }
 
     @Override

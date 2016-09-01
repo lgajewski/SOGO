@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Container;
+import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Route;
 import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.persistence.ContainerRepository;
@@ -40,8 +41,8 @@ public class RouteController {
 
     @ResponseBody
     @RequestMapping(value = "/{registration}", method = RequestMethod.GET)
-    public Route getRoute(@PathVariable(value = "registration") String registration) {
-        log.info("[GET][/api/routes/"+registration+"] getRoute("+registration+")");
+    public List<Location> getRoute(@PathVariable(value = "registration") String registration) {
+        log.info("[GET][/api/routes/"+registration+"] getRoute("+registration+")\n"+routeService.getRoute(registration));
         return routeService.getRoute(registration);
     }
 
