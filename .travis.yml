@@ -30,4 +30,4 @@ install: npm install
 script:
   - ./gradlew clean
   - ./gradlew test
-  - npm test
+  - ./bin/test.sh
