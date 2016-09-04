@@ -15,10 +15,10 @@
                         <form role="form" ng-submit="vm.login($event)">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Login" name="email" type="text" autofocus ng-model="vm.username">
+                                    <input id="username" class="form-control" placeholder="Login" name="email" type="text" autofocus ng-model="vm.username">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="vm.password">
+                                    <input id="password" class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="vm.password">
                                 </div>
                                 <div class="col-sm-12 text-center">
                                     <input type="button" id="btn-signup" class="btn btn-lg btn-block" value="Sign up" ui-sref="signup">

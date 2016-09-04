@@ -14,17 +14,20 @@
 <!-- /.row -->
 
 <div ng-switch="isAuthenticated()">
-    <div class="alert alert-success" ng-switch-when="true">
+    <div class="alert alert-success alert-dismissable" ng-switch-when="true">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <!--You are logged in as user "{{vm.account.login}}".-->
         You are logged in.
     </div>
 
     <div class="alert alert-warning" ng-switch-when="false">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <!--If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").-->
         If you want to <a class="alert-link">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
     </div>
 
     <div class="alert alert-warning" ng-switch-when="false">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <!--You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>-->
         You don't have an account yet? <a class="alert-link">Register a new account</a>
     </div>
@@ -121,91 +124,94 @@
     </div>
 </div>
 <!-- /.row -->
-
-<div class="col-lg-8">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <i class="fa fa-globe fa-fw"></i> Map
-            <div class="pull-right">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                        Actions
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu pull-right" role="menu">
-                        <li><a href="#">Action</a>
-                        </li>
-                        <li><a href="#">Another action</a>
-                        </li>
-                        <li><a href="#">Something else here</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a>
-                        </li>
-                    </ul>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-globe fa-fw"></i> Map
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="#">Action</a>
+                            </li>
+                            <li><a href="#">Another action</a>
+                            </li>
+                            <li><a href="#">Something else here</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- /.panel-heading -->
-        <div class="panel-body">
-            <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options" bounds="map.bounds" control="map.control">
-                <!--<div ng-repeat="collectionName in selection">-->
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options" bounds="map.bounds" control="map.control">
+                    <!--<div ng-repeat="collectionName in selection">-->
                     <!--<ui-gmap-marker ng-repeat="marker in items[collectionName]" click="showRoute(marker.registration)" coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">-->
-                        <!--<ui-gmap-window>-->
-                            <!--<table style="width:100%">-->
-                                <!--<tbody>-->
-                                <!--<tr>-->
-                                    <!--<td>Id:</td>-->
-                                    <!--<td>{{marker.id}}</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td>Type:</td>-->
-                                    <!--<td>{{marker.type}}</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td>Location:</td>-->
-                                    <!--<td>{{marker.coords.latitude + ', ' + marker.coords.longitude}}</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td>Capacity:</td>-->
-                                    <!--<td>{{marker.capacity}} kg</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td>Load:</td>-->
-                                    <!--<td>{{marker.load}}</td>-->
-                                <!--</tr>-->
-                                <!--</tbody>-->
-                            <!--</table>-->
-                        <!--</ui-gmap-window>-->
+                    <!--<ui-gmap-window>-->
+                    <!--<table style="width:100%">-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>Id:</td>-->
+                    <!--<td>{{marker.id}}</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>Type:</td>-->
+                    <!--<td>{{marker.type}}</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>Location:</td>-->
+                    <!--<td>{{marker.coords.latitude + ', ' + marker.coords.longitude}}</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>Capacity:</td>-->
+                    <!--<td>{{marker.capacity}} kg</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>Load:</td>-->
+                    <!--<td>{{marker.load}}</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                    <!--</ui-gmap-window>-->
                     <!--</ui-gmap-marker>-->
                     <!--&lt;!&ndash;<ui-gmap-marker ng-repeat="marker in items['trucks']"  coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">&ndash;&gt;-->
                     <!--&lt;!&ndash;</ui-gmap-marker>&ndash;&gt;-->
-                <!--</div>-->
-            </ui-gmap-google-map>
+                    <!--</div>-->
+                </ui-gmap-google-map>
+            </div>
+            <!-- /.panel-body -->
         </div>
-        <!-- /.panel-body -->
+        <!-- /.panel -->
     </div>
-    <!-- /.panel -->
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-map-marker fa-fw"></i> Filters
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    Choose filter:<br>
+                    <div ng-repeat="col in collectionsAvailable" class="checkbox">
+                           <label><input id="{{col}}" type="checkbox" class="checkbox" value="{{col}}" ng-checked="selection.indexOf(col) > -1" ng-click="toggleSelection(col)" />Show {{col}}</label>
+                    </div>
+                </div>
+                <!-- /.list-group -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-4 -->
 </div>
+
 <!-- /.col-lg-8 -->
 
-<div class="col-lg-4">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <i class="fa fa-map-marker fa-fw"></i> Filters
-        </div>
-        <!-- /.panel-heading -->
-        <div class="panel-body">
-            <div class="list-group">
-                Choose filter:<br>
-                <div ng-repeat="col in collectionsAvailable" class="checkbox">
-                       <label><input id="{{col}}" type="checkbox" class="checkbox" value="{{col}}" ng-checked="selection.indexOf(col) > -1" ng-click="toggleSelection(col)" />Show {{col}}</label>
-                </div>
-            </div>
-            <!-- /.list-group -->
-        </div>
-        <!-- /.panel-body -->
-    </div>
-    <!-- /.panel -->
-</div>
-<!-- /.col-lg-4 -->
+
