@@ -28,12 +28,6 @@
                     url: '/signup',
                     templateUrl: 'partials/views/signup.html'
                 })
-                .state('navbar.trucks', {
-                    url: '/trucks',
-                    templateUrl: 'partials/views/trucks.html',
-                    controller: 'TruckController',
-                    service: 'TruckService'
-                })
                 .state('navbar.trucks-user', {
                     url: '/trucks-user',
                     templateUrl: 'partials/views/trucks-user.html',
