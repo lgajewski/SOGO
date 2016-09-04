@@ -95,7 +95,7 @@ angular.module('sogo.controllers', [])
                         type: "truck",
                         options: {
                             draggable: false,
-                            icon: 'assets/truck.png'
+                            icon: 'assets/images/truck.png'
                         }
                     };
                     truck.id = resp[i].id;
@@ -124,7 +124,7 @@ angular.module('sogo.controllers', [])
                         type: "",
                         options: {
                             draggable: false,
-                            icon: 'assets/ic_map_trash_' + resp[i].type + '.png'
+                            icon: 'assets/images/ic_map_trash_' + resp[i].type + '.png'
                         }
                     };
                     container.id = resp[i].id;
@@ -216,7 +216,7 @@ angular.module('sogo.controllers', [])
         $scope.setActiveObject = function(item) {
             $scope.activeObject.id = item.id;
             $scope.activeObject.coords = item.location;
-            $scope.activeObject.options.icon = 'assets/ic_map_trash_' + item.type + '.png';
+            $scope.activeObject.options.icon = 'assets/images/ic_map_trash_' + item.type + '.png';
             $scope.activeObject.map.center.latitude = item.location.latitude;
             $scope.activeObject.map.center.longitude = item.location.longitude
 
@@ -318,7 +318,7 @@ angular.module('sogo.controllers', [])
         $scope.setActiveObject = function(item) {
             $scope.activeObject.id = item.id;
             $scope.activeObject.coords = item.location;
-            $scope.activeObject.options.icon = 'assets/truck.png';
+            $scope.activeObject.options.icon = 'assets/images/truck.png';
             $scope.activeObject.map.center.latitude = item.location.latitude;
             $scope.activeObject.map.center.longitude = item.location.longitude
 

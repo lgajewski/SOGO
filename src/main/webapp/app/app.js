@@ -28,19 +28,6 @@
                     url: '/signup',
                     templateUrl: 'partials/views/signup.html'
                 })
-                .state('navbar', {
-                    templateUrl: 'partials/views/navbar.html',
-                    controller: function (Auth) {
-                        this.logout = Auth.logout;
-                    },
-                    controllerAs: 'co'
-                })
-                .state('navbar.home', {
-                    url: '/home',
-                    templateUrl: 'partials/views/home.html',
-                    controller: 'HomeController',
-                    service: 'sharedProperties'
-                })
                 .state('navbar.trucks', {
                     url: '/trucks',
                     templateUrl: 'partials/views/trucks.html',

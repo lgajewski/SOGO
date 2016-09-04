@@ -7,7 +7,7 @@
             $stateProvider
                 .state('login', {
                     url: '/login',
-                    templateUrl: 'partials/views/login.html',
+                    templateUrl: 'app/view/login/login.html',
                     controller: 'LoginController',
                     controllerAs: 'vm',
                     resolve: {
