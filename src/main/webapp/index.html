@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html ng-app="sogo">
+<html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>SOGO - System Optymalizujacy Gospodarke Odpadami</title>
-    <base href="/"/>
+    <base href="/">
 
     <!-- Bower css -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
@@ -24,22 +24,22 @@
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet">
 
     <!-- JS core files -->
-    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body ng-app="sogo">
 <div ui-view></div>
 
     <!-- Bower libs -->
-    <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script type="text/javascript" src="bower_components/restangular/src/restangular.js"></script>
-    <script type="text/javascript" src="bower_components/lodash/dist/lodash.js"></script>
-    <script type="text/javascript" src='bower_components/angular-simple-logger/dist/angular-simple-logger.js'></script>
-    <script type="text/javascript" src='bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
-    <script type="text/javascript" src="bower_components/ngstorage/ngStorage.js"></script>
+    <script type="text/javascript" src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script type="text/javascript" src='bower_components/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
+    <script type="text/javascript" src='bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
+    <script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
 
     <!-- Angular application -->
     <script type="text/javascript" src="app/app.js"></script>
@@ -62,7 +62,7 @@
     <script src="bower_components/datatables-responsive/js/dataTables.responsive.js"></script>
 
     <!--DataTables Buttons JavaScript -->
-    <script src="bower_components/datatables-buttons/js/dataTables.buttons.js"></script>
+    <script src="bower_components/datatables.net-buttons/js/dataTables.buttons.js"></script>
 
 </body>
 </html>
