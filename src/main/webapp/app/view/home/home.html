@@ -5,9 +5,9 @@
             Dashboard
         </h1>
         <!--<ol class="breadcrumb">-->
-            <!--<li class="active">-->
-                <!--<i class="fa fa-dashboard"></i> Dashboard-->
-            <!--</li>-->
+        <!--<li class="active">-->
+        <!--<i class="fa fa-dashboard"></i> Dashboard-->
+        <!--</li>-->
         <!--</ol>-->
     </div>
 </div>
@@ -23,7 +23,8 @@
     <div class="alert alert-warning" ng-switch-when="false">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <!--If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").-->
-        If you want to <a class="alert-link">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+        If you want to <a class="alert-link">sign in</a>, you can try the default accounts:<br/>- Administrator
+        (login="admin" and password="admin") <br/>- User (login="user" and password="user").
     </div>
 
     <div class="alert alert-warning" ng-switch-when="false">
@@ -151,7 +152,8 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
-                <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options" bounds="map.bounds" control="map.control">
+                <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options"
+                                    bounds="map.bounds" control="map.control">
                     <!--<div ng-repeat="collectionName in selection">-->
                     <!--<ui-gmap-marker ng-repeat="marker in items[collectionName]" click="showRoute(marker.registration)" coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">-->
                     <!--<ui-gmap-window>-->
@@ -200,7 +202,9 @@
                 <div class="list-group">
                     Choose filter:<br>
                     <div ng-repeat="col in collectionsAvailable" class="checkbox">
-                           <label><input id="{{col}}" type="checkbox" class="checkbox" value="{{col}}" ng-checked="selection.indexOf(col) > -1" ng-click="toggleSelection(col)" />Show {{col}}</label>
+                           <label><input id="{{col}}" type="checkbox" class="checkbox" value="{{col}}"
+                                         ng-checked="selection.indexOf(col) > -1" ng-click="toggleSelection(col)"/>Show
+                        {{col}}</label>
                     </div>
                 </div>
                 <!-- /.list-group -->

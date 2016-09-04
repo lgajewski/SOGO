@@ -10,5 +10,5 @@
     function NavbarController(Auth) {
         this.logout = Auth.logout;
     }
-      
+
 })();

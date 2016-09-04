@@ -5,9 +5,9 @@
         .module('sogo')
         .config(function ($stateProvider) {
             $stateProvider
-                .state('navbar.trucks', {
-                    url: '/trucks',
-                    templateUrl: 'app/view/trucks/trucks.html',
+                .state('navbar.users', {
+                    url: '/users',
+                    templateUrl: 'app/view/users/users.html',
                     controller: 'UsersController'
                 })
         })

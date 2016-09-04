@@ -8,8 +8,7 @@
                 .state('navbar.home', {
                     url: '/home',
                     templateUrl: 'app/view/home/home.html',
-                    controller: 'HomeController',
-                    service: 'sharedProperties'
+                    controller: 'HomeController'
                 })
         })
 })();

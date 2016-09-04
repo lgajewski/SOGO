@@ -15,19 +15,23 @@
                         <form role="form" ng-submit="vm.login($event)">
                             <fieldset>
                                 <div class="form-group">
-                                    <input id="username" class="form-control" placeholder="Login" name="email" type="text" autofocus ng-model="vm.username">
+                                    <input id="username" class="form-control" placeholder="Login" name="email"
+                                           type="text" autofocus ng-model="vm.username">
                                 </div>
                                 <div class="form-group">
-                                    <input id="password" class="form-control" placeholder="Password" name="password" type="password" value="" ng-model="vm.password">
+                                    <input id="password" class="form-control" placeholder="Password" name="password"
+                                           type="password" value="" ng-model="vm.password">
                                 </div>
                                 <div class="col-sm-12 text-center">
-                                    <input type="button" id="btn-signup" class="btn btn-lg btn-block" value="Sign up" ui-sref="signup">
+                                    <input type="button" id="btn-signup" class="btn btn-lg btn-block" value="Sign up"
+                                           ui-sref="signup">
                                     <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Log in">
                                 </div>
                             </fieldset>
                         </form>
                         <div class="forget">
-                            <a href="javascript:;" data-toggle="modal" data-target=".forget-modal">forgot your password?</a>
+                            <a href="javascript:;" data-toggle="modal" data-target=".forget-modal">forgot your
+                                password?</a>
                         </div>
                     </div>
                 </div>
@@ -37,41 +41,42 @@
 </div>
 
 <!--<section id="login">-->
-    <!--<div class="main-login main-center">-->
-        <!--<div class="panel-heading">-->
-            <!--<img src="/assets/web_logo.png"/>-->
-        <!--</div>-->
-        <!--<div class="col-md-12">-->
-            <!--<div class="alert alert-danger" ng-show="vm.authenticationError">-->
-                <!--<strong>Failed to sign in!</strong> Please check your credentials and try again.-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="container">-->
-            <!--<div class="form-wrap">-->
-                <!--<form class="form" role="form" id="login-form" autocomplete="off" ng-submit="vm.login($event)">-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="username" class="label">login</label>-->
-                        <!--<input type="text" name="username" id="username" class="form-control" ng-model="vm.username">-->
+<!--<div class="main-login main-center">-->
+<!--<div class="panel-heading">-->
+<!--<img src="/assets/web_logo.png"/>-->
+<!--</div>-->
+<!--<div class="col-md-12">-->
+<!--<div class="alert alert-danger" ng-show="vm.authenticationError">-->
+<!--<strong>Failed to sign in!</strong> Please check your credentials and try again.-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="container">-->
+<!--<div class="form-wrap">-->
+<!--<form class="form" role="form" id="login-form" autocomplete="off" ng-submit="vm.login($event)">-->
+<!--<div class="form-group">-->
+<!--<label for="username" class="label">login</label>-->
+<!--<input type="text" name="username" id="username" class="form-control" ng-model="vm.username">-->
 
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="password" class="label">password</label>-->
-                        <!--<input type="password" name="password" id="password" class="form-control" ng-model="vm.password">-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-12 text-center">-->
-                        <!--<input type="button" id="btn-signup" class="btn btn-lg btn-block" value="Sign up" ui-sref="signup">-->
-                        <!--<input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Log in">-->
-                    <!--</div>-->
-                <!--</form>-->
-                <!--<div class="forget">-->
-                    <!--<a href="javascript:;" data-toggle="modal" data-target=".forget-modal">forgot your password?</a>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="password" class="label">password</label>-->
+<!--<input type="password" name="password" id="password" class="form-control" ng-model="vm.password">-->
+<!--</div>-->
+<!--<div class="col-sm-12 text-center">-->
+<!--<input type="button" id="btn-signup" class="btn btn-lg btn-block" value="Sign up" ui-sref="signup">-->
+<!--<input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Log in">-->
+<!--</div>-->
+<!--</form>-->
+<!--<div class="forget">-->
+<!--<a href="javascript:;" data-toggle="modal" data-target=".forget-modal">forgot your password?</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 <!--</section>-->
 
-<div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel" aria-hidden="true">
+<div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
