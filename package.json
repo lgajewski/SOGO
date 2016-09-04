@@ -15,6 +15,6 @@
   },
   "scripts": {
     "test": "protractor src/test/javascript/protractor.conf.js",
-    "postinstall": "webdriver-manager update"
+    "postinstall": "bower install && webdriver-manager update"
   }
 }
