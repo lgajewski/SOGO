@@ -12,8 +12,9 @@
     "bootstrap": "3.3.7",
     "components-font-awesome": "4.6.3",
     "restangular": "1.5.2",
-    "datatables": "1.10.4",
+    "datatables": "1.10.8",
     "datatables-plugins": "1.0.1",
-    "datatables-responsive": "1.0.6"
+    "datatables-responsive": "1.0.6",
+    "datatables-buttons": "1.2.2"
   }
 }
