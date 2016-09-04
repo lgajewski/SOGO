@@ -1,14 +1,38 @@
-/*!
- * Start Bootstrap - SB Admin (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
+#login-img {
+    max-width: 100%;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
 
-/* Global Styles */
+#btn-login {
+    display: inline-block;
+    max-width: 40%;
+    font-size: 14px;
+    color: #fff;
+    background-color: #32A945;
+    margin: 0 15px 20px;
+}
+
+#btn-signup {
+    display: inline-block;
+    max-width: 40%;
+    font-size: 14px;
+    color: #fff;
+    background-color: #6d6d6d;
+    margin: 0 15px 20px;
+}
+
+.forget {
+    font-size: 13px;
+    text-align: center;
+    display: block;
+    color: #6d6d6d;
+    margin-bottom: 20px;
+}
 
 body {
     margin-top: 100px;
-    background-color: #222;
+    background-color: #3a3a3a;
 }
 
 @media(min-width:768px) {
@@ -67,7 +91,7 @@ body {
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
     color: #fff;
-    background-color: #000;
+    background-color: #3a3a3a;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -123,7 +147,7 @@ ul.alert-dropdown {
         border: none;
         border-radius: 0;
         overflow-y: auto;
-        background-color: #222;
+        background-color: #3a3a3a;
         bottom: 0;
         overflow-x: hidden;
         padding-bottom: 40px;
