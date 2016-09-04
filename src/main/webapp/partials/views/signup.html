@@ -1,55 +1,102 @@
 <!--<link rel="stylesheet" type="text/css" href="css/style-form.css">-->
-
-<section id="login">
-    <div class="main-login main-center">
-        <div class="panel-heading">
-            <div>
-                <img src="/assets/web_logo.png"/>
-            </div>
-        </div>
-        <div class="container">
-            <div class="form-wrap">
-                <form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off">
-                    <div class="form-group">
-                        <label for="username" class="label">login</label>
-                        <input type="text" name="username" id="username" class="form-control">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <img id="login-img" src="/assets/web_logo.png"/>
+                </div>
+                <div class="col-md-12">
+                    <div class="alert alert-danger" ng-show="vm.authenticationError">
+                        <strong>Failed to sign in!</strong> Please check your credentials and try again.
                     </div>
-                    <div class="form-group">
-                        <label for="name" class="label">name</label>
-                        <input type="text" name="name" id="name" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="surname" class="label">surname</label>
-                        <input type="text" name="surname" id="surname" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="label">email</label>
-                        <input type="email" name="email" id="email" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="label">password</label>
-                        <input type="password" name="password" id="password" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="repeat" class="label">repeat password</label>
-                        <input type="password" name="repeat" id="repeat" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="position" class="label">position</label>
-                        <select class="form-control" name="position" id="position">
-                            <option>garbage collector</option>
-                            <option>administrative worker</option>
-                        </select>
-                    </div>
-                    <input type="submit" id="btn-left" class="btn btn-lg btn-block" value="Sign up" ui-sref="login">
-                </form>
-                <div class="forget">
-                    Already have an account? <a ui-sref="login">Log in</a>
+                </div>
+                <div class="panel-body">
+                    <form role="form" ng-submit="vm.login($event)">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Login" name="login" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Name" name="name" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Surname" name="surname" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Login" name="login" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Email" name="email" type="email">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Repeat password" name="repeat" type="password">
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Sign up" ui-sref="login">
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div class="forget">Already have an account? <a ui-sref="login">Log in</a></div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+
+<!--<section id="login">-->
+    <!--<div class="main-login main-center">-->
+        <!--<div class="panel-heading">-->
+            <!--<div>-->
+                <!--<img src="/assets/web_logo.png"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="container">-->
+            <!--<div class="form-wrap">-->
+                <!--<form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off">-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="username" class="label">login</label>-->
+                        <!--<input type="text" name="username" id="username" class="form-control">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="name" class="label">name</label>-->
+                        <!--<input type="text" name="name" id="name" class="form-control">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="surname" class="label">surname</label>-->
+                        <!--<input type="text" name="surname" id="surname" class="form-control">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="email" class="label">email</label>-->
+                        <!--<input type="email" name="email" id="email" class="form-control">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="password" class="label">password</label>-->
+                        <!--<input type="password" name="password" id="password" class="form-control">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="repeat" class="label">repeat password</label>-->
+                        <!--<input type="password" name="repeat" id="repeat" class="form-control">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="position" class="label">position</label>-->
+                        <!--<select class="form-control" name="position" id="position">-->
+                            <!--<option>garbage collector</option>-->
+                            <!--<option>administrative worker</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<input type="submit" id="btn-left" class="btn btn-lg btn-block" value="Sign up" ui-sref="login">-->
+                <!--</form>-->
+                <!--<div class="forget">-->
+                    <!--Already have an account? <a ui-sref="login">Log in</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</section>-->
 
 <footer id="footer">
     <div class="container">

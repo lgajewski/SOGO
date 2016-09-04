@@ -1,66 +1,211 @@
-<!--<link rel="stylesheet" type="text/css" href="css/style-home.css">-->
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Dashboard
+        </h1>
+        <!--<ol class="breadcrumb">-->
+            <!--<li class="active">-->
+                <!--<i class="fa fa-dashboard"></i> Dashboard-->
+            <!--</li>-->
+        <!--</ol>-->
+    </div>
+</div>
+<!-- /.row -->
 
-<div class="container">
-
-    <div ng-switch="isAuthenticated()">
-        <div class="alert alert-success" ng-switch-when="true">
-            <!--You are logged in as user "{{vm.account.login}}".-->
-            You are logged in.
-        </div>
-
-        <div class="alert alert-warning" ng-switch-when="false">
-            <!--If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").-->
-            If you want to <a class="alert-link">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
-        </div>
-
-        <div class="alert alert-warning" ng-switch-when="false">
-            <!--You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>-->
-            You don't have an account yet? <a class="alert-link">Register a new account</a>
-        </div>
+<div ng-switch="isAuthenticated()">
+    <div class="alert alert-success" ng-switch-when="true">
+        <!--You are logged in as user "{{vm.account.login}}".-->
+        You are logged in.
     </div>
 
-    <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
-        <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options" bounds="map.bounds" control="map.control">
-            <div ng-repeat="collectionName in selection">
-                <ui-gmap-marker ng-repeat="marker in items[collectionName]" click="showRoute(marker.registration)" coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
-                    <ui-gmap-window>
-                        <table style="width:100%">
-                            <tbody>
-                            <tr>
-                                <td>Id:</td>
-                                <td>{{marker.id}}</td>
-                            </tr>
-                            <tr>
-                                <td>Type:</td>
-                                <td>{{marker.type}}</td>
-                            </tr>
-                            <tr>
-                                <td>Location:</td>
-                                <td>{{marker.coords.latitude + ', ' + marker.coords.longitude}}</td>
-                            </tr>
-                            <tr>
-                                <td>Capacity:</td>
-                                <td>{{marker.capacity}} kg</td>
-                            </tr>
-                            <tr>
-                                <td>Load:</td>
-                                <td>{{marker.load}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </ui-gmap-window>
-                </ui-gmap-marker>
-                <!--<ui-gmap-marker ng-repeat="marker in items['trucks']"  coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">-->
-                <!--</ui-gmap-marker>-->
-            </div>
-        </ui-gmap-google-map>
+    <div class="alert alert-warning" ng-switch-when="false">
+        <!--If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").-->
+        If you want to <a class="alert-link">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
     </div>
-    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 bar">
-        Choose filter:<br>
-        <div ng-repeat="col in collectionsAvailable" class="checkbox">
-               <label><input id="{{col}}" type="checkbox" class="checkbox" value="{{col}}" ng-checked="selection.indexOf(col) > -1" ng-click="toggleSelection(col)" />Show {{col}}</label>
-             </div>
 
+    <div class="alert alert-warning" ng-switch-when="false">
+        <!--You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>-->
+        You don't have an account yet? <a class="alert-link">Register a new account</a>
     </div>
 </div>
 
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-truck fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">15</div>
+                        <div>Trucks</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">Add new truck</span>
+                    <span class="pull-right"><i class="fa fa-plus"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-trash-o fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">18</div>
+                        <div>Containers</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">Add new container</span>
+                    <span class="pull-right"><i class="fa fa-plus"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-users fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">5</div>
+                        <div>Users</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">Add new user</span>
+                    <span class="pull-right"><i class="fa fa-plus"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-wrench fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">13</div>
+                        <div>Service alerts</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View details</span>
+                    <span class="pull-right"><i class="fa fa-plus"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+
+<div class="col-lg-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-globe fa-fw"></i> Map
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                        Actions
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="#">Action</a>
+                        </li>
+                        <li><a href="#">Another action</a>
+                        </li>
+                        <li><a href="#">Something else here</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options" bounds="map.bounds" control="map.control">
+                <!--<div ng-repeat="collectionName in selection">-->
+                    <!--<ui-gmap-marker ng-repeat="marker in items[collectionName]" click="showRoute(marker.registration)" coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">-->
+                        <!--<ui-gmap-window>-->
+                            <!--<table style="width:100%">-->
+                                <!--<tbody>-->
+                                <!--<tr>-->
+                                    <!--<td>Id:</td>-->
+                                    <!--<td>{{marker.id}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>Type:</td>-->
+                                    <!--<td>{{marker.type}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>Location:</td>-->
+                                    <!--<td>{{marker.coords.latitude + ', ' + marker.coords.longitude}}</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>Capacity:</td>-->
+                                    <!--<td>{{marker.capacity}} kg</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>Load:</td>-->
+                                    <!--<td>{{marker.load}}</td>-->
+                                <!--</tr>-->
+                                <!--</tbody>-->
+                            <!--</table>-->
+                        <!--</ui-gmap-window>-->
+                    <!--</ui-gmap-marker>-->
+                    <!--&lt;!&ndash;<ui-gmap-marker ng-repeat="marker in items['trucks']"  coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">&ndash;&gt;-->
+                    <!--&lt;!&ndash;</ui-gmap-marker>&ndash;&gt;-->
+                <!--</div>-->
+            </ui-gmap-google-map>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.col-lg-8 -->
+
+<div class="col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-map-marker fa-fw"></i> Filters
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="list-group">
+                Choose filter:<br>
+                <div ng-repeat="col in collectionsAvailable" class="checkbox">
+                       <label><input id="{{col}}" type="checkbox" class="checkbox" value="{{col}}" ng-checked="selection.indexOf(col) > -1" ng-click="toggleSelection(col)" />Show {{col}}</label>
+                </div>
+            </div>
+            <!-- /.list-group -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.col-lg-4 -->
