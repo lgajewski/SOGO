@@ -11,6 +11,9 @@ angular.module('sogo.controllers', [])
 
     })
     .controller('HomeController',function($scope, $state, Restangular, uiGmapIsReady, uiGmapGoogleMapApi, ActiveItemService, $timeout) {
+        // TODO replace with Auth service with Principal
+        $scope.isAuthenticated = function() { return true };
+
         $scope.route = [];
         $scope.maps = {};
         $scope.map = {

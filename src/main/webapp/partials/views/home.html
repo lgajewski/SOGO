@@ -2,6 +2,23 @@
 
 <div class="container">
 
+    <div ng-switch="isAuthenticated()">
+        <div class="alert alert-success" ng-switch-when="true">
+            <!--You are logged in as user "{{vm.account.login}}".-->
+            You are logged in.
+        </div>
+
+        <div class="alert alert-warning" ng-switch-when="false">
+            <!--If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").-->
+            If you want to <a class="alert-link">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+        </div>
+
+        <div class="alert alert-warning" ng-switch-when="false">
+            <!--You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>-->
+            You don't have an account yet? <a class="alert-link">Register a new account</a>
+        </div>
+    </div>
+
     <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
         <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options" bounds="map.bounds" control="map.control">
             <div ng-repeat="collectionName in selection">

@@ -7,6 +7,8 @@ exports.config = {
 
     framework: 'jasmine2',
 
+    baseUrl: "http://localhost:8081",
+
     capabilities: {
         'browserName': 'phantomjs',
         'phantomjs.binary.path': require('phantomjs-prebuilt').path
