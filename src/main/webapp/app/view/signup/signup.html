@@ -15,9 +15,6 @@
                     <form role="form" ng-submit="vm.login($event)">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Login" name="login" type="text">
-                            </div>
-                            <div class="form-group">
                                 <input class="form-control" placeholder="Name" name="name" type="text">
                             </div>
                             <div class="form-group">
@@ -34,6 +31,12 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Repeat password" name="repeat" type="password">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" name="position" id="position">
+                                    <option>garbage collector</option>
+                                    <option>administrative worker</option>
+                                </select>
                             </div>
                             <div class="col-sm-12 text-center">
                                 <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="Sign up"
