@@ -3,11 +3,12 @@
   "name": "sogo",
   "appPath": "src/main/webapp/",
   "dependencies": {
-    "angular": "1.5.5",
-    "angular-resource": "1.5.5",
+    "angular": "1.5.8",
+    "angular-resource": "1.5.8",
     "angular-ui-router": "0.2.18",
     "angular-simple-logger": "0.1.7",
     "angular-google-maps": "2.3.3",
+    "angular-loading-bar": "0.9.0",
     "ngstorage": "0.3.10",
     "bootstrap": "3.3.7",
     "components-font-awesome": "4.6.3",
@@ -17,5 +18,8 @@
     "datatables-responsive": "1.0.6",
     "datatables.net-buttons": "1.2.2",
     "datatables.net-buttons-dt": "1.2.2"
+  },
+  "resolutions": {
+    "angular": "1.5.8"
   }
 }

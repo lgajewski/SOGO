@@ -7,6 +7,8 @@
             'ngResource',
             'ngStorage',
             'restangular',
-            'uiGmapgoogle-maps'
+            'uiGmapgoogle-maps',
+            'ngAnimate',
+            'angular-loading-bar'
         ])
 })();
