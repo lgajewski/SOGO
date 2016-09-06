@@ -12,8 +12,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import pl.edu.agh.simulator.domain.Container;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimulatorApp extends Application {
-    private static final String DEFAULT_SERVER_ADDRESS = "http://localhost/";
+    private static final String DEFAULT_SERVER_ADDRESS = "http://localhost:8081/";
 
     public static void main(String[] args) {
         launch(args);
@@ -51,17 +53,74 @@ public class SimulatorApp extends Application {
         Button btn = new Button("Enter");
         btn.setOnAction(event -> {
             System.out.println(userTextField.getText());
+            HttpClient loginClient = HttpClientBuilder.create().build();
+            HttpGet sampleRequest = new HttpGet(userTextField.getText());
+            HttpResponse sampleResponse = null;
+
+            String csrfHeader = "";
+            String jsessionidHeader = "";
+            try {
+
+                sampleResponse = loginClient.execute(sampleRequest);
+                for(Header header : sampleResponse.getAllHeaders()){
+                    if(header.getName().equalsIgnoreCase("set-cookie") && header.getValue().contains("CSRF")){
+                        System.out.println(header.getName() + ": " + header.getValue());
+                        csrfHeader = header.getValue();
+                        csrfHeader = csrfHeader.substring(11);
+                        csrfHeader = csrfHeader.substring(0, csrfHeader.length()-7);
+                    }
+
+                }
+
+
+            HttpPost loginRequest = new HttpPost(userTextField.getText()+"api/authentication?username=admin&password=admin&submit=Login");
+            loginRequest.setHeader("Cookie", jsessionidHeader + " CSRF-TOKEN=" + csrfHeader);
+            loginRequest.setHeader("Content-type", "application/x-www-form-urlencoded");
+                loginRequest.setHeader("X-CSRF-TOKEN", csrfHeader);
+            HttpResponse loginResponse = null;
+                loginResponse = loginClient.execute(loginRequest);
+                for(Header header : loginResponse.getAllHeaders()){
+//                    System.out.println(header.getName()+":"+header.getValue());
+                    if(header.getName().equalsIgnoreCase("set-cookie") && header.getValue().contains("JSESSIONID")){
+                        jsessionidHeader = header.getValue();
+                        jsessionidHeader = jsessionidHeader.substring(0, jsessionidHeader.length()-15);
+                    }
+                }
+                BufferedReader rd = new BufferedReader(new InputStreamReader(loginResponse.getEntity().getContent()));
+
+                String line = "";
+                while ((line = rd.readLine()) != null) {
+                    System.out.println(line);
+                }
+
+                sampleResponse = loginClient.execute(sampleRequest);
+                for(Header header : sampleResponse.getAllHeaders()){
+                    if(header.getName().equalsIgnoreCase("set-cookie") && header.getValue().contains("CSRF")){
+                        System.out.println(header.getName() + ": " + header.getValue());
+                        csrfHeader = header.getValue();
+                        csrfHeader = csrfHeader.substring(11);
+                        csrfHeader = csrfHeader.substring(0, csrfHeader.length()-7);
+                    }
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
             GridPane secondaryGrid = elementFactory.createGridPane();
             String serverAddress = userTextField.getText();
-            TruckSimulator truckSimulator = new TruckSimulator(serverAddress);
+            TruckSimulator truckSimulator = new TruckSimulator(serverAddress, csrfHeader, jsessionidHeader);
             Thread truckSimulatorThread = new Thread(truckSimulator);
             truckSimulatorThread.start();
 
-            ContainerSimulator containerSimulator = new ContainerSimulator(serverAddress);
+            ContainerSimulator containerSimulator = new ContainerSimulator(serverAddress, csrfHeader, jsessionidHeader);
             Thread containerSimulatorThread = new Thread(containerSimulator);
             containerSimulatorThread.start();
             GridPane tempGridPane = elementFactory.createGridPane();
             Button tempBtn = new Button("Create");
+
+            RoutesGenerator routesGenerator = new RoutesGenerator(serverAddress, csrfHeader, jsessionidHeader);
 
             //TRUCKS
             VBox trucksVBox = elementFactory.createVBox();
@@ -153,19 +212,10 @@ public class SimulatorApp extends Application {
             tempBtn = new Button("Generate");
             tempBtn.setOnAction(event2 -> {
                 System.out.println("Routes/generate");
-                try {
-                    HttpClient client = HttpClientBuilder.create().build();
-                    HttpPost request = new HttpPost(serverAddress+"routes/generate");
-                    request.addHeader("Content-type", "application/json");
-                    HttpResponse response = client.execute(request);
-                    BufferedReader rd = new BufferedReader (new InputStreamReader(response.getEntity().getContent()));
-                    String line = "";
-                    while((line = rd.readLine()) != null) {
-                        System.out.println(line);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                routesGenerator.generate();
+
+
             });
             tempGridPane.add(tempBtn, 0, 0);
 

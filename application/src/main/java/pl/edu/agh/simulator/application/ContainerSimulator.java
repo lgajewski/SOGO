@@ -24,12 +24,15 @@ import java.util.Random;
 public class ContainerSimulator implements Runnable {
 
     private String serverAddress;
-
+    private String csrf;
+    private String jsessionid;
     private Boolean isRunning;
 
-    public ContainerSimulator(String serverAddress){
+    public ContainerSimulator(String serverAddress, String csrf, String jsessionid){
         this.serverAddress = serverAddress;
         this.isRunning = false;
+        this.csrf = csrf;
+        this.jsessionid = jsessionid;
     }
 
     public void createContainers(List<Container> containers){
@@ -37,8 +40,10 @@ public class ContainerSimulator implements Runnable {
             Gson gson = new Gson();
             HttpClient client = HttpClientBuilder.create().build();
 
-            HttpPost request = new HttpPost(serverAddress+"containers");
-            request.addHeader("Content-type", "application/json");
+            HttpPost request = new HttpPost(serverAddress+"api/containers");
+            request.setHeader("Content-type", "application/json");
+            request.setHeader("Cookie", jsessionid);
+            request.setHeader("X-CSRF-TOKEN", csrf);
 
              for (Container container : containers) {
                 StringEntity params = new StringEntity(gson.toJson(container));
@@ -62,9 +67,10 @@ public class ContainerSimulator implements Runnable {
         try {
             Gson gson = new Gson();
             HttpClient client = HttpClientBuilder.create().build();
-            HttpGet request = new HttpGet(serverAddress+"containers");
-            request.addHeader("Content-type", "application/json");
-
+            HttpGet request = new HttpGet(serverAddress+"api/containers");
+            request.setHeader("Content-type", "application/json");
+            request.setHeader("Cookie", jsessionid);
+            request.setHeader("X-CSRF-TOKEN", csrf);
             while(true) {
                 if(isRunning) {
                     HttpResponse response = client.execute(request);
@@ -84,7 +90,7 @@ public class ContainerSimulator implements Runnable {
                     }
                     Random rand = new Random();
                     for (Container container : containers) {
-                        HttpPut updateLocationRequest = new HttpPut(serverAddress + "containers");
+                        HttpPut updateLocationRequest = new HttpPut(serverAddress + "api/containers");
                         for (String sensorType : container.getSensors().keySet()) {
                             Sensor sensor = container.getSensors().get(sensorType);
                             if (sensorType.equalsIgnoreCase("device")) {
@@ -101,7 +107,9 @@ public class ContainerSimulator implements Runnable {
                         }
                         StringEntity params = new StringEntity(gson.toJson(container));
                         System.out.println(gson.toJson(container));
-                        updateLocationRequest.addHeader("Content-type", "application/json");
+                        updateLocationRequest.setHeader("Content-type", "application/json");
+                        updateLocationRequest.setHeader("Cookie", jsessionid);
+                        updateLocationRequest.setHeader("X-CSRF-TOKEN", csrf);
                         updateLocationRequest.setEntity(params);
                         HttpResponse updateLocationResponse = client.execute(updateLocationRequest);
                         rd = new BufferedReader(new InputStreamReader(updateLocationResponse.getEntity().getContent()));
