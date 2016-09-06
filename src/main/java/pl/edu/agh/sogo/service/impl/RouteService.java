@@ -14,6 +14,7 @@ import pl.edu.agh.sogo.persistence.RouteRepository;
 import pl.edu.agh.sogo.persistence.TruckRepository;
 import pl.edu.agh.sogo.service.IRouteService;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,11 @@ public class RouteService implements IRouteService {
 
     @Override
     public List<Location> getRoute(String registration) {
-        return routeRepository.findByTruck(truckRepository.findByRegistration(registration)).getRoute();
+        Route route = routeRepository.findByTruck(truckRepository.findByRegistration(registration));
+        if(route == null){
+            return new ArrayList<>();
+        }
+        return route.getRoute();
     }
 
     @Override

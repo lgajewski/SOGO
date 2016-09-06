@@ -165,13 +165,17 @@
         // ];
 
         function displayRoute(route){
-            
+
             //====================
             var batches = [];
             var itemsPerBatch = 10; // google API max = 10 - 1 start, 1 stop, and 8 waypoints
             var itemsCounter = 0;
             var wayptsExist = route.length > 0;
             var directionsService = new $scope.maps.DirectionsService();
+            if(route.length == 0) {
+                $scope.directionsDisplay.setMap(null);
+                return;
+            }
             $scope.directionsDisplay.setMap($scope.map.control.getGMap());
             while (wayptsExist) {
                 var subBatch = [];
