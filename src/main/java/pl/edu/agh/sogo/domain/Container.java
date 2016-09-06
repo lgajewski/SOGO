@@ -2,11 +2,13 @@ package pl.edu.agh.sogo.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Document(collection = "containers")
 public class Container {
     @Id
     private String id;
