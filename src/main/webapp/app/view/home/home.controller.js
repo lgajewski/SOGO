@@ -108,13 +108,68 @@
 
             })
         };
+        // $scope.loadContainers = function () {
+        //     Restangular.all('containers').getList().then(function (resp) {
+        //         console.log(resp);
+        //         $scope.items["blue"] = [];
+        //         $scope.items["yellow"] = [];
+        //         $scope.items["green"] = [];
+        //         for (var i = 0; i < resp.length; i++) {
+        //             var container = {
+        //                 id: 0,
+        //                 coords: {},
+        //                 capacity: 0,
+        //                 load: 0,
+        //                 type: "",
+        //                 options: {
+        //                     draggable: false,
+        //                     icon: 'assets/images/ic_map_trash_' + resp[i].type + '.png'
+        //                 }
+        //             };
+        //             container.id = resp[i].id;
+        //             container.coords.latitude = resp[i].location.latitude;
+        //             container.coords.longitude = resp[i].location.longitude;
+        //             container.type = resp[i].type;
+        //             container.capacity = resp[i].capacity;
+        //             container.load = resp[i].sensors.load.value.toFixed(2) + '%';
+        //             $scope.items[resp[i].type].push(container);
+        //         }
+        //
+        //     })
+        // };
         $scope.loadContainers = function () {
             Restangular.all('containers').getList().then(function (resp) {
                 console.log(resp);
+                var num;
+                var load_value;
                 $scope.items["blue"] = [];
                 $scope.items["yellow"] = [];
                 $scope.items["green"] = [];
                 for (var i = 0; i < resp.length; i++) {
+                    load_value = resp[i].sensors.load.value.toFixed(2);
+                    if(load_value >= 0 && load_value < 5){
+                        num = 0;
+                    } else if(load_value >= 5 && load_value < 15) {
+                        num = 1;
+                    } else if(load_value >= 15 && load_value < 25) {
+                        num = 2;
+                    } else if(load_value >= 25 && load_value < 35) {
+                        num = 3;
+                    } else if(load_value >= 35 && load_value < 45) {
+                        num = 4;
+                    } else if(load_value >= 45 && load_value < 55) {
+                        num = 5;
+                    } else if(load_value >= 55 && load_value < 65) {
+                        num = 6;
+                    } else if(load_value >= 65 && load_value < 75) {
+                        num = 7;
+                    } else if(load_value >= 75 && load_value < 85) {
+                        num = 8;
+                    } else if(load_value >= 85 && load_value < 95) {
+                        num = 9;
+                    } else {
+                        num = 10;
+                    }
                     var container = {
                         id: 0,
                         coords: {},
@@ -123,7 +178,10 @@
                         type: "",
                         options: {
                             draggable: false,
-                            icon: 'assets/images/ic_map_trash_' + resp[i].type + '.png'
+                            icon: {
+                                url: 'assets/images/trash' + num + '_transparent.png',
+                                scaledSize: {width: 40, height: 40}
+                            }
                         }
                     };
                     container.id = resp[i].id;
