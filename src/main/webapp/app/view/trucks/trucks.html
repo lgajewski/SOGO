@@ -18,126 +18,26 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>RT17776</td>
-                        <td class="center">-</td>
-                        <td>4</td>
-                        <td>10</td>
+                    <tr ng-repeat="item in items">
+                        <td>{{item.id}}</td>
+                        <td>{{item.registration}}</td>
+                        <td class="center"><a ng-click="showDetail(item);setActiveObject(item)">Show</a>
+                            <div ng-if="active==item.id" ng-class-odd="'alt'">
+                                <div ng-controller="HomeController" >
+                                    <ui-gmap-google-map  center='activeObject.map.center' zoom='activeObject.map.zoom'>
+                                        <div>
+                                            <ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">
+                                            </ui-gmap-marker>
+                                        </div>
+                                    </ui-gmap-google-map>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{item.capacity}}</td>
+                        <td>{{item.load}}</td>
                         <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>KR158XV</td>
-                        <td class="center">-</td>
-                        <td>5</td>
-                        <td>20</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>KR34256</td>
-                        <td class="center">-</td>
-                        <td>10</td>
-                        <td>65</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>TKI4356F</td>
-                        <td class="center">-</td>
-                        <td>7</td>
-                        <td>90</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>KR2435Y</td>
-                        <td class="center">-</td>
-                        <td>12</td>
-                        <td>50</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>KR67YTS</td>
-                        <td class="center">-</td>
-                        <td>12</td>
-                        <td>35</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>KRA54367</td>
-                        <td class="center">-</td>
-                        <td>10</td>
-                        <td>80</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>KK10987</td>
-                        <td class="center">-</td>
-                        <td>10</td>
-                        <td>75</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>KK34251</td>
-                        <td class="center">-</td>
-                        <td>10</td>
-                        <td>30</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>KRA142E4</td>
-                        <td class="center">-</td>
-                        <td>7</td>
-                        <td>15</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>11</td>
-                        <td>RZ34526</td>
-                        <td class="center">-</td>
-                        <td>7</td>
-                        <td>25</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>12</td>
-                        <td>RZ54FG6</td>
-                        <td class="center">-</td>
-                        <td>3</td>
-                        <td>80</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>13</td>
-                        <td>RMI547UI</td>
-                        <td class="center">-</td>
-                        <td>3</td>
-                        <td>45</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>14</td>
-                        <td>RMI95342</td>
-                        <td class="center">-</td>
-                        <td>3</td>
-                        <td>50</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>15</td>
-                        <td>RMI34TKI</td>
-                        <td class="center">-</td>
-                        <td>1.5</td>
-                        <td>100</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
-                    </tr>
+
                     </tbody>
                 </table>
             </div>
