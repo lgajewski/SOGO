@@ -55,7 +55,9 @@
         $('#containers').DataTable({
             responsive: true
         });
-        var table = $('#containers').DataTable();
+        var table = $('#containers').DataTable(
+            {"ajax": anything}
+        );
         new $.fn.dataTable.Buttons(table, {
             buttons: [
                 {

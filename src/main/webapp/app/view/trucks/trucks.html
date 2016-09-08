@@ -56,7 +56,9 @@
         $('#trucks').DataTable({
             responsive: true
         });
-        var table = $('#trucks').DataTable();
+        var table = $('#trucks').DataTable(
+            {"ajax": anything}
+ );
         new $.fn.dataTable.Buttons(table, {
             buttons: [
                 {
