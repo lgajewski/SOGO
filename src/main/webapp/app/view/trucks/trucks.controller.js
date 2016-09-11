@@ -21,7 +21,6 @@
         $scope.getTrucks = function () {
             Restangular.all('trucks').getList().then(function (data) {
                 $scope.items = data;
-                console.log(data);
             })
         };
         $scope.getTrucks();

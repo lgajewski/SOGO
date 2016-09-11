@@ -14,7 +14,7 @@ import pl.edu.agh.sogo.persistence.ContainerRepository;
 import pl.edu.agh.sogo.persistence.RouteRepository;
 import pl.edu.agh.sogo.persistence.TruckRepository;
 //import pl.edu.agh.sogo.persistence.security.UserRepository;
-import pl.edu.agh.sogo.service.impl.RouteService;
+import pl.edu.agh.sogo.service.RouteService;
 
 import java.util.ArrayList;
 import java.util.List;

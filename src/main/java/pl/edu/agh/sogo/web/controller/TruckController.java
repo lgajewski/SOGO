@@ -10,10 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Truck;
-import pl.edu.agh.sogo.service.ITruckService;
-import pl.edu.agh.sogo.service.impl.RouteService;
+import pl.edu.agh.sogo.service.RouteService;
+import pl.edu.agh.sogo.service.SseService;
+import pl.edu.agh.sogo.service.TruckService;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/trucks")
@@ -22,19 +28,40 @@ public class TruckController {
     private static final Logger log = LoggerFactory.getLogger(RouteService.class);
 
     @Autowired
-    private ITruckService truckService;
+    private TruckService truckService;
+
+    @Autowired
+    private SseService sseService;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
     public Collection<Truck> getTrucks() {
-        log.info("[GET][/api/trucks] getTrucks()");
-        return truckService.getTrucks();
+        try {
+            log.info("[GET][/api/trucks] getTrucks()");
+
+            // TODO test async exeuctor and SseService here
+            ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(4);
+                scheduledExecutorService.scheduleAtFixedRate(() -> {
+                    try {
+                        sseService.emit("KRA 6888");
+                    } catch (Exception e) {
+                        log.error("updateLocation", e);
+                        e.printStackTrace();
+                    }
+                }, 1, 1, TimeUnit.SECONDS);
+
+            return truckService.getTrucks();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("updateLocation", e);
+            return new ArrayList<>();
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "/{registration}", method = RequestMethod.GET)
     public Truck getTruck(@PathVariable(value = "registration") String registration) {
-        log.info("[GET][/api/trucks/"+registration+"] getTruck("+registration+")");
+        log.info("[GET][/api/trucks/" + registration + "] getTruck(" + registration + ")");
         return truckService.findTruckByRegistration(registration);
     }
 
@@ -43,7 +70,6 @@ public class TruckController {
     public void addTruck(@RequestBody Truck truck) {
         log.info("[POST][/api/trucks/] addTruck()");
         truckService.add(truck);
-        return;
     }
 
     @ResponseBody
@@ -51,7 +77,6 @@ public class TruckController {
     public void updateTruck(@RequestBody Truck truck) {
         log.info("[PUT][/api/trucks/] updateTruck()");
         truckService.update(truck);
-        return;
     }
 
     @ResponseBody
@@ -59,7 +84,6 @@ public class TruckController {
     public void deleteTruck(@PathVariable(value = "registration") String registration) {
         log.info("[DELETE][/api/trucks/" + registration + "] deleteTruck(" + registration + ")");
         truckService.delete(registration);
-        return;
     }
 
     @ResponseBody
@@ -67,7 +91,7 @@ public class TruckController {
     public void updateLocation(@PathVariable(value = "registration") String registration, @RequestBody Location location) {
         log.info("[PATCH][/api/trucks/" + registration + "] updateLocation(" + registration + ")");
         truckService.updateLocation(registration, location);
-        return;
+//        sseService.updateLocation(new SseService.LocationUpdate(registration, location));
     }
 }
 

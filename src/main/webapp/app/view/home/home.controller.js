@@ -8,6 +8,17 @@
     HomeController.$inject = ['$scope', '$state', 'Restangular', 'uiGmapIsReady', 'uiGmapGoogleMapApi', 'ActiveItemService', '$timeout'];
 
     function HomeController($scope, $state, Restangular, uiGmapIsReady, uiGmapGoogleMapApi, ActiveItemService, $timeout) {
+        var source = new EventSource("/api/sse");
+        source.onmessage = function(event) {
+            console.log(event.timeStamp);
+        };
+        source.onerror = function(event) {
+            console.log(event);
+        };
+        source.onopen = function(event) {
+            console.log(event);
+        };
+
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = function () {
             return true
@@ -68,7 +79,6 @@
         }
         $scope.loadRoute = function (registration, callback) {
             Restangular.all('routes/' + registration).getList().then(function (resp) {
-                console.log(resp);
                 var response = resp.plain();
                 callback(response);
             })
@@ -83,7 +93,6 @@
 
         $scope.loadTrucks = function () {
             Restangular.all('trucks').getList().then(function (resp) {
-                console.log(resp);
                 $scope.items['trucks'] = [];
                 for (var i = 0; i < resp.length; i++) {
                     var truck = {
@@ -139,7 +148,6 @@
         // };
         $scope.loadContainers = function () {
             Restangular.all('containers').getList().then(function (resp) {
-                console.log(resp);
                 var num;
                 var load_value;
                 $scope.items["blue"] = [];

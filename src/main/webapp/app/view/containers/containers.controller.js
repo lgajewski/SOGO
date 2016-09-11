@@ -28,7 +28,6 @@
         $scope.getContainers = function () {
             Restangular.all('containers').getList().then(function (data) {
                 $scope.items = data;
-                console.log(data);
             })
         };
         $scope.getContainers();

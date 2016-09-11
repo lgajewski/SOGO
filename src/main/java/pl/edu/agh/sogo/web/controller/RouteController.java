@@ -13,8 +13,7 @@ import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Route;
 import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.persistence.ContainerRepository;
-import pl.edu.agh.sogo.service.IRouteService;
-import pl.edu.agh.sogo.service.impl.RouteService;
+import pl.edu.agh.sogo.service.RouteService;
 
 import java.util.List;
 import java.util.Map;
@@ -27,10 +26,10 @@ public class RouteController {
     private static final Logger log = LoggerFactory.getLogger(RouteService.class);
 
     @Autowired
-    IRouteService routeService;
+    private RouteService routeService;
 
     @Autowired
-    ContainerRepository containerRepository;
+    private ContainerRepository containerRepository;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
@@ -42,7 +41,7 @@ public class RouteController {
     @ResponseBody
     @RequestMapping(value = "/{registration}", method = RequestMethod.GET)
     public List<Location> getRoute(@PathVariable(value = "registration") String registration) {
-        log.info("[GET][/api/routes/"+registration+"] getRoute("+registration+")\n"+routeService.getRoute(registration));
+        log.info("[GET][/api/routes/" + registration + "] getRoute(" + registration + ")\n" + routeService.getRoute(registration));
         return routeService.getRoute(registration);
     }
 

@@ -8,11 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.agh.sogo.persistence.UserRepository;
-import pl.edu.agh.sogo.service.UserService;
 import pl.edu.agh.sogo.web.dto.UserDTO;
 
-import javax.inject.Inject;
 import java.security.Principal;
 
 /**
@@ -23,12 +20,6 @@ import java.security.Principal;
 public class AuthController {
 
     private final Logger log = LoggerFactory.getLogger(AuthController.class);
-
-    @Inject
-    private UserRepository userRepository;
-
-    @Inject
-    private UserService userService;
 
     /**
      * GET  /authenticate : check if the user is authenticated, and return its login.
@@ -55,9 +46,6 @@ public class AuthController {
     public ResponseEntity<UserDTO> getUser() {
         log.info("[GET][/api/user] getUSer()");
         return new ResponseEntity<>(new UserDTO(), HttpStatus.OK);
-//        return Optional.ofNullable(userService.getUserWithAuthorities())
-//            .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
-//            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
 }

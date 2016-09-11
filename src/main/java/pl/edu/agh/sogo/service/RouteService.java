@@ -1,4 +1,4 @@
-package pl.edu.agh.sogo.service.impl;
+package pl.edu.agh.sogo.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,6 @@ import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.persistence.ContainerRepository;
 import pl.edu.agh.sogo.persistence.RouteRepository;
 import pl.edu.agh.sogo.persistence.TruckRepository;
-import pl.edu.agh.sogo.service.IRouteService;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,21 +21,19 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class RouteService implements IRouteService {
+public class RouteService {
 
     private static final Logger log = LoggerFactory.getLogger(RouteService.class);
 
     @Autowired
-    RouteRepository routeRepository;
+    private RouteRepository routeRepository;
 
     @Autowired
-    TruckRepository truckRepository;
+    private TruckRepository truckRepository;
 
     @Autowired
-    ContainerRepository containerRepository;
+    private ContainerRepository containerRepository;
 
-
-    @Override
     public Map<Truck, Route> getRoutes() {
         List<Route> routes = routeRepository.findAll();
         Map<Truck, Route> result = routes.stream().collect(Collectors.toMap(Route::getTruck, Function.identity()));
@@ -44,24 +41,22 @@ public class RouteService implements IRouteService {
         return result;
     }
 
-    @Override
     public List<Location> getRoute(String registration) {
         Route route = routeRepository.findByTruck(truckRepository.findByRegistration(registration));
-        if(route == null){
+        if (route == null) {
             return new ArrayList<>();
         }
         return route.getRoute();
     }
 
-    @Override
     public void generateRoutes(List<String> availableContainers) {
         for (Truck truck : truckRepository.findAll()) {
             //TODO: set starting location for each truck(new field?)
             Location startingLocation = new Location(50.0690377, 20.0064407);
             Route route = generateRoute(startingLocation, truck, availableContainers);
-            if(route != null) {
+            if (route != null) {
                 log.info("Truck = " + route.getTruck());
-                int i=0;
+                int i = 0;
                 for (Location location : route.getRoute()) {
                     i++;
                     log.info("Location " + i + " = " + location);
@@ -69,7 +64,7 @@ public class RouteService implements IRouteService {
                 routeRepository.save(route);
             }
         }
-        if(!availableContainers.isEmpty()){
+        if (!availableContainers.isEmpty()) {
             generateRoutes(availableContainers);
         }
     }
@@ -80,26 +75,26 @@ public class RouteService implements IRouteService {
         Container container = null;
         List<Container> nearestContainersToStartingLocation = containerRepository.findByLocationNear(new Point(startingLocation.getLongitude(), startingLocation.getLatitude()));
         //TODO: move capacity multiplier to configuration file
-        int truckCapacity = (int)(truck.getCapacity() * 0.9);
-        int i=0;
+        int truckCapacity = (int) (truck.getCapacity() * 0.9);
+        int i = 0;
 
-        if(nearestContainersToStartingLocation != null) {
+        if (nearestContainersToStartingLocation != null) {
             do {
                 container = nearestContainersToStartingLocation.get(i);
                 i++;
-                if(availableContainers.contains(container.getId())){
+                if (availableContainers.contains(container.getId())) {
                     break;
                 }
             } while (i < nearestContainersToStartingLocation.size());
         }
-        if(container!=null) {
-            while (truckCapacity - truck.getLoad() >  (container.getCapacity () * ((double)container.getSensors().get("load").getValue())/100) && !availableContainers.isEmpty()){
+        if (container != null) {
+            while (truckCapacity - truck.getLoad() > (container.getCapacity() * ((double) container.getSensors().get("load").getValue()) / 100) && !availableContainers.isEmpty()) {
                 availableContainers.remove(container.getId());
                 locations.add(container.getLocation());
-                truckCapacity -= (container.getCapacity () * ((double)container.getSensors().get("load").getValue())/100);
+                truckCapacity -= (container.getCapacity() * ((double) container.getSensors().get("load").getValue()) / 100);
                 List<Container> nearestContainers = containerRepository.findByLocationNear(new Point(container.getLocation().getLongitude(), container.getLocation().getLatitude()));
-                i=0;
-                if(nearestContainers != null) {
+                i = 0;
+                if (nearestContainers != null) {
                     do {
                         container = nearestContainers.get(i);
                         i++;
@@ -108,7 +103,7 @@ public class RouteService implements IRouteService {
             }
         }
 
-        if(!locations.isEmpty()) {
+        if (!locations.isEmpty()) {
             route = new Route();
             route.setTruck(truck);
             route.setRoute(locations);

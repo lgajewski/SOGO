@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.edu.agh.sogo.service.ITruckService;
+import pl.edu.agh.sogo.service.TruckService;
 
 import javax.inject.Inject;
 
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class AppTest {
 
     @Inject
-    private ITruckService truckService;
+    private TruckService truckService;
 
     @Before
     public void setUp() throws Exception {
