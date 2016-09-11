@@ -5,10 +5,13 @@
         .module('sogo')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['Auth'];
+    NavbarController.$inject = [$scope, 'Auth'];
 
-    function NavbarController(Auth) {
+    function NavbarController($scope, Auth) {
         this.logout = Auth.logout;
+        $scope.$on('$viewContentLoaded', function(){
+            $scope.$emit('onNavbarLoaded');
+        });
     }
 
 })();

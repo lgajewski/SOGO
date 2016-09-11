@@ -10,10 +10,5 @@
                     templateUrl: 'app/view/trucks/trucks.html',
                     controller: 'TrucksController'
                 })
-                .state('navbar.new_truck', {
-                    url: '/trucks',
-                    templateUrl: 'app/view/trucks/new_truck.html',
-                    controller: 'TrucksController'
-                })
         })
 })();
