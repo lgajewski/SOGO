@@ -10,7 +10,7 @@
     function HomeController($scope, $state, Restangular, uiGmapIsReady, uiGmapGoogleMapApi, ActiveItemService, $timeout) {
         var source = new EventSource("/api/sse");
         source.onmessage = function(event) {
-            console.log(event.timeStamp);
+            console.log(event.data);
         };
         source.onerror = function(event) {
             console.log(event);

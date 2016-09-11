@@ -16,6 +16,7 @@ import pl.edu.agh.sogo.service.TruckService;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -38,18 +39,6 @@ public class TruckController {
     public Collection<Truck> getTrucks() {
         try {
             log.info("[GET][/api/trucks] getTrucks()");
-
-            // TODO test async exeuctor and SseService here
-            ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(4);
-                scheduledExecutorService.scheduleAtFixedRate(() -> {
-                    try {
-                        sseService.emit("KRA 6888");
-                    } catch (Exception e) {
-                        log.error("updateLocation", e);
-                        e.printStackTrace();
-                    }
-                }, 1, 1, TimeUnit.SECONDS);
-
             return truckService.getTrucks();
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,7 +80,8 @@ public class TruckController {
     public void updateLocation(@PathVariable(value = "registration") String registration, @RequestBody Location location) {
         log.info("[PATCH][/api/trucks/" + registration + "] updateLocation(" + registration + ")");
         truckService.updateLocation(registration, location);
-//        sseService.updateLocation(new SseService.LocationUpdate(registration, location));
+
+        sseService.emit(truckService.findTruckByRegistration(registration));
     }
 }
 
