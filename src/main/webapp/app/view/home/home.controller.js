@@ -9,13 +9,20 @@
 
     function HomeController($scope, $state, Restangular, uiGmapIsReady, uiGmapGoogleMapApi, ActiveItemService, $timeout) {
         var source = new EventSource("/api/sse");
-        source.onmessage = function(event) {
-            console.log(event.data);
+        source.onmessage = function (event) {
+            var updatedTruck = JSON.parse(event.data);
+            $scope.$apply(function () {
+                var truck = $scope.items['trucks'].find(t => t.registration === updatedTruck.registration);
+                if (truck) {
+                    truck.coords.longitude = updatedTruck.location.longitude;
+                    truck.coords.latitude = updatedTruck.location.latitude;
+                }
+            });
         };
-        source.onerror = function(event) {
+        source.onerror = function (event) {
             console.log(event);
         };
-        source.onopen = function(event) {
+        source.onopen = function (event) {
             console.log(event);
         };
 
@@ -74,9 +81,10 @@
         // };
         $scope.showRoute = function (registration) {
             // if (registration) {
-                $scope.loadRoute(registration, displayRoute);
+            $scope.loadRoute(registration, displayRoute);
             // }
-        }
+        };
+
         $scope.loadRoute = function (registration, callback) {
             Restangular.all('routes/' + registration).getList().then(function (resp) {
                 var response = resp.plain();
@@ -89,12 +97,12 @@
             if (marker.type === 'truck')
                 return 1;
             return 0;
-        }
+        };
 
-        setTimeout(function() {
+        setTimeout(function () {
             // TODO change here, trucks addition
-            $scope.$apply(function() {
-                $scope.items['trucks'].forEach(function(truck) {
+            $scope.$apply(function () {
+                $scope.items['trucks'].forEach(function (truck) {
                     truck.coords.latitude += 0.01;
                     truck.coords.longitude += 0.01;
                 });
@@ -165,25 +173,25 @@
                 $scope.items["green"] = [];
                 for (var i = 0; i < resp.length; i++) {
                     load_value = resp[i].sensors.load.value.toFixed(2);
-                    if(load_value >= 0 && load_value < 5){
+                    if (load_value >= 0 && load_value < 5) {
                         num = 0;
-                    } else if(load_value >= 5 && load_value < 15) {
+                    } else if (load_value >= 5 && load_value < 15) {
                         num = 1;
-                    } else if(load_value >= 15 && load_value < 25) {
+                    } else if (load_value >= 15 && load_value < 25) {
                         num = 2;
-                    } else if(load_value >= 25 && load_value < 35) {
+                    } else if (load_value >= 25 && load_value < 35) {
                         num = 3;
-                    } else if(load_value >= 35 && load_value < 45) {
+                    } else if (load_value >= 35 && load_value < 45) {
                         num = 4;
-                    } else if(load_value >= 45 && load_value < 55) {
+                    } else if (load_value >= 45 && load_value < 55) {
                         num = 5;
-                    } else if(load_value >= 55 && load_value < 65) {
+                    } else if (load_value >= 55 && load_value < 65) {
                         num = 6;
-                    } else if(load_value >= 65 && load_value < 75) {
+                    } else if (load_value >= 65 && load_value < 75) {
                         num = 7;
-                    } else if(load_value >= 75 && load_value < 85) {
+                    } else if (load_value >= 75 && load_value < 85) {
                         num = 8;
-                    } else if(load_value >= 85 && load_value < 95) {
+                    } else if (load_value >= 85 && load_value < 95) {
                         num = 9;
                     } else {
                         num = 10;
@@ -221,8 +229,8 @@
         $scope.loadData();
         $scope.checkAllTrucks = false;
 
-        $scope.checkCollection = function checkCollection(collectionName){
-            if($scope.checkAllTrucks){
+        $scope.checkCollection = function checkCollection(collectionName) {
+            if ($scope.checkAllTrucks) {
                 $scope.checkAll(collectionName);
             } else {
                 $scope.uncheckAll(collectionName);
@@ -230,10 +238,11 @@
         };
 
         $scope.checkAll = function checkAll(collectionName) {
-            for(var i=0;i<$scope.items[collectionName].length;i++){
+            for (var i = 0; i < $scope.items[collectionName].length; i++) {
                 var idx = $scope.selection.indexOf($scope.items[collectionName][i]);
                 // is currently selected
-                if (idx > -1) {}
+                if (idx > -1) {
+                }
 
                 // is newly selected
                 else {
@@ -242,14 +251,15 @@
             }
         };
         $scope.uncheckAll = function uncheckAll(collectionName) {
-            for(var i=0;i<$scope.items[collectionName].length;i++){
+            for (var i = 0; i < $scope.items[collectionName].length; i++) {
                 var idx = $scope.selection.indexOf($scope.items[collectionName][i]);
                 // is currently selected
                 if (idx > -1) {
                     $scope.selection.splice(idx, 1);
                 }
                 // is newly selected
-                else {}
+                else {
+                }
             }
         };
 
@@ -266,7 +276,7 @@
         };
 
         $scope.toggleCollection = function toggleCollection(collectionName) {
-            for(var i=0;i<$scope.items[collectionName].length;i++){
+            for (var i = 0; i < $scope.items[collectionName].length; i++) {
                 $scope.toggleSelection($scope.items[collectionName][i]);
             }
         };
@@ -279,7 +289,7 @@
         //     {location: {lat:50.0613359, lng: 19.9379849}, stopover: true}
         // ];
 
-        function displayRoute(route){
+        function displayRoute(route) {
 
             //====================
             var batches = [];
@@ -287,7 +297,7 @@
             var itemsCounter = 0;
             var wayptsExist = route.length > 0;
             var directionsService = new $scope.maps.DirectionsService();
-            if(route.length == 0) {
+            if (route.length == 0) {
                 $scope.directionsDisplay.setMap(null);
                 return;
             }
@@ -349,7 +359,7 @@
                 directionsService.route(request, function (result, status) {
                     if (status == window.google.maps.DirectionsStatus.OK) {
 
-                        var unsortedResult = { order: k, result: result };
+                        var unsortedResult = {order: k, result: result};
                         unsortedResults.push(unsortedResult);
 
                         directionsResultsReturned++;
@@ -397,8 +407,6 @@
             // }
             // console.log(waypts);
             // directions($scope.maps, origin.latitude + ", " + origin.longitude, destination.latitude + ", " + destination.longitude, waypts);
-
-
 
 
         };

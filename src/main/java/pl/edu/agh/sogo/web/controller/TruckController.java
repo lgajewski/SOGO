@@ -16,11 +16,6 @@ import pl.edu.agh.sogo.service.TruckService;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/trucks")
@@ -79,8 +74,10 @@ public class TruckController {
     @RequestMapping(value = "/{registration}", method = RequestMethod.PATCH)
     public void updateLocation(@PathVariable(value = "registration") String registration, @RequestBody Location location) {
         log.info("[PATCH][/api/trucks/" + registration + "] updateLocation(" + registration + ")");
+
         truckService.updateLocation(registration, location);
 
+        // emit updated truck to browsers that subscribe on SSE
         sseService.emit(truckService.findTruckByRegistration(registration));
     }
 }
