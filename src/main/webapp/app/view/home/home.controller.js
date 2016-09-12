@@ -91,6 +91,16 @@
             return 0;
         }
 
+        setTimeout(function() {
+            // TODO change here, trucks addition
+            $scope.$apply(function() {
+                $scope.items['trucks'].forEach(function(truck) {
+                    truck.coords.latitude += 0.01;
+                    truck.coords.longitude += 0.01;
+                });
+            });
+        }, 3000);
+
         $scope.loadTrucks = function () {
             Restangular.all('trucks').getList().then(function (resp) {
                 $scope.items['trucks'] = [];
