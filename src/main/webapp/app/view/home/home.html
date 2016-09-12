@@ -65,7 +65,7 @@
                         <i class="fa fa-trash-o fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">{{items['containers'].length}}</div>
+                        <div class="huge">{{items.blue.length + items.yellow.length + items.green.length}}</div>
                         <div>Containers</div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                 <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options"
                                     bounds="map.bounds" control="map.control">
                     <div ng-repeat="marker in selection">
-                    <ui-gmap-marker click="showRoute(marker.registration)" coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+                    <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
                         <ui-gmap-window>
                         <table style="width:100%">
                         <tbody>
@@ -204,14 +204,14 @@
                     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for registrations..">
                     <table id="myTable" class="table table-striped table-bordered table-hover">
                         <tr>
-                            <th><input type="checkbox" ng-model="checkAllTrucks" ng-click="checkCollection('trucks')"/></th>
+                            <th><input type="checkbox" ng-model="checkAllTrucks" ng-click="checkCollection('trucks')"></th>
                             <th>Truck</th>
                             <th>Location</th>
                         </tr>
-                        <tr ng-repeat="item in items['trucks']">
-                            <td><input type="checkbox" checklist-model="selection" checklist-value="item"/></td>
+                        <tr ng-repeat="item in items.trucks">
+                            <td><input type="checkbox" checklist-model="selection" checklist-value="item" ng-checked="selection.indexOf(item) > -1"></td>
                             <td>{{item.registration}}</td>
-                            <td><input type="radio" name="route" ng-click="showRoute(item.registration)"/></td>
+                            <td><input type="radio" name="route" ng-click="showRoute(item.registration)"></td>
                         </tr>
                     </table>
                     <table class="table table-striped table-bordered table-hover" ng-repeat="col in collectionsAvailable">
