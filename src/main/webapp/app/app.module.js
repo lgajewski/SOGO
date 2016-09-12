@@ -9,6 +9,7 @@
             'restangular',
             'uiGmapgoogle-maps',
             'ngAnimate',
-            'angular-loading-bar'
+            'angular-loading-bar',
+            'checklist-model'
         ])
 })();

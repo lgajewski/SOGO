@@ -53,7 +53,7 @@
 
         $scope.activeObject = ActiveItemService.getObject();
 
-        $scope.collectionsAvailable = ['trucks', 'yellow', 'green', 'blue'];
+        $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
         $scope.items = [];
         $scope.selection = [];
         // $scope.mapInit = {
@@ -62,9 +62,9 @@
         //
         // };
         $scope.showRoute = function (registration) {
-            if (registration) {
+            // if (registration) {
                 $scope.loadRoute(registration, displayRoute);
-            }
+            // }
         }
         $scope.loadRoute = function (registration, callback) {
             Restangular.all('routes/' + registration).getList().then(function (resp) {
@@ -201,16 +201,55 @@
             $scope.loadTrucks();
         };
         $scope.loadData();
-        $scope.toggleSelection = function toggleSelection(collectionName) {
-            var idx = $scope.selection.indexOf(collectionName);
+        $scope.checkAllTrucks = false;
+
+        $scope.checkCollection = function checkCollection(collectionName){
+            if($scope.checkAllTrucks){
+                $scope.checkAll(collectionName);
+            } else {
+                $scope.uncheckAll(collectionName);
+            }
+        };
+
+        $scope.checkAll = function checkAll(collectionName) {
+            for(var i=0;i<$scope.items[collectionName].length;i++){
+                var idx = $scope.selection.indexOf($scope.items[collectionName][i]);
+                // is currently selected
+                if (idx > -1) {}
+
+                // is newly selected
+                else {
+                    $scope.selection.push($scope.items[collectionName][i]);
+                }
+            }
+        };
+        $scope.uncheckAll = function uncheckAll(collectionName) {
+            for(var i=0;i<$scope.items[collectionName].length;i++){
+                var idx = $scope.selection.indexOf($scope.items[collectionName][i]);
+                // is currently selected
+                if (idx > -1) {
+                    $scope.selection.splice(idx, 1);
+                }
+                // is newly selected
+                else {}
+            }
+        };
+
+        $scope.toggleSelection = function toggleSelection(item) {
+            var idx = $scope.selection.indexOf(item);
             // is currently selected
             if (idx > -1) {
                 $scope.selection.splice(idx, 1);
             }
             // is newly selected
             else {
-                $scope.selection.push(collectionName);
-                // $scope.loadRoute('KRA 6479', displayRoute);
+                $scope.selection.push(item);
+            }
+        };
+
+        $scope.toggleCollection = function toggleCollection(collectionName) {
+            for(var i=0;i<$scope.items[collectionName].length;i++){
+                $scope.toggleSelection($scope.items[collectionName][i]);
             }
         };
 
@@ -340,6 +379,8 @@
             // }
             // console.log(waypts);
             // directions($scope.maps, origin.latitude + ", " + origin.longitude, destination.latitude + ", " + destination.longitude, waypts);
+
+
 
 
         };

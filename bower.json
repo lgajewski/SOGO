@@ -17,7 +17,8 @@
     "datatables-plugins": "1.0.1",
     "datatables-responsive": "1.0.6",
     "datatables.net-buttons": "1.2.2",
-    "datatables.net-buttons-dt": "1.2.2"
+    "datatables.net-buttons-dt": "1.2.2",
+    "checklist-model": "0.10.0"
   },
   "resolutions": {
     "angular": "1.5.8"
