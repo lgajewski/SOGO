@@ -5,27 +5,27 @@
         .module('sogo')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', '$state', 'Restangular', 'uiGmapIsReady', 'uiGmapGoogleMapApi', 'ActiveItemService', '$timeout'];
+    HomeController.$inject = ['$scope', 'Restangular', 'uiGmapIsReady', 'uiGmapGoogleMapApi', 'ActiveItemService', 'SseService'];
 
-    function HomeController($scope, $state, Restangular, uiGmapIsReady, uiGmapGoogleMapApi, ActiveItemService, $timeout) {
-        var source = new EventSource("/api/sse");
-        source.onmessage = function (event) {
-            var updatedTruck = JSON.parse(event.data);
-            $scope.$apply(function () {
-                var truck = $scope.items['trucks'].find(t => t.registration === updatedTruck.registration);
-                if (truck) {
-                    truck.coords.longitude = updatedTruck.location.longitude;
-                    truck.coords.latitude = updatedTruck.location.latitude;
-                }
-            });
-        };
-        source.onerror = function (event) {
-            console.log(event);
-        };
-        source.onopen = function (event) {
-            console.log(event);
-        };
+    function HomeController($scope, Restangular, uiGmapIsReady, uiGmapGoogleMapApi, ActiveItemService, SseService) {
+        // register on SSE
+        registerSseService();
+        
+        function registerSseService() {
+            var onTruckUpdated = function(event) {
+                var updatedTruck = JSON.parse(event.data);
+                $scope.$apply(function () {
+                    var truck = $scope.items['trucks'].find(t => t.registration === updatedTruck.registration);
+                    if (truck) {
+                        truck.coords.longitude = updatedTruck.location.longitude;
+                        truck.coords.latitude = updatedTruck.location.latitude;
+                    }
+                });
+            };
 
+            SseService.register(onTruckUpdated);
+        }
+        
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = function () {
             return true
