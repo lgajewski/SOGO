@@ -10,8 +10,7 @@ exports.config = {
     baseUrl: "http://localhost:8081",
 
     capabilities: {
-        'browserName': 'phantomjs',
-        'phantomjs.binary.path': require('phantomjs-prebuilt').path
+        'browserName': 'chrome'
     },
 
     jasmineNodeOpts: {

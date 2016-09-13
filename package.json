@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "System optymalizujacy gospodarke odpadami",
   "private": true,
+  "config": {
+    "browser": "chrome"
+  },
   "cacheDirectories": [
     "node_modules",
     "src/main/webapp/bower_components"
@@ -14,7 +17,7 @@
     "protractor-jasmine2-html-reporter": "0.0.6"
   },
   "scripts": {
-    "test": "protractor src/test/javascript/protractor.conf.js",
+    "test": "protractor src/test/javascript/protractor.conf.js --browser $npm_package_config_browser",
     "postinstall": "bower install && webdriver-manager update"
   }
 }

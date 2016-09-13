@@ -13,7 +13,7 @@ echo "Waiting for application warmup..."
 sleep 60s
 
 echo "Execution of Protractor e2e tests"
-npm test
+npm test --sogo:browser=firefox
 
 echo "Kill Spring Boot application."
 kill -9 $bootPid
