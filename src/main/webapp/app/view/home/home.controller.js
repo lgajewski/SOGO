@@ -15,7 +15,7 @@
         $scope.showRoute = showRoute;
         $scope.checkAllTrucks = true;
         $scope.toggleCollection = toggleCollection;
-        $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
+        $scope.collectionsAvailable = [/*'trucks', */'red', 'green', 'blue'];
         $scope.checkCollection = checkCollection;
         $scope.items = {
             trucks: [],
@@ -156,7 +156,7 @@
                         options: {
                             draggable: false,
                             icon: {
-                                url: 'assets/images/trash' + num + '_transparent.png',
+                                url: 'assets/images/trash' + num + '_' + resp[i].type + '.png',
                                 scaledSize: {width: 40, height: 40}
                             }
                         }
