@@ -156,7 +156,7 @@
                         options: {
                             draggable: false,
                             icon: {
-                                url: 'assets/images/trash' + num + '_transparent.png',
+                                url: 'assets/images/trash' + num + '_' + resp[i].type + '.png',
                                 scaledSize: {width: 40, height: 40}
                             }
                         }
