@@ -96,8 +96,8 @@ public class TruckSimulator implements Runnable {
                     for (Truck truck : trucks) {
 
                         HttpPatch updateLocationRequest = new HttpPatch(serverAddress + "api/trucks/" + truck.getRegistration().replace(" ", "%20"));
-                        Location location = new Location(truck.getLocation().getLatitude() + (Math.pow(-1, rand.nextInt()) * 0.00000000000976),
-                                truck.getLocation().getLongitude() + (Math.pow(-1, rand.nextInt()) * 0.00000000000976));
+                        Location location = new Location(truck.getLocation().getLatitude() + (Math.pow(-1, rand.nextInt()) * 0.002976),
+                                truck.getLocation().getLongitude() + (Math.pow(-1, rand.nextInt()) * 0.002976));
 
 
                         StringEntity params = new StringEntity(gson.toJson(location));
