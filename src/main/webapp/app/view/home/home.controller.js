@@ -15,7 +15,7 @@
         $scope.showRoute = showRoute;
         $scope.checkAllTrucks = true;
         $scope.toggleCollection = toggleCollection;
-        $scope.collectionsAvailable = [/*'trucks', */'red', 'green', 'blue'];
+        $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
         $scope.checkCollection = checkCollection;
         $scope.items = {
             trucks: [],
