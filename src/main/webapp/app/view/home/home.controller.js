@@ -37,6 +37,8 @@
         loadTrucks();
         setList();
 
+        setList();
+
         function isError(container){
             for(var sensor in container.sensors){
                 if(container.sensors[sensor].errorCode != 0){
