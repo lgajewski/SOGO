@@ -22,7 +22,7 @@
                     <tr ng-repeat="item in items">
                         <td>{{item.id}}</td>
                         <td>{{item.registration}}</td>
-                        <td class="center"><a ng-click="showDetail(item);setActiveObject(item)">Show</a>
+                        <td class="center"><a href="" ng-click="showDetail(item);setActiveObject(item)">Show</a>
                             <div ng-if="active==item.id" ng-class-odd="'alt'">
                                 <div ng-controller="HomeController" >
                                     <ui-gmap-google-map  center='activeObject.map.center' zoom='activeObject.map.zoom'>

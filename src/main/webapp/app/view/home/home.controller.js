@@ -13,7 +13,7 @@
         $scope.map = getMap();
         $scope.selection = [];
         $scope.showRoute = showRoute;
-        $scope.checkAllTrucks = true;
+        $scope.checkAllElements = {'trucks':true, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
         $scope.checkCollection = checkCollection;
@@ -21,15 +21,52 @@
             trucks: [],
             blue: [],
             yellow: [],
-            green: []
+            green: [],
+            broken: []
         };
+        $scope.active = {'trucks': false, 'yellow': false, 'blue':false, 'green':false};
+        $scope.showList = showList;
+        $scope.fillingPercentageList = [];
+        $scope.selectContainers = selectContainers;
 
+        setList();
         // register on SSE
         registerSseService();
 
         // load data
         loadContainers();
         loadTrucks();
+
+        function isError(container){
+            for(var sensor in container.sensors){
+                if(container.sensors[sensor].errorCode != 0){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        function selectContainers(col, value){
+            for(var i=0; i< $scope.items[col].length; i++){
+                var x = parseFloat($scope.items[col][i].load.substr(0,$scope.items[col][i].load.length-1));
+                if(x > (parseInt(value)-10) && x < parseInt(value)){
+                    toggleSelection($scope.items[col][i]);
+                }
+            }
+        }
+
+
+        function setList() {
+            for(var i = 100; i >= 10; i-=10){
+                $scope.fillingPercentageList.push(i);
+            }
+        }
+
+        function showList(item) {
+            $scope.active[item] = !$scope.active[item];
+        }
+
 
         function registerSseService() {
             var onTruckUpdated = function (event) {
@@ -109,7 +146,7 @@
                     truck.registration = resp[i].registration;
                     $scope.items.trucks.push(truck);
 
-                    if ($scope.checkAllTrucks) {
+                    if ($scope.checkAllElements['trucks']) {
                         // select automatically
                         $scope.selection.push(truck);
                     }
@@ -153,11 +190,12 @@
                         capacity: 0,
                         load: 0,
                         type: "",
+                        sensors: {},
                         options: {
                             draggable: false,
                             icon: {
                                 url: 'assets/images/trash' + num + '_' + resp[i].type + '.png',
-                                scaledSize: {width: 40, height: 40}
+                                scaledSize: {width: 30, height: 30}
                             }
                         }
                     };
@@ -167,14 +205,29 @@
                     container.type = resp[i].type;
                     container.capacity = resp[i].capacity;
                     container.load = resp[i].sensors.load.value.toFixed(2) + '%';
+                    container.sensors = resp[i].sensors;
                     $scope.items[resp[i].type].push(container);
+
+                    if(isError(container)){
+                        $scope.items['broken'].push(container);
+                        container.options.icon.url = 'assets/images/trash_' + resp[i].type + '_error.png';
+                    }
+
+
+                    if (($scope.checkAllElements['yellow'] && container.type == 'yellow')
+                        || ($scope.checkAllElements['green'] && container.type == 'green')
+                    ||  ($scope.checkAllElements['blue'] && container.type == 'blue')){
+                        // select automatically
+                        $scope.selection.push(container);
+                    }
+
                 }
 
             })
         }
 
         function checkCollection(collectionName) {
-            if ($scope.checkAllTrucks) {
+            if ($scope.checkAllElements[collectionName]) {
                 checkAll(collectionName);
             } else {
                 uncheckAll(collectionName);
@@ -184,13 +237,17 @@
         function checkAll(collectionName) {
             for (var i = 0; i < $scope.items[collectionName].length; i++) {
                 var idx = $scope.selection.indexOf($scope.items[collectionName][i]);
-                // is currently selected
-                if (idx > -1) {
-                    // TODO what's here?
-                }
                 // is newly selected
-                else {
+                if (idx <= -1) {
                     $scope.selection.push($scope.items[collectionName][i]);
+                }
+            }
+            if(collectionName != 'trucks' && collectionName != 'broken'){
+                for(var j=10; j<=100; j+=10){
+                    var elem = document.getElementById(collectionName+'_'+j);
+                    if(!elem.checked){
+                        elem.checked = true;
+                    }
                 }
             }
         }
@@ -202,9 +259,13 @@
                 if (idx > -1) {
                     $scope.selection.splice(idx, 1);
                 }
-                // is newly selected
-                else {
-                    // TODO what's here?
+            }
+            if(collectionName != 'trucks' && collectionName != 'broken'){
+                for(var j=10; j<=100; j+=10){
+                    var elem = document.getElementById(collectionName+'_'+j);
+                    if(elem.checked){
+                        elem.checked = false;
+                    }
                 }
             }
         }
