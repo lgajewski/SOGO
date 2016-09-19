@@ -29,13 +29,13 @@
         $scope.fillingPercentageList = [];
         $scope.selectContainers = selectContainers;
 
-        setList();
-        // register on SSE
-        registerSseService();
+        // Server Side Events
+        configureSse();
 
         // load data
         loadContainers();
         loadTrucks();
+        setList();
 
         function isError(container){
             for(var sensor in container.sensors){
@@ -68,7 +68,7 @@
         }
 
 
-        function registerSseService() {
+        function configureSse() {
             var onTruckUpdated = function (event) {
                 var updatedTruck = JSON.parse(event.data);
                 $scope.$apply(function () {
@@ -80,7 +80,13 @@
                 });
             };
 
+            // register
             SseService.register(onTruckUpdated);
+
+            // unregister on exit
+            $scope.$on("$destroy", function(){
+                SseService.unregister(onTruckUpdated);
+            });
         }
 
         function getMap() {
