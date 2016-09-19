@@ -66,7 +66,7 @@
                         <td>gajo@gmail.com</td>
                         <td>administrative worker</td>
                         <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><a ui-sref="navbar.new_user"><i class="fa fa-check-square-o"></i></a></td>
+                        <td><a ng-click="acceptUser(item)"><i class="fa fa-minus-square-o"></i></a></td>
                     </tr>
                     <tr>
                         <td>siatek</td>
@@ -74,7 +74,7 @@
                         <td>siatek@gmail.com</td>
                         <td>administrative worker</td>
                         <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><i class="fa fa-minus-square-o"></i></td>
+                        <td><a ng-click="disableUser(item)"><i class="fa fa-check-square-o"></i></a></td>
                     </tr>
                     <tr>
                         <td>zuzia</td>
@@ -82,7 +82,7 @@
                         <td>zuzia@gmail.com</td>
                         <td>administrative worker</td>
                         <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><i class="fa fa-minus-square-o"></i></td>
+                        <td><a ng-click="acceptUser(item)"><i class="fa fa-minus-square-o"></i></a></td>
                     </tr>
                     <tr>
                         <td>patka</td>
@@ -90,7 +90,7 @@
                         <td>patka@gmail.com</td>
                         <td>administrative worker</td>
                         <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><i class="fa fa-minus-square-o"></i></td>
+                        <td><a ng-click="disableUser(item)"><i class="fa fa-check-square-o"></i></a></td>
                     </tr>
                     <tr>
                         <td>roman</td>
@@ -98,7 +98,7 @@
                         <td>Win XP SP2+</td>
                         <td>garbage collector</td>
                         <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><i class="fa fa-minus-square-o"></i></td>
+                        <td><a ng-click="disableUser(item)"><i class="fa fa-check-square-o"></i></a></td>
                     </tr>
                     </tbody>
                 </table>
