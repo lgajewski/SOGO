@@ -37,7 +37,6 @@
         loadTrucks();
         setList();
 
-        setList();
 
         function isError(container){
             for(var sensor in container.sensors){
