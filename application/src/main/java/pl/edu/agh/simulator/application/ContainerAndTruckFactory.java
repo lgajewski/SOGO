@@ -43,7 +43,7 @@ public class ContainerAndTruckFactory {
             container.addSensor("smell", smellSensor);
 
             Sensor deviceSensor = new Sensor<Integer>();
-            deviceSensor.setErrorCode(1);
+            deviceSensor.setErrorCode(r.nextInt(2));
             deviceSensor.setValue(r.nextInt(100));
             container.addSensor("device", deviceSensor);
             container.setLocation(new Location(50.047+(r.nextDouble()*24/1000), 19.915+(r.nextDouble()*54/1000)));
