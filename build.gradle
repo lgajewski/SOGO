@@ -1,17 +1,59 @@
-group 'pl.edu.agh'
-version '1.0'
-description = ''
+/* BUILD DEPENDENCIES */
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}"
+    }
+}
 
+/* GRADLE SSH PLUGIN  */
+plugins {
+    id 'org.hidetake.ssh' version '2.6.0'
+}
+
+/* PLUGINS */
 apply plugin: 'idea'
-
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
 
-defaultTasks 'bootRun'
+group 'pl.edu.agh'
+version '1.0'
+description = ''
 
+/* JAVA CONFIG */
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+remotes {
+    natd17 {
+        host = "nat-1.d17.iisg.agh.edu.pl"
+        port = 60622
+        user = project.hasProperty('ssh.user') ? project.getProperty('ssh.user') : 'root'
+        password = project.hasProperty('ssh.password') ? project.getProperty('ssh.password') : 'root'
+    }
+}
+
+ssh.settings {
+    knownHosts = allowAnyHosts
+}
+
+task deploy << {
+    ssh.run {
+        session(remotes.natd17) {
+            put from: 'build/libs/sogo-1.0.war', into: '/root/sogo'
+            execute 'service sogo restart'
+        }
+    }
+}
+deploy.dependsOn bootRepackage
+
+/* SPRING BOOT CONFIGURATION */
+defaultTasks 'bootRun'
 
 springBoot {
     mainClass = 'pl.edu.agh.sogo.App'
@@ -22,26 +64,14 @@ bootRepackage {
     mainClass = 'pl.edu.agh.sogo.App'
 }
 
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        jcenter()
-//        maven { url "http://repo.spring.io/plugins-release" }
-//        maven { url "http://repo.spring.io/milestone" }
-//        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}"
-    }
-}
-
+/* PROJECT REPOSITORIES */
 repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
 }
 
+/* PROJECT DEPENDENCIES */
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-mongodb"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
