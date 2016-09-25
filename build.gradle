@@ -50,6 +50,8 @@ dependencies {
     compile "org.springframework.boot:spring-boot-devtools"
 
 
+    compile "commons-lang:commons-lang:2.6"
+
     compile "javax.inject:javax.inject:1"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"

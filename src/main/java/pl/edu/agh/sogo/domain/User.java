@@ -63,6 +63,10 @@ public class User implements Serializable {
     @Field("reset_key")
     private String resetKey;
 
+    @Size(min = 2, max = 5)
+    @Field("lang_key")
+    private String langKey;
+
     @Field("reset_date")
     private ZonedDateTime resetDate = null;
 
@@ -156,6 +160,14 @@ public class User implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public String getLangKey() {
+        return langKey;
+    }
+
+    public void setLangKey(String langKey) {
+        this.langKey = langKey;
     }
 
     @Override
