@@ -10,6 +10,7 @@ import pl.edu.agh.sogo.persistence.AuthorityRepository;
 import pl.edu.agh.sogo.persistence.UserRepository;
 import pl.edu.agh.sogo.service.util.RandomUtil;
 import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
+import pl.edu.agh.sogo.web.dto.UserDTO;
 
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
@@ -60,7 +61,6 @@ public class UserService {
 
     public void updateUser(String id, String login, String firstName, String lastName, String email,
                            boolean activated, String langKey, Set<String> authorities) {
-
         userRepository
             .findOneById(id)
             .ifPresent(u -> {
@@ -87,11 +87,11 @@ public class UserService {
         });
     }
 
-    public Optional<User> getUserWithAuthoritiesByLogin(String login) {
+    public Optional<User> getUserByLogin(String login) {
         return userRepository.findOneByLogin(login);
     }
 
-    public User getUserWithAuthorities(String id) {
+    public User getUserById(String id) {
         return userRepository.findOne(id);
     }
 }

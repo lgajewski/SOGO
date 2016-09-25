@@ -3,9 +3,6 @@ package pl.edu.agh.sogo.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -54,9 +51,7 @@ public class UserController {
      * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Secured(SecurityConstants.ADMIN)
     public ResponseEntity<?> createUser(@RequestBody ManagedUserDTO managedUserDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserDTO);
@@ -81,9 +76,7 @@ public class UserController {
      * or with status 400 (Bad Request) if the login or email is already in use,
      * or with status 500 (Internal Server Error) if the user couldn't be updated
      */
-    @RequestMapping(value = "/users",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Secured(SecurityConstants.ADMIN)
     public ResponseEntity<ManagedUserDTO> updateUser(@RequestBody ManagedUserDTO managedUserDTO) {
         log.debug("REST request to update User : {}", managedUserDTO);
@@ -102,7 +95,7 @@ public class UserController {
 
         return ResponseEntity.ok()
             .headers(HeaderUtil.createAlert("A user is updated with identifier " + managedUserDTO.getLogin(), managedUserDTO.getLogin()))
-            .body(new ManagedUserDTO(userService.getUserWithAuthorities(managedUserDTO.getId())));
+            .body(new ManagedUserDTO(userService.getUserById(managedUserDTO.getId())));
     }
 
     /**
@@ -110,9 +103,8 @@ public class UserController {
      *
      * @return the ResponseEntity with status 200 (OK) and with body all users
      */
-    @RequestMapping(value = "/users",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(SecurityConstants.ADMIN)
     public ResponseEntity<List<ManagedUserDTO>> getAllUsers() {
         List<User> users = userRepository.findAll();
         List<ManagedUserDTO> managedUserDTOs = users.stream()
@@ -127,12 +119,12 @@ public class UserController {
      * @param login the login of the user to find
      * @return the ResponseEntity with status 200 (OK) and with body the "login" user, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/users/{login:" + SecurityConstants.LOGIN_REGEX + "}",
-        method = RequestMethod.GET,
+    @RequestMapping(value = "/{login:" + SecurityConstants.LOGIN_REGEX + "}", method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(SecurityConstants.ADMIN)
     public ResponseEntity<ManagedUserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
-        return userService.getUserWithAuthoritiesByLogin(login)
+        return userService.getUserByLogin(login)
             .map(ManagedUserDTO::new)
             .map(managedUserDTO -> new ResponseEntity<>(managedUserDTO, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -144,8 +136,7 @@ public class UserController {
      * @param login the login of the user to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/users/{login:" + SecurityConstants.LOGIN_REGEX + "}",
-        method = RequestMethod.DELETE,
+    @RequestMapping(value = "/{login:" + SecurityConstants.LOGIN_REGEX + "}", method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Secured(SecurityConstants.ADMIN)
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
