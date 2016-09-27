@@ -29,7 +29,7 @@ Only execute shell script to start:
 SOGO is already prepared to being deployed on external server.
 Type below command to automatically build .war file, upload it and restart SOGO service on the server:
 
-- [nat-1.d17.iisg.agh.edu.pl:60680]()
+- [nat-1.d17.iisg.agh.edu.pl:60680](http://nat-1.d17.iisg.agh.edu.pl:60680/)
 
 Make sure to update **SSH password** with current one!
 
