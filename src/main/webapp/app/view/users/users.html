@@ -16,17 +16,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>wojtek</td>
-                        <td>wojtek</td>
-                        <td>wojtek@gmail.com</td>
-                        <td>garbage collector</td>
-                    </tr>
-                    <tr>
-                        <td>bartek</td>
-                        <td>bartek</td>
-                        <td>bartek@gmail.com</td>
-                        <td>administrative worker</td>
+                    <tr ng-repeat="request in requests">
+                        <td>{{request.firstName + ' ' + request.lastName}}</td>
+                        <td>{{request.login}}</td>
+                        <td>{{request.email}}</td>
+                        <td>{{request.authorities}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -60,45 +54,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>gajo</td>
-                        <td>gajo</td>
-                        <td>gajo@gmail.com</td>
-                        <td>administrative worker</td>
+                    <tr ng-repeat="user in users">
+                        <td>{{user.firstName + ' ' + user.lastName}}</td>
+                        <td>{{user.login}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.authorities}}</td>
                         <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
                         <td><a ng-click="acceptUser(item)"><i class="fa fa-minus-square-o"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>siatek</td>
-                        <td>siatek123</td>
-                        <td>siatek@gmail.com</td>
-                        <td>administrative worker</td>
-                        <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><a ng-click="disableUser(item)"><i class="fa fa-check-square-o"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>zuzia</td>
-                        <td>zuziaaa</td>
-                        <td>zuzia@gmail.com</td>
-                        <td>administrative worker</td>
-                        <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><a ng-click="acceptUser(item)"><i class="fa fa-minus-square-o"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>patka</td>
-                        <td>patka23</td>
-                        <td>patka@gmail.com</td>
-                        <td>administrative worker</td>
-                        <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><a ng-click="disableUser(item)"><i class="fa fa-check-square-o"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>roman</td>
-                        <td>Internet Explorer 7</td>
-                        <td>Win XP SP2+</td>
-                        <td>garbage collector</td>
-                        <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><a ng-click="disableUser(item)"><i class="fa fa-check-square-o"></i></a></td>
                     </tr>
                     </tbody>
                 </table>
