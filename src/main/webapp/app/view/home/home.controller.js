@@ -29,6 +29,36 @@
         $scope.fillingPercentageList = [];
         $scope.selectContainers = selectContainers;
 
+        $scope.drawingManagerOptions = {
+            drawingMode: google.maps.drawing.OverlayType.MARKER,
+            drawingControl: false,
+            drawingControlOptions: {
+                position: google.maps.ControlPosition.TOP_CENTER,
+                drawingModes: [
+                    google.maps.drawing.OverlayType.MARKER
+                ]
+            },
+            markerOptions: {
+                icon: 'assets/images/truck.png'
+            }
+        };
+        $scope.markersAndCircleFlag = true;
+        $scope.drawingManagerControl = {};
+        $scope.$watch('markersAndCircleFlag', function() {
+            if (!$scope.drawingManagerControl.getDrawingManager) {
+                return;
+            }
+            var controlOptions = angular.copy($scope.drawingManagerOptions);
+            if (!$scope.markersAndCircleFlag) {
+                controlOptions.drawingControlOptions.drawingModes.shift();
+                controlOptions.drawingControlOptions.drawingModes.shift();
+            }
+            $scope.drawingManagerControl.getDrawingManager().setOptions(controlOptions);
+        });
+
+
+
+
         // Server Side Events
         configureSse();
 

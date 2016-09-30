@@ -36,9 +36,8 @@
                         </td>
                         <td>{{item.capacity}}</td>
                         <td>{{item.load}}</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
+                        <td><a href="" data-toggle="modal" data-target=".edit-modal"><i class="fa fa-edit fa-3px"></i></a></td>
                     </tr>
-
                     </tbody>
                 </table>
             </div>
@@ -56,15 +55,13 @@
         $('#trucks').DataTable({
             responsive: true
         });
-        var table = $('#trucks').DataTable(
-            {"ajax": anything}
- );
+        var table = $('#trucks').DataTable();
         new $.fn.dataTable.Buttons(table, {
             buttons: [
                 {
                     text: 'Add new truck',
                     action: function (e, dt, node, conf) {
-                        alert('Redirection to truck addition page');
+                        $('#myAddModalLabel').modal('toggle');
                     }
                 }
             ]
@@ -76,7 +73,7 @@
     });
 </script>
 
-<div class="modal fade add-modal" tabindex="-1" role="dialog" aria-labelledby="myAddModalLabel"
+<div id="myAddModalLabel" class="modal fade add-modal" tabindex="-1" role="dialog" aria-labelledby="myAddModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -91,21 +88,29 @@
                 <label>Registration</label>
                 <input class="form-control">
                 <label>Location</label>
-                <input class="form-control">
+                <div ng-controller="HomeController" >
+                    <ui-gmap-google-map center='defaultMapProperties.center' zoom='defaultMapProperties.zoom'>
+                        <!--<div>-->
+                            <!--<ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">-->
+                            <!--</ui-gmap-marker>-->
+                        <!--</div>-->
+                        <ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl"></ui-gmap-drawing-manager>
+                    </ui-gmap-google-map>
+                </div>
                 <label>Capacity</label>
                 <input class="form-control">
                 <label>Load</label>
                 <input class="form-control">
             </div>
             <div class="modal-footer">
-                <button type="button" id="btn-cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btn-cancelAdd" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-custom" data-dismiss="modal">Add</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel"
+<div id="myEditModalLabel" class="modal fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -120,14 +125,21 @@
                 <label>Registration</label>
                 <input class="form-control">
                 <label>Location</label>
-                <input class="form-control">
+                <div ng-controller="HomeController" >
+                    <ui-gmap-google-map  center='activeObject.map.center' zoom='activeObject.map.zoom'>
+                        <div>
+                            <ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">
+                            </ui-gmap-marker>
+                        </div>
+                    </ui-gmap-google-map>
+                </div>
                 <label>Capacity</label>
                 <input class="form-control">
                 <label>Load</label>
                 <input class="form-control">
             </div>
             <div class="modal-footer">
-                <button type="button" id="btn-cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btn-cancelEdit" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-custom" data-dismiss="modal">Save</button>
             </div>
         </div>

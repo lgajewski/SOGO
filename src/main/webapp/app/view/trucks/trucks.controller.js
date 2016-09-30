@@ -18,6 +18,15 @@
             $scope.activeObject.map.center.longitude = item.location.longitude
 
         };
+
+        $scope.defaultMapProperties = {
+            center: {
+                latitude: 50.0613356,
+                longitude: 19.9379844
+            },
+            zoom: 14
+        };
+
         $scope.getTrucks = function () {
             Restangular.all('trucks').getList().then(function (data) {
                 $scope.items = data;

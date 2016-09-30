@@ -9,6 +9,7 @@
 
     function ContainersController($scope, Restangular, ActiveItemService) {
         $scope.activeObject = ActiveItemService.getObject();
+
         $scope.setActiveObject = function (item) {
             $scope.activeObject.id = item.id;
             $scope.activeObject.coords = item.location;
@@ -16,6 +17,14 @@
             $scope.activeObject.map.center.latitude = item.location.latitude;
             $scope.activeObject.map.center.longitude = item.location.longitude
 
+        };
+
+        $scope.defaultMapProperties = {
+            center: {
+                latitude: 50.0613356,
+                longitude: 19.9379844
+            },
+            zoom: 14
         };
 
 

@@ -22,7 +22,7 @@
                     <tr ng-repeat="item in items">
                         <td>{{item.id}}</td>
                         <td>{{item.type}}</td>
-                        <td><a ng-click="showDetail(item);setActiveObject(item)">Show</a>
+                        <td><a href="" ng-click="showDetail(item);setActiveObject(item)">Show</a>
                             <div ng-if="active==item.id" ng-class-odd="'alt'">
                                 <div ng-controller="HomeController" >
                                     <ui-gmap-google-map  center='activeObject.map.center' zoom='activeObject.map.zoom'>
@@ -32,10 +32,11 @@
                                         </div>
                                     </ui-gmap-google-map>
                                 </div>
-                            </div></td>
+                            </div>
+                        </td>
                         <td>{{item.capacity}}</td>
                         <td>{{item.sensors.load.value.toFixed(2)}}</td>
-                        <td><a ui-sref="navbar.new_truck"><i class="fa fa-edit fa-3px"></i></a></td>
+                        <td><a href="" data-toggle="modal" data-target=".edit-modal" ng-click="alert(item);setActiveObject(item);alert(activeObject.map.center)"><i class="fa fa-edit fa-3px"></i></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -55,15 +56,13 @@
         $('#containers').DataTable({
             responsive: true
         });
-        var table = $('#containers').DataTable(
-            {"ajax": anything}
-        );
+        var table = $('#containers').DataTable();
         new $.fn.dataTable.Buttons(table, {
             buttons: [
                 {
                     text: 'Add new container',
                     action: function (e, dt, node, conf) {
-                        alert('Redirection to container addition page');
+                        $('#myAddModalLabel').modal('toggle');
                     }
                 }
             ]
@@ -75,7 +74,7 @@
     });
 </script>
 
-<div class="modal fade add-modal" tabindex="-1" role="dialog" aria-labelledby="myAddModalLabel"
+<div id="myAddModalLabel" class="modal fade add-modal" tabindex="-1" role="dialog" aria-labelledby="myAddModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -90,35 +89,43 @@
                 <label>Type</label>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>blue
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd1" value="option1" checked>blue
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">green
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd2" value="option2">green
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">yellow
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd3" value="option3">yellow
                     </label>
                 </div>
                 <label>Location</label>
-                <input class="form-control">
+                <div ng-controller="HomeController">
+                    <ui-gmap-google-map  center='defaultMapProperties.center' zoom='defaultMapProperties.zoom'>
+                        <!--<div>-->
+                            <!--<ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">-->
+                            <!--</ui-gmap-marker>-->
+                        <!--</div>-->
+                        <ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl"></ui-gmap-drawing-manager>
+                    </ui-gmap-google-map>
+                </div>
                 <label>Capacity</label>
                 <input class="form-control">
                 <label>Filling percentage</label>
                 <input class="form-control" type="range" min="10" max="1000" step="10" />
             </div>
             <div class="modal-footer">
-                <button type="button" id="btn-cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btn-cancelAdd" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-custom" data-dismiss="modal">Add</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel"
+<div id="myEditModalLabel" class="modal fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -133,28 +140,37 @@
                 <label>Type</label>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>blue
+                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit1" value="option1" checked>blue
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">green
+                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit2" value="option2">green
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">yellow
+                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit 3" value="option3">yellow
                     </label>
                 </div>
                 <label>Location</label>
-                <input class="form-control">
+                <div ng-controller="HomeController" >
+                    <div ng-controller="HomeController" >
+                        <ui-gmap-google-map  center='activeObject.map.center' zoom='activeObject.map.zoom'>
+                            <div>
+                                <ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">
+                                </ui-gmap-marker>
+                            </div>
+                        </ui-gmap-google-map>
+                    </div>
+                </div>
                 <label>Capacity</label>
                 <input class="form-control">
                 <label>Filling percentage</label>
                 <input class="form-control" type="range" min="10" max="1000" step="10" />
             </div>
             <div class="modal-footer">
-                <button type="button" id="btn-cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btn-cancelEdit" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-custom" data-dismiss="modal">Save</button>
             </div>
         </div>
