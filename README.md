@@ -27,10 +27,10 @@ Only execute shell script to start:
 ### Deployment
 
 SOGO is already prepared to being deployed on external server.
-Type below command to automatically build .war file, upload it and restart SOGO service on the server:
+Type below command to automatically clean your repository, build .war file, upload it and restart SOGO service on the server:
 
 - [nat-1.d17.iisg.agh.edu.pl:60680](http://nat-1.d17.iisg.agh.edu.pl:60680/)
 
 Make sure to update **SSH password** with current one!
 
-> ./gradlew deploy -Pssh.password=_[SSH_PASSWORD]_
+> ./gradlew clean deploy -Pssh.password=_[SSH_PASSWORD]_
