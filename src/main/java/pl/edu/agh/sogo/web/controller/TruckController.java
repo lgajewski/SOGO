@@ -78,7 +78,7 @@ public class TruckController {
         truckService.updateLocation(registration, location);
 
         // emit updated truck to browsers that subscribe on SSE
-        sseService.emit(truckService.findTruckByRegistration(registration));
+        sseService.emit("truck", truckService.findTruckByRegistration(registration));
     }
 }
 

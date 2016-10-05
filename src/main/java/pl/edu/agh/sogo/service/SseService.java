@@ -31,13 +31,13 @@ public class SseService {
         return sseEmitter;
     }
 
-    public void emit(Object object) {
+    public void emit(String eventName, Object object) {
         synchronized (cache) {
             Iterator<SseEmitter> it = cache.iterator();
             while (it.hasNext()) {
                 SseEmitter sseEmitter = it.next();
                 try {
-                    sseEmitter.send(object);
+                    sseEmitter.send(SseEmitter.event().name(eventName).data(object));
                 } catch (IOException | IllegalStateException e) {
                     log.warn("Unable to emit: " + e.getMessage());
 

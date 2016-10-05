@@ -13,13 +13,14 @@
 
         var cache = [];
 
-        function register(callback) {
+        function register(eventName, callback) {
             var index = cache.map(e => e.cb).indexOf(callback);
             if (index >= 0) {
                 console.error("Unable to register. This callback has been already registered.")
             } else {
                 var source = new EventSource("/api/sse");
-                source.onmessage = callback;
+
+                source.addEventListener(eventName, callback);
                 source.onerror = event => console.log(event);
                 source.onopen = event => console.log(event);
 

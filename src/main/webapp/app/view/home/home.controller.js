@@ -112,7 +112,7 @@
             };
 
             // register
-            SseService.register(onTruckUpdated);
+            SseService.register("truck", onTruckUpdated);
 
             // unregister on exit
             $scope.$on("$destroy", function(){

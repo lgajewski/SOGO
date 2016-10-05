@@ -50,13 +50,15 @@ public class ContainerController {
         return;
     }
 
-//    @ResponseBody
-//    @RequestMapping(method = RequestMethod.PUT)
-//    public void updateContainer(@RequestBody Container container) {
-//        log.info("[PUT][/api/containers] updateContainer(" + container + ")");
-//        containerService.update(container);
-//        return;
-//    }
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT)
+    public void updateContainer(@RequestBody Container container) {
+        log.info("[PUT][/api/containers] updateContainer(" + container + ")");
+        containerService.update(container);
+
+        // emit updated container to browsers that subscribe on SSE
+        sseService.emit("container", container);
+    }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -71,18 +73,6 @@ public class ContainerController {
     public void addSensor(@PathVariable(value = "id") String id, @RequestBody Sensor sensor, @RequestBody String sensorName) {
         containerService.addSensor(id, sensorName, sensor);
         log.info("[PATCH][/api/containers/" + id + "] addSensor(" + id + ", " + sensorName + ")");
-        return;
-    }
-
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.PUT)
-    public void updateContainer(@PathVariable(value = "id") String id, @RequestBody Container container) {
-        log.info("[PUT][/api/containers] updateContainer(" + container + ")");
-        containerService.update(container);
-
-        // emit updated container to browsers that subscribe on SSE
-        sseService.emit(containerService.getContainer(id));
-
         return;
     }
 }
