@@ -11,6 +11,7 @@
 
         $scope.getTrucks = getTrucks;
         $scope.deleteTruck = deleteTruck;
+        $scope.addTruck = addTruck;
         $scope.showDetail = showDetail;
         $scope.setActiveObject = setActiveObject;
         $scope.setTruckToEdit = setTruckToEdit;
@@ -40,9 +41,20 @@
             zoom: 14
         };
 
+
+        function addTruck(truck){
+            // TO DO - setting location
+            truck.location = {};
+            truck.location.latitude = $scope.defaultMapProperties.center.latitude;
+            truck.location.longitude = $scope.defaultMapProperties.center.longitude;
+            Restangular.all('trucks').customPOST(truck).then(function () {
+                $scope.getTrucks();
+            })
+        }
         function getTrucks() {
             Restangular.all('trucks').getList().then(function (data) {
                 $scope.items = data;
+                console.log($scope.items[0])
             })
         }
         function setActiveObject(item) {

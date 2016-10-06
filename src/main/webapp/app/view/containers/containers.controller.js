@@ -15,6 +15,7 @@
         $scope.showDetail = showDetail;
         $scope.deleteContainer = deleteContainer;
         $scope.getContainers = getContainers;
+        $scope.addContainer = addContainer;
         $scope.activeObject = ActiveItemService.getObject();
         $scope.getContainers();
 
@@ -38,6 +39,16 @@
             },
             zoom: 14
         };
+
+        function addContainer(container){
+            // TO DO - setting location
+            container.location = {};
+            container.location.latitude = $scope.defaultMapProperties.center.latitude;
+            container.location.longitude = $scope.defaultMapProperties.center.longitude;
+            Restangular.all('containers').customPOST(container).then(function () {
+                $scope.getContainers();
+            })
+        }
 
         function setActiveObject(item) {
             $scope.activeObject.coords = item.location;
