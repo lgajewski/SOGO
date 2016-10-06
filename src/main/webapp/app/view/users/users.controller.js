@@ -12,13 +12,36 @@
         $scope.users = [];
 
         $scope.acceptUser = function (item) {
-            Restangular.all('users').one(item.username).one('enable').post().then(function () {
+            var user = {};
+            user.activated = true;
+            user.authorities = item.authorities;
+            user.email = item.email;
+            user.firstName = item.firstName;
+            user.id = item.id;
+            user.langKey = item.langKey;
+            user.lastName = item.lastName;
+            user.login = item.login;
+            user.password = "";
+            console.log(user);
+            Restangular.one('users').put(user).then(function () {
                 $scope.getUsers();
             });
         };
 
         $scope.disableUser = function (item) {
-            Restangular.all('users').one(item.username).one('disable').post().then(function () {
+            var user = {};
+            user.activated = false;
+            user.authorities = item.authorities;
+            user.email = item.email;
+            user.firstName = item.firstName;
+            user.id = item.id;
+            user.langKey = item.langKey;
+            user.lastName = item.lastName;
+            user.login = item.login;
+            user.password = "";
+
+            console.log(user);
+            Restangular.one('users').put(user).then(function () {
                 $scope.getUsers();
             });
         };

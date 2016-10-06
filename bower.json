@@ -9,6 +9,7 @@
     "angular-simple-logger": "0.1.7",
     "angular-google-maps": "2.3.3",
     "angular-loading-bar": "0.9.0",
+    "angular-datatables": "0.5.5",
     "ngstorage": "0.3.10",
     "bootstrap": "3.3.7",
     "components-font-awesome": "4.6.3",

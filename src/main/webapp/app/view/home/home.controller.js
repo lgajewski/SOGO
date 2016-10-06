@@ -197,7 +197,8 @@
                 var num;
                 var load_value;
                 for (var i = 0; i < resp.length; i++) {
-                    load_value = resp[i].sensors.load.value.toFixed(2);
+                    console.log(resp[i].sensors.load.value);
+                    load_value = parseFloat(resp[i].sensors.load.value).toFixed(2);
                     if (load_value >= 0 && load_value < 5) {
                         num = 0;
                     } else if (load_value >= 5 && load_value < 15) {
@@ -241,7 +242,7 @@
                     container.coords.longitude = resp[i].location.longitude;
                     container.type = resp[i].type;
                     container.capacity = resp[i].capacity;
-                    container.load = resp[i].sensors.load.value.toFixed(2) + '%';
+                    container.load = parseFloat(resp[i].sensors.load.value).toFixed(2) + '%';
                     container.sensors = resp[i].sensors;
                     $scope.items[resp[i].type].push(container);
 

@@ -13,6 +13,7 @@
                         <th>Login</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Enable</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -21,6 +22,7 @@
                         <td>{{request.login}}</td>
                         <td>{{request.email}}</td>
                         <td>{{request.authorities}}</td>
+                        <td><a ng-click="acceptUser(request)"><i class="fa fa-minus-square-o"></i></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -49,8 +51,7 @@
                         <th>Login</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Edit</th>
-                        <th>Enable/disable</th>
+                        <th>Disable</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,8 +60,7 @@
                         <td>{{user.login}}</td>
                         <td>{{user.email}}</td>
                         <td>{{user.authorities}}</td>
-                        <td><a ui-sref="navbar.new_user"><i class="fa fa-edit fa-3px"></i></a></td>
-                        <td><a ng-click="acceptUser(item)"><i class="fa fa-minus-square-o"></i></a></td>
+                        <td><a ng-click="disableUser(user)"><i class="fa fa-minus-square-o"></i></a></td>
                     </tr>
                     </tbody>
                 </table>

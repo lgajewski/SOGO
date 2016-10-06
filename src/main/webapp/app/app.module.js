@@ -10,6 +10,7 @@
             'uiGmapgoogle-maps',
             'ngAnimate',
             'angular-loading-bar',
-            'checklist-model'
+            'checklist-model',
+            'datatables'
         ])
 })();
