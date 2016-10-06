@@ -57,7 +57,7 @@ public class TruckController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public void updateTruck(@RequestBody Truck truck) {
         log.info("[PUT][/api/trucks/] updateTruck()");
         truckService.update(truck);

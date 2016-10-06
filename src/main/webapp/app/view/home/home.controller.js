@@ -197,7 +197,6 @@
                 var num;
                 var load_value;
                 for (var i = 0; i < resp.length; i++) {
-                    console.log(resp[i].sensors.load.value);
                     load_value = parseFloat(resp[i].sensors.load.value).toFixed(2);
                     if (load_value >= 0 && load_value < 5) {
                         num = 0;

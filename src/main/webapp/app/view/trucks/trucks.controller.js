@@ -5,19 +5,32 @@
         .module('sogo')
         .controller('TrucksController', TrucksController);
 
-    TrucksController.$inject = ['$scope', 'Restangular', 'ActiveItemService'];
+    TrucksController.$inject = ['$scope', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
 
-    function TrucksController($scope, Restangular, ActiveItemService) {
+    function TrucksController($scope, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder) {
+
+        $scope.getTrucks = getTrucks;
+        $scope.deleteTruck = deleteTruck;
+        $scope.showDetail = showDetail;
+        $scope.setActiveObject = setActiveObject;
+        $scope.setTruckToEdit = setTruckToEdit;
+        $scope.editTruck = editTruck;
+
+        $scope.getTrucks();
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withOption('responsive', true);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2),
+            DTColumnDefBuilder.newColumnDef(3),
+            DTColumnDefBuilder.newColumnDef(4),
+            DTColumnDefBuilder.newColumnDef(5).notSortable()
+        ];
 
         $scope.activeObject = ActiveItemService.getObject();
-        $scope.setActiveObject = function (item) {
-            $scope.activeObject.id = item.id;
-            $scope.activeObject.coords = item.location;
-            $scope.activeObject.options.icon = 'assets/images/truck.png';
-            $scope.activeObject.map.center.latitude = item.location.latitude;
-            $scope.activeObject.map.center.longitude = item.location.longitude
-
-        };
 
         $scope.defaultMapProperties = {
             center: {
@@ -27,27 +40,43 @@
             zoom: 14
         };
 
-        $scope.getTrucks = function () {
+        function getTrucks() {
             Restangular.all('trucks').getList().then(function (data) {
                 $scope.items = data;
             })
-        };
-        $scope.getTrucks();
+        }
+        function setActiveObject(item) {
+            $scope.activeObject.id = item.id;
+            $scope.activeObject.coords = item.location;
+            $scope.activeObject.options.icon = 'assets/images/truck.png';
+            $scope.activeObject.map.center.latitude = item.location.latitude;
+            $scope.activeObject.map.center.longitude = item.location.longitude
+        }
 
-        $scope.deleteTruck = function (truck) {
+        function editTruck(truck){
+            Restangular.all('trucks').customPUT(truck).then(function () {
+                $scope.getTrucks();
+            })
+        }
+
+        function deleteTruck(truck) {
             Restangular.all('trucks').one(truck.registration).remove().then(function () {
                 $scope.getTrucks();
             })
-        };
+        }
 
-        $scope.showDetail = function (item) {
+        function setTruckToEdit(truck){
+            $scope.truckToEdit = truck;
+        }
+
+        function showDetail(item) {
             if ($scope.active != item.id) {
                 $scope.active = item.id;
             }
             else {
                 $scope.active = null;
             }
-        };
+        }
 
     }
 

@@ -36,11 +36,7 @@
                         </td>
                         <td>{{item.capacity}}</td>
                         <td>{{item.sensors.load.value}}</td>
-                        <!--<td><a href="" data-toggle="modal" data-target=".edit-modal" ng-click="alert(item);setActiveObject(item);alert(activeObject.map.center)"><i class="fa fa-edit fa-3px"></i></a></td>-->
                         <td>
-                            <!--<button class="btn btn-warning" data-toggle="modal" data-target=".edit-modal" ng-click="console.log('asdasd');alert(item);setActiveObject(item);alert(activeObject.map.center)">-->
-                               <!--<i class="fa fa-edit"></i>-->
-                            <!--</button>-->
                             <button type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".edit-modal" class="btn btn-warning"><i class="fa fa-edit"></i></button>
                             <button type="button" ng-click="deleteContainer(item)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                         </td>
@@ -57,31 +53,6 @@
 </div>
 <!-- /.row -->
 
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<!--<script>-->
-    <!--var editor;-->
-    <!--$(document).ready(function () {-->
-
-        <!--$('#containers').DataTable({-->
-            <!--responsive: true-->
-        <!--});-->
-        <!--var table = $('#containers').DataTable();-->
-        <!--new $.fn.dataTable.Buttons(table, {-->
-            <!--buttons: [-->
-                <!--{-->
-                    <!--text: 'Add new container',-->
-                    <!--action: function (e, dt, node, conf) {-->
-                        <!--$('#myAddModalLabel').modal('toggle');-->
-                    <!--}-->
-                <!--}-->
-            <!--]-->
-        <!--});-->
-
-        <!--table.buttons(0, null).container().prependTo(-->
-            <!--table.table().container()-->
-        <!--);-->
-    <!--});-->
-<!--</script>-->
 
 <div id="myAddModalLabel" class="modal fade add-modal" tabindex="-1" role="dialog" aria-labelledby="myAddModalLabel"
      aria-hidden="true">
@@ -174,7 +145,7 @@
                     </div>
                 </div>
                 <label>Capacity</label>
-                <input class="form-control" value="{{containerToEdit.capacity}}">
+                <input class="form-control" ng-model="containerToEdit.capacity">
                 <label>Filling percentage({{containerToEdit.sensors.load.value}}%)</label>
                 <input class="form-control" type="range" min="10" max="100" step="0.01" ng-model="containerToEdit.sensors.load.value"/>
             </div>
