@@ -84,16 +84,6 @@
             responsive: true
         });
         var table = $('#requests').DataTable();
-        new $.fn.dataTable.Buttons(table, {
-            buttons: [
-                {
-                    text: 'Add new user',
-                    action: function (e, dt, node, conf) {
-                        alert('Redirection to user addition page');
-                    }
-                }
-            ]
-        });
 
         table.buttons(0, null).container().prependTo(
             table.table().container()
