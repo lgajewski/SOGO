@@ -24,6 +24,7 @@
             green: [],
             broken: []
         };
+        $scope.users = [];
         $scope.active = {'trucks': false, 'yellow': false, 'blue':false, 'green':false};
         $scope.showList = showList;
         $scope.fillingPercentageList = [];
@@ -65,6 +66,7 @@
         // load data
         loadContainers();
         loadTrucks();
+        loadUsers();
         setList();
 
 
@@ -260,6 +262,12 @@
 
                 }
 
+            })
+        }
+
+        function loadUsers() {
+            Restangular.all('users').getList().then(function (data) {
+                $scope.users = data;
             })
         }
 
