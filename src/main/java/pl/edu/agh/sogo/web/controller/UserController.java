@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.User;
 import pl.edu.agh.sogo.persistence.UserRepository;
 import pl.edu.agh.sogo.security.SecurityConstants;
+import pl.edu.agh.sogo.service.MailService;
 import pl.edu.agh.sogo.service.UserService;
 import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
 import pl.edu.agh.sogo.web.util.HeaderUtil;
@@ -38,6 +39,9 @@ public class UserController {
     @Inject
     private UserService userService;
 
+    @Inject
+    private MailService mailService;
+
     /**
      * POST  /users  : Creates a new user.
      * <p>
@@ -56,12 +60,24 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody ManagedUserDTO managedUserDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserDTO);
 
-        // lowercase the user login before comparing with database
-        if (userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase()).isPresent() ||
-            userRepository.findOneByEmail(managedUserDTO.getEmail()).isPresent()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        //Lowercase the user login before comparing with database
+        if (userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use"))
+                .body(null);
+        } else if (userRepository.findOneByEmail(managedUserDTO.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "Email already in use"))
+                .body(null);
         } else {
             User newUser = userService.createUser(managedUserDTO);
+            String baseUrl = request.getScheme() + // "http"
+                "://" +                                // "://"
+                request.getServerName() +              // "myhost"
+                ":" +                                  // ":"
+                request.getServerPort() +              // "80"
+                request.getContextPath();              // "/myContextPath" or "" if deployed in root context
+            mailService.sendCreationEmail(newUser, baseUrl);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert("A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
                 .body(newUser);
@@ -88,7 +104,6 @@ public class UserController {
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use")).body(null);
         }
-
         userService.updateUser(managedUserDTO.getId(), managedUserDTO.getLogin(), managedUserDTO.getFirstName(),
             managedUserDTO.getLastName(), managedUserDTO.getEmail(), managedUserDTO.isActivated(),
             managedUserDTO.getLangKey(), managedUserDTO.getAuthorities());

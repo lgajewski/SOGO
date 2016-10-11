@@ -10,13 +10,12 @@ import pl.edu.agh.sogo.persistence.AuthorityRepository;
 import pl.edu.agh.sogo.persistence.UserRepository;
 import pl.edu.agh.sogo.service.util.RandomUtil;
 import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
-import pl.edu.agh.sogo.web.dto.UserDTO;
 
 import javax.inject.Inject;
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Service class for managing users.
@@ -42,17 +41,17 @@ public class UserService {
         user.setLastName(managedUserDTO.getLastName());
         user.setEmail(managedUserDTO.getEmail());
         user.setLangKey((managedUserDTO.getLangKey() == null) ? "en" : managedUserDTO.getLangKey());
+        Set<Authority> authorities = new HashSet<>();
         if (managedUserDTO.getAuthorities() != null) {
-            Set<Authority> authorities = new HashSet<>();
             managedUserDTO.getAuthorities().stream().forEach(
                 authority -> authorities.add(authorityRepository.findOne(authority))
             );
-            user.setAuthorities(authorities);
         }
+        user.setAuthorities(authorities);
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
-        user.setResetDate(ZonedDateTime.now());
+        user.setResetDate(System.currentTimeMillis());
         user.setActivated(true);
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
@@ -70,11 +69,11 @@ public class UserService {
                 u.setEmail(email);
                 u.setActivated(activated);
                 u.setLangKey(langKey);
-                Set<Authority> managedAuthorities = u.getAuthorities();
-                managedAuthorities.clear();
-                authorities.stream().forEach(
-                    authority -> managedAuthorities.add(authorityRepository.findOne(authority))
-                );
+                u.setAuthorities(Optional.ofNullable(authorities).orElse(new HashSet<>())
+                    .stream()
+                    .map(authority -> authorityRepository.findOne(authority))
+                    .collect(Collectors.toSet()));
+
                 userRepository.save(u);
                 log.debug("Changed Information for User: {}", u);
             });

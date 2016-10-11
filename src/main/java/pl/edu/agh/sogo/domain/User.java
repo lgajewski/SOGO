@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Locale;
@@ -68,7 +69,7 @@ public class User implements Serializable {
     private String langKey;
 
     @Field("reset_date")
-    private ZonedDateTime resetDate = null;
+    private long resetDate;
 
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
@@ -146,11 +147,11 @@ public class User implements Serializable {
         this.resetKey = resetKey;
     }
 
-    public ZonedDateTime getResetDate() {
+    public long getResetDate() {
         return resetDate;
     }
 
-    public void setResetDate(ZonedDateTime resetDate) {
+    public void setResetDate(long resetDate) {
         this.resetDate = resetDate;
     }
 

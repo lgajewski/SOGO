@@ -79,6 +79,9 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-devtools"
 
+    compile "org.springframework:spring-context-support"
+
+    compile "org.apache.geronimo.javamail:geronimo-javamail_1.4_mail:1.8.4"
     compile "commons-lang:commons-lang:2.6"
 
     compile "javax.inject:javax.inject:1"
