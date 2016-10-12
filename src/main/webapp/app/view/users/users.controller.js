@@ -5,11 +5,25 @@
         .module('sogo')
         .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$scope', '$filter', 'Restangular'];
+    UsersController.$inject = ['$scope', '$filter', 'Restangular', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
 
-    function UsersController($scope, $filter, Restangular) {
+    function UsersController($scope, $filter, Restangular, DTOptionsBuilder, DTColumnDefBuilder) {
         $scope.requests = [];
         $scope.users = [];
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withOption('responsive', true);
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2),
+            DTColumnDefBuilder.newColumnDef(3),
+            DTColumnDefBuilder.newColumnDef(4).notSortable()
+        ];
+
+
+
 
         $scope.acceptUser = function (item) {
             var user = {};

@@ -44,7 +44,7 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
-                <table width="100%" class="table table-striped table-bordered table-hover" id="users">
+                <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" width="100%" class="table table-striped table-bordered table-hover" id="users">
                     <thead>
                     <tr>
                         <th>Name</th>
@@ -75,18 +75,28 @@
 <!-- /.row -->
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
-    $(document).ready(function () {
-        $('#requests').DataTable({
-            responsive: true
-        });
-        $('#users').DataTable({
-            responsive: true
-        });
-        var table = $('#requests').DataTable();
+<!--<script>-->
+    <!--$(document).ready(function () {-->
+        <!--$('#requests').DataTable({-->
+            <!--responsive: true-->
+        <!--});-->
+        <!--$('#users').DataTable({-->
+            <!--responsive: true-->
+        <!--});-->
+        <!--var table = $('#requests').DataTable();-->
+        <!--new $.fn.dataTable.Buttons(table, {-->
+            <!--buttons: [-->
+                <!--{-->
+                    <!--text: 'Add new user',-->
+                    <!--action: function (e, dt, node, conf) {-->
+                        <!--alert('Redirection to user addition page');-->
+                    <!--}-->
+                <!--}-->
+            <!--]-->
+        <!--});-->
 
-        table.buttons(0, null).container().prependTo(
-            table.table().container()
-        );
-    });
-</script>
+        <!--table.buttons(0, null).container().prependTo(-->
+            <!--table.table().container()-->
+        <!--);-->
+    <!--});-->
+<!--</script>-->
