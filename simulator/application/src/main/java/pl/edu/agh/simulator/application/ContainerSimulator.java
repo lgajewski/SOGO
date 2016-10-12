@@ -95,13 +95,13 @@ public class ContainerSimulator implements Runnable {
                             Sensor sensor = container.getSensors().get(sensorType);
                             if (sensorType.equalsIgnoreCase("device")) {
                                 System.out.println(sensorType);
-                                if ((double) sensor.getValue() <= 99) {
-                                    sensor.setValue((int) ((double) sensor.getValue() + 1));
+                                if (Double.parseDouble(sensor.getValue().toString()) <= 99) {
+                                    sensor.setValue((int) (Double.parseDouble(sensor.getValue().toString()) + 1));
                                 }
                             } else {
                                 double rn = rand.nextDouble();
-                                if ((double) sensor.getValue() + rn < 100.0) {
-                                    sensor.setValue((double) sensor.getValue() + rn);
+                                if (Double.parseDouble(sensor.getValue().toString()) + rn < 100.0) {
+                                    sensor.setValue(Double.parseDouble(sensor.getValue().toString()) + rn);
                                 }
                             }
                         }
