@@ -27,34 +27,156 @@
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
             DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(4),
-            DTColumnDefBuilder.newColumnDef(5).notSortable()
+            DTColumnDefBuilder.newColumnDef(4).notSortable()
         ];
 
         $scope.activeObject = ActiveItemService.getObject();
+        $scope.truckToAdd = {};
+        $scope.truckToEdit = {};
+        var mapCenter = new google.maps.LatLng(50.0613356, 19.9379844);
 
         $scope.defaultMapProperties = {
-            center: {
-                latitude: 50.0613356,
-                longitude: 19.9379844
-            },
-            zoom: 14
+            center: mapCenter,
+            zoom: 14,
+            draggable: true,
+            scrollwheel: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            events: {
+                idle: function () {
+                    console.log('idle');
+                }
+            }
         };
 
+        $scope.truckAddMap = new google.maps.Map(document.getElementById("map-canvas-addtruck"), $scope.defaultMapProperties);
+        $scope.truckEditMap = new google.maps.Map(document.getElementById("map-canvas-edittruck"), $scope.defaultMapProperties);
+        $scope.truckShowMap = new google.maps.Map(document.getElementById("map-canvas-showtruck"), $scope.defaultMapProperties);
 
-        function addTruck(truck){
-            // TO DO - setting location
-            truck.location = {};
-            truck.location.latitude = $scope.defaultMapProperties.center.latitude;
-            truck.location.longitude = $scope.defaultMapProperties.center.longitude;
-            Restangular.all('trucks').customPOST(truck).then(function () {
-                $scope.getTrucks();
-            })
+        var marker;
+
+
+
+        google.maps.event.addListener($scope.truckAddMap, 'click', function(event){
+            addMarker(event.latLng, 'assets/images/truck.png',
+                $scope.truckAddMap, $scope.truckToAdd);
+        });
+
+        google.maps.event.addListener($scope.truckEditMap, 'click', function(event){
+            addMarker(event.latLng, 'assets/images/truck.png',
+                $scope.truckEditMap, $scope.truckToEdit);
+        });
+
+
+        $('#myAddModalLabel').on('show.bs.modal', function() {
+            //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
+            resizeMap($scope.truckAddMap);
+        });
+
+        $('#myAddModalLabel').on('hidden.bs.modal', function() {
+            if(marker != null){
+                marker.setMap(null);
+            }
+        });
+
+        $('#myEditModalLabel').on('show.bs.modal', function() {
+            //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
+            resizeMap($scope.truckEditMap);
+            var pos = new google.maps.LatLng($scope.truckToEdit.location.latitude, $scope.truckToEdit.location.longitude);
+            addMarker(pos, 'assets/images/truck.png',
+                $scope.truckEditMap, $scope.truckToEdit);
+            $scope.truckEditMap.center = new google.maps.LatLng($scope.truckToEdit.location.latitude, $scope.truckToEdit.location.longitude);
+
+        });
+
+        $('#myEditModalLabel').on('hidden.bs.modal', function() {
+            if(marker != null){
+                marker.setMap(null);
+            }
+        });
+
+        $('#myShowLocationModalLabel').on('show.bs.modal', function() {
+            //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
+            resizeMap($scope.truckShowMap);
+            var pos = new google.maps.LatLng($scope.truckToEdit.location.latitude, $scope.truckToEdit.location.longitude);
+            addMarker(pos, 'assets/images/truck.png',
+                $scope.truckShowMap, $scope.truckToEdit);
+            $scope.truckShowMap.center = new google.maps.LatLng($scope.truckToEdit.location.latitude, $scope.truckToEdit.location.longitude);
+
+        });
+
+        $('#myShowLocationModalLabel').on('hidden.bs.modal', function() {
+            if(marker != null){
+                marker.setMap(null);
+            }
+        });
+
+        function addMarker(latLng, icon, map, item){
+            //clear the previous marker and circle.
+            if(marker != null){
+                marker.setMap(null);
+            }
+
+            marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                draggable: false,
+                icon: {
+                    url: icon,
+                    scaledSize: {width: 30, height: 30}
+                }
+            });
+
+            if(item) {
+                var contentString = '<table style="width:100%">'
+                    + '<tbody>'
+                    + '<tr>'
+                    + '<td>Id:</td>'
+                    + '<td>' + item.id + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Registration:</td>'
+                    + '<td>' + item.registration + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Capacity:</td>'
+                    + '<td>' + item.capacity + 'kg</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Load:</td>'
+                    + '<td>' + item.load + 'kg</td>'
+                    + '</tr>'
+                    + '</tbody>'
+                    + '</table>';
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                });
+            }
+            item.location = {};
+            item.location.latitude = marker.position.lat();
+            item.location.longitude = marker.position.lng();
         }
+
+        function resizeMap(map) {
+            if(typeof map == "undefined") return;
+            setTimeout( function(){resizingMap(map);} , 400);
+        }
+
+        function resizingMap(map) {
+            if(typeof map == "undefined") return;
+            var center = map.getCenter();
+            google.maps.event.trigger(map, "resize");
+            map.setCenter(center);
+
+        }
+
         function getTrucks() {
             Restangular.all('trucks').getList().then(function (data) {
                 $scope.items = data;
-                console.log($scope.items[0])
             })
         }
         function setActiveObject(item) {
@@ -63,6 +185,16 @@
             $scope.activeObject.options.icon = 'assets/images/truck.png';
             $scope.activeObject.map.center.latitude = item.location.latitude;
             $scope.activeObject.map.center.longitude = item.location.longitude
+        }
+
+        function addTruck(truck){
+            Restangular.all('trucks').customPOST(truck).then(function () {
+                $scope.getTrucks();
+                if(marker != null){
+                    marker.setMap(null);
+                }
+                $scope.truckToAdd = {};
+            })
         }
 
         function editTruck(truck){
@@ -78,7 +210,8 @@
         }
 
         function setTruckToEdit(truck){
-            $scope.truckToEdit = truck;
+            $scope.truckToEdit = _.clone(truck);
+
         }
 
         function showDetail(item) {

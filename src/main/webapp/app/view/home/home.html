@@ -49,7 +49,7 @@
                 </div>
             </div>
             <a href="">
-                <div class="panel-footer">
+                <div class="panel-footer" data-toggle="modal" data-target="#myAddTruckModalLabel">
                     <span class="pull-left">Add new truck</span>
                     <span class="pull-right"><i class="fa fa-plus"></i></span>
                     <div class="clearfix"></div>
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <a href="">
-                <div class="panel-footer">
+                <div class="panel-footer" data-toggle="modal" data-target="#myAddContainerModalLabel">
                     <span class="pull-left">Add new container</span>
                     <span class="pull-right"><i class="fa fa-plus"></i></span>
                     <div class="clearfix"></div>
@@ -152,8 +152,8 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
-                <ui-gmap-google-map center='map.center' zoom='map.zoom' events="map.events" options="map.options"
-                                    bounds="map.bounds" control="map.control">
+                <ui-gmap-google-map center='mapOptions.center' zoom='mapOptions.zoom' events="mapOptions.events" options="mapOptions.options"
+                                    bounds="mapOptions.bounds" control="mapOptions.control">
                     <div ng-repeat="marker in selection">
                     <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
                         <ui-gmap-window>
@@ -183,8 +183,6 @@
                         </table>
                         </ui-gmap-window>
                     </ui-gmap-marker>
-                    <!--<ui-gmap-marker ng-repeat="marker in items['trucks']"  coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">-->
-                        <!--</ui-gmap-marker>-->
                     </div>
 
                 </ui-gmap-google-map>
@@ -313,4 +311,78 @@
 </script>
 
 <!-- /.col-lg-8 -->
+
+<div id="myAddTruckModalLabel" class="modal fade add-modal" tabindex="-1" role="dialog" aria-labelledby="myAddTruckModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Add new truck</h4>
+            </div>
+            <div class="modal-body" id="addTruckModalBody">
+                <label>Registration</label>
+                <input class="form-control" ng-model="truckToAdd.registration">
+                <label>Location</label>
+                <div id="map-canvas-addtruck" class="angular-google-map-container"></div>
+                <label>Capacity</label>
+                <input class="form-control" ng-model="truckToAdd.capacity">
+                <label>Load</label>
+                <input class="form-control" ng-model="truckToAdd.load">
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-cancelAddTruck" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-custom" data-dismiss="modal" ng-click="addTruck(truckToAdd)">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myAddContainerModalLabel" class="modal fade add-modal" tabindex="-1" role="dialog" aria-labelledby="myAddContainerModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Add new container</h4>
+            </div>
+            <div class="modal-body">
+                <label>Type</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd1" value="blue"  ng-model="containerToAdd.type">blue
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd2" value="green"  ng-model="containerToAdd.type">green
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd3" value="yellow" ng-model="containerToAdd.type">yellow
+                    </label>
+                </div>
+                <label>Location</label>
+                <div id="map-canvas-addcontainer" class="angular-google-map-container">
+
+                </div>
+                <label>Capacity</label>
+                <input class="form-control" ng-model="containerToAdd.capacity">
+                <label>Filling percentage({{containerToAdd.sensors.load.value}}%)</label>
+                <input class="form-control" type="range" min="0" max="100" step="0.01"  ng-model="containerToAdd.sensors.load.value"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-cancelAddContainer" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-custom" data-dismiss="modal" ng-click="addContainer(containerToAdd)">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
 

@@ -13,31 +13,19 @@
                     <tr>
                         <th>ID</th>
                         <th>Registration</th>
-                        <th>Location</th>
-                        <th>Capacity</th>
-                        <th>Load</th>
-                        <th>Edit</th>
+                        <th>Capacity[kg]</th>
+                        <th>Load[kg]</th>
+                        <th>Options</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in items">
                         <td>{{item.id}}</td>
                         <td>{{item.registration}}</td>
-                        <td><a href="" ng-click="showDetail(item);setActiveObject(item)">Show</a>
-                            <div ng-if="active==item.id" ng-class-odd="'alt'">
-                                <div ng-controller="HomeController" >
-                                    <ui-gmap-google-map  center='activeObject.map.center' zoom='activeObject.map.zoom'>
-                                        <div>
-                                            <ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">
-                                            </ui-gmap-marker>
-                                        </div>
-                                    </ui-gmap-google-map>
-                                </div>
-                            </div>
-                        </td>
                         <td>{{item.capacity}}</td>
                         <td>{{item.load}}</td>
                         <td>
+                            <button type="button" ng-click="setTruckToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".show-modal" class="btn btn-primary"><i class="fa fa-map-marker"></i></button>
                             <button type="button" ng-click="setTruckToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".edit-modal" class="btn btn-warning"><i class="fa fa-edit"></i></button>
                             <button type="button" ng-click="deleteTruck(item)" class="btn btn-danger">
                                 <i class="fa fa-trash-o"></i>
@@ -69,25 +57,17 @@
             </div>
             <div class="modal-body">
                 <label>Registration</label>
-                <input class="form-control" ng-model="truckToEdit.registration">
+                <input class="form-control" ng-model="truckToAdd.registration">
                 <label>Location</label>
-                <div ng-controller="HomeController">
-                    <ui-gmap-google-map center='defaultMapProperties.center' zoom='defaultMapProperties.zoom'>
-                        <!--<div>-->
-                            <!--<ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">-->
-                            <!--</ui-gmap-marker>-->
-                        <!--</div>-->
-                        <!--<ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl"></ui-gmap-drawing-manager>-->
-                    </ui-gmap-google-map>
-                </div>
-                <label>Capacity</label>
-                <input class="form-control" ng-model="truckToEdit.capacity">
-                <label>Load</label>
-                <input class="form-control" ng-model="truckToEdit.load">
+                <div id="map-canvas-addtruck" class="angular-google-map-container"></div>
+                <label>Capacity[kg]</label>
+                <input class="form-control" ng-model="truckToAdd.capacity">
+                <label>Load[kg]</label>
+                <input class="form-control" ng-model="truckToAdd.load">
             </div>
             <div class="modal-footer">
                 <button type="button" id="btn-cancelAdd" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-custom" data-dismiss="modal" ng-click="addTruck(truckToEdit)">Add</button>
+                <button type="button" class="btn btn-custom" data-dismiss="modal" ng-click="addTruck(truckToAdd)">Add</button>
             </div>
         </div>
     </div>
@@ -108,22 +88,33 @@
                 <label>Registration</label>
                 <input class="form-control" ng-model="truckToEdit.registration">
                 <label>Location</label>
-                <div ng-controller="HomeController" >
-                    <ui-gmap-google-map  center='activeObject.map.center' zoom='activeObject.map.zoom'>
-                        <div>
-                            <ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">
-                            </ui-gmap-marker>
-                        </div>
-                    </ui-gmap-google-map>
-                </div>
-                <label>Capacity</label>
+                <div id="map-canvas-edittruck" class="angular-google-map-container"></div>
+                <label>Capacity[kg]</label>
                 <input class="form-control" ng-model="truckToEdit.capacity">
-                <label>Load</label>
+                <label>Load[kg]</label>
                 <input class="form-control" ng-model="truckToEdit.load">
             </div>
             <div class="modal-footer">
                 <button type="button" id="btn-cancelEdit" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-custom" data-dismiss="modal" ng-click="editTruck(truckToEdit)">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myShowLocationModalLabel" class="modal fade show-modal" tabindex="-1" role="dialog" aria-labelledby="myShowLocationModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Truck location</h4>
+            </div>
+            <div class="modal-body">
+                <div id="map-canvas-showtruck" class="angular-google-map-container"></div>
             </div>
         </div>
     </div>

@@ -13,31 +13,19 @@
                     <tr>
                         <th>ID</th>
                         <th>Type</th>
-                        <th>Location</th>
-                        <th>Capacity</th>
+                        <th>Capacity[kg]</th>
                         <th>Filling percentage</th>
-                        <th>Edit</th>
+                        <th>Options</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in items">
                         <td>{{item.id}}</td>
                         <td>{{item.type}}</td>
-                        <td><a href="" ng-click="showDetail(item);setActiveObject(item)">Show</a>
-                            <div ng-if="active==item.id" ng-class-odd="'alt'">
-                                <div ng-controller="HomeController" >
-                                    <ui-gmap-google-map  center='activeObject.map.center' zoom='activeObject.map.zoom'>
-                                        <div>
-                                            <ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">
-                                            </ui-gmap-marker>
-                                        </div>
-                                    </ui-gmap-google-map>
-                                </div>
-                            </div>
-                        </td>
                         <td>{{item.capacity}}</td>
-                        <td>{{item.sensors.load.value}}</td>
+                        <td>{{item.sensors.load.value.toFixed(2)}}%</td>
                         <td>
+                            <button type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".show-modal" class="btn btn-primary"><i class="fa fa-map-marker"></i></button>
                             <button type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".edit-modal" class="btn btn-warning"><i class="fa fa-edit"></i></button>
                             <button type="button" ng-click="deleteContainer(item)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                         </td>
@@ -70,37 +58,29 @@
                 <label>Type</label>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd1" value="blue"  ng-model="containerToEdit.type">blue
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd1" value="blue"  ng-model="containerToAdd.type">blue
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd2" value="green"  ng-model="containerToEdit.type">green
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd2" value="green"  ng-model="containerToAdd.type">green
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd3" value="yellow" ng-model="containerToEdit.type">yellow
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd3" value="yellow" ng-model="containerToAdd.type">yellow
                     </label>
                 </div>
                 <label>Location</label>
-                <div ng-controller="HomeController">
-                    <ui-gmap-google-map  center='defaultMapProperties.center' zoom='defaultMapProperties.zoom'>
-                        <!--<div>-->
-                            <!--<ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">-->
-                            <!--</ui-gmap-marker>-->
-                        <!--</div>-->
-                        <!--<ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl"></ui-gmap-drawing-manager>-->
-                    </ui-gmap-google-map>
-                </div>
+                <div id="map-canvas-addcontainer" class="angular-google-map-container"></div>
                 <label>Capacity</label>
-                <input class="form-control" ng-model="containerToEdit.capacity">
-                <label>Filling percentage({{containerToEdit.sensors.load.value}}%)</label>
-                <input class="form-control" type="range" min="0" max="100" step="0.01"  ng-model="containerToEdit.sensors.load.value"/>
+                <input class="form-control" ng-model="containerToAdd.capacity">
+                <label>Filling percentage({{containerToAdd.sensors.load.value}}%)</label>
+                <input class="form-control" type="range" min="0" max="100" step="0.01"  ng-model="containerToAdd.sensors.load.value"/>
             </div>
             <div class="modal-footer">
                 <button type="button" id="btn-cancelAdd" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-custom" data-dismiss="modal" ng-click="addContainer(containerToEdit)">Add</button>
+                <button type="button" class="btn btn-custom" data-dismiss="modal" ng-click="addContainer(containerToAdd)">Add</button>
             </div>
         </div>
     </div>
@@ -121,30 +101,21 @@
                 <label>Type</label>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit1" value="option1" ng-checked="containerToEdit.type == 'blue'">blue
+                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit1" value="blue" ng-model="containerToEdit.type">blue
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit2" value="option2" ng-checked="containerToEdit.type == 'green'">green
+                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit2" value="green" ng-model="containerToEdit.type">green
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit3" value="option3" ng-checked="containerToEdit.type == 'yellow'">yellow
+                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit3" value="yellow" ng-model="containerToEdit.type">yellow
                     </label>
                 </div>
                 <label>Location</label>
-                <div ng-controller="HomeController" >
-                    <div ng-controller="HomeController" >
-                        <ui-gmap-google-map  center='activeObject.map.center' zoom='activeObject.map.zoom'>
-                            <div>
-                                <ui-gmap-marker coords="activeObject.coords" options="activeObject.options" events="activeObject.events" idkey="activeObject.id">
-                                </ui-gmap-marker>
-                            </div>
-                        </ui-gmap-google-map>
-                    </div>
-                </div>
+                <div id="map-canvas-editcontainer" class="angular-google-map-container"></div>
                 <label>Capacity</label>
                 <input class="form-control" ng-model="containerToEdit.capacity">
                 <label>Filling percentage({{containerToEdit.sensors.load.value}}%)</label>
@@ -153,6 +124,25 @@
             <div class="modal-footer">
                 <button type="button" id="btn-cancelEdit" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-custom" data-dismiss="modal" ng-click="editContainer(containerToEdit)">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="myShowLocationModalLabel" class="modal fade show-modal" tabindex="-1" role="dialog" aria-labelledby="myShowLocationModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Container location</h4>
+            </div>
+            <div class="modal-body">
+                <div id="map-canvas-showcontainer" class="angular-google-map-container"></div>
             </div>
         </div>
     </div>

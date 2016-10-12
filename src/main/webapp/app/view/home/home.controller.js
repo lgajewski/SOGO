@@ -5,15 +5,15 @@
         .module('sogo')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService'];
+    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService' ,'uiGmapIsReady'];
 
-    function HomeController($scope, Restangular, SseService, DirectionsService) {
+    function HomeController($scope, Restangular, SseService, DirectionsService, uiGmapIsReady) {
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = () => true;
-        $scope.map = getMap();
+        $scope.mapOptions = getMap();
         $scope.selection = [];
         $scope.showRoute = showRoute;
-        $scope.checkAllElements = {'trucks':true, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
+        $scope.checkAllElements = {'trucks':false, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
         $scope.checkCollection = checkCollection;
@@ -29,32 +29,71 @@
         $scope.showList = showList;
         $scope.fillingPercentageList = [];
         $scope.selectContainers = selectContainers;
+        $scope.addContainer = addContainer;
+        $scope.addTruck = addTruck;
+        $scope.containerToAdd = {};
+        $scope.containerToAdd.type = 'blue';
+        $scope.truckToAdd = {};
 
-        $scope.drawingManagerOptions = {
-            drawingMode: google.maps.drawing.OverlayType.MARKER,
-            drawingControl: false,
-            drawingControlOptions: {
-                position: google.maps.ControlPosition.TOP_CENTER,
-                drawingModes: [
-                    google.maps.drawing.OverlayType.MARKER
-                ]
-            },
-            markerOptions: {
-                icon: 'assets/images/truck.png'
+        var marker;
+        var mapCenter = new google.maps.LatLng($scope.mapOptions.center.latitude, $scope.mapOptions.center.longitude);
+
+        $scope.mapProp = {
+            center: mapCenter,
+            zoom: 14,
+            draggable: true,
+            scrollwheel: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            events: {
+                idle: function () {
+                    console.log('idle');
+                }
             }
         };
-        $scope.markersAndCircleFlag = true;
-        $scope.drawingManagerControl = {};
-        $scope.$watch('markersAndCircleFlag', function() {
-            if (!$scope.drawingManagerControl.getDrawingManager) {
-                return;
+
+
+        $scope.containerMap = new google.maps.Map(document.getElementById("map-canvas-addcontainer"), $scope.mapProp);
+
+        $scope.truckMap = new google.maps.Map(document.getElementById("map-canvas-addtruck"), $scope.mapProp);
+
+        google.maps.event.addListener($scope.containerMap, 'click', function(event){
+            addMarker(event.latLng, 'assets/images/ic_map_trash_' + $scope.containerToAdd.type + '.png',
+                $scope.containerMap, $scope.containerToAdd);
+        });
+
+        google.maps.event.addListener($scope.truckMap, 'click', function(event){
+            addMarker(event.latLng, 'assets/images/truck.png', $scope.truckMap, $scope.truckToAdd);
+        });
+
+
+
+        $scope.$watch('containerToAdd.type', function(){
+            if(marker != null){
+                addMarker(marker.position, 'assets/images/ic_map_trash_' + $scope.containerToAdd.type + '.png',
+                    $scope.containerMap, $scope.containerToAdd);
             }
-            var controlOptions = angular.copy($scope.drawingManagerOptions);
-            if (!$scope.markersAndCircleFlag) {
-                controlOptions.drawingControlOptions.drawingModes.shift();
-                controlOptions.drawingControlOptions.drawingModes.shift();
+        });
+
+        $('#myAddTruckModalLabel').on('show.bs.modal', function() {
+            //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
+            resizeMap($scope.truckMap);
+        });
+
+        $('#myAddTruckModalLabel').on('hidden.bs.modal', function() {
+            if(marker != null){
+                marker.setMap(null);
             }
-            $scope.drawingManagerControl.getDrawingManager().setOptions(controlOptions);
+        });
+
+        $('#myAddContainerModalLabel').on('show.bs.modal', function() {
+            //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
+            resizeMap($scope.containerMap);
+        });
+
+        $('#myAddContainerModalLabel').on('hidden.bs.modal', function() {
+            if(marker != null){
+                marker.setMap(null);
+            }
         });
 
 
@@ -69,6 +108,51 @@
         loadUsers();
         setList();
 
+        function addMarker(latLng, icon, map, item){
+            //clear the previous marker and circle.
+            if(marker != null){
+                marker.setMap(null);
+            }
+
+            marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                draggable: true,
+                icon: icon
+            });
+            item.location = {};
+            item.location.latitude = marker.position.lat();
+            item.location.longitude = marker.position.lng();
+        }
+
+        function resizeMap(map) {
+            if(typeof map == "undefined") return;
+            setTimeout( function(){resizingMap(map);} , 400);
+        }
+
+        function resizingMap(map) {
+            if(typeof map == "undefined") return;
+            var center = map.getCenter();
+            google.maps.event.trigger(map, "resize");
+            map.setCenter(center);
+        }
+
+        function addContainer(container){
+            Restangular.all('containers').customPOST(container).then(function () {
+                loadContainers();
+                marker.setMap(null);
+                $scope.containerToAdd = {};
+                $scope.containerToAdd.type = 'blue';
+            })
+        }
+
+        function addTruck(truck){
+            Restangular.all('trucks').customPOST(truck).then(function () {
+                loadTrucks();
+                marker.setMap(null);
+                $scope.truckToAdd = {};
+            })
+        }
 
         function isError(container){
             for(var sensor in container.sensors){
@@ -83,7 +167,7 @@
         function selectContainers(col, value){
             for(var i=0; i< $scope.items[col].length; i++){
                 var x = parseFloat($scope.items[col][i].load.substr(0,$scope.items[col][i].load.length-1));
-                if(x > (parseInt(value)-10) && x < parseInt(value)){
+                if(x > (parseInt(value)-10) && x <= parseInt(value)){
                     toggleSelection($scope.items[col][i]);
                 }
             }
@@ -112,6 +196,7 @@
                     }
                 });
             };
+
 
             // register
             SseService.register("truck", onTruckUpdated);
@@ -150,9 +235,12 @@
             }
         }
 
+
+
+
         function showRoute(registration) {
             loadRoute(registration, (route) => {
-                DirectionsService.displayRoute($scope.map.control.getGMap(), route)
+                DirectionsService.displayRoute($scope.mapOptions.control.getGMap(), route)
             });
         }
 
@@ -164,6 +252,7 @@
         }
 
         function loadTrucks() {
+            $scope.items.trucks = [];
             Restangular.all('trucks').getList().then(function (resp) {
                 for (var i = 0; i < resp.length; i++) {
                     var truck = {
@@ -195,34 +284,16 @@
         }
 
         function loadContainers() {
+            $scope.items.blue = [];
+            $scope.items.yellow = [];
+            $scope.items.green = [];
+            $scope.items.broken = [];
             Restangular.all('containers').getList().then(function (resp) {
                 var num;
                 var load_value;
                 for (var i = 0; i < resp.length; i++) {
-                    load_value = parseFloat(resp[i].sensors.load.value).toFixed(2);
-                    if (load_value >= 0 && load_value < 5) {
-                        num = 0;
-                    } else if (load_value >= 5 && load_value < 15) {
-                        num = 1;
-                    } else if (load_value >= 15 && load_value < 25) {
-                        num = 2;
-                    } else if (load_value >= 25 && load_value < 35) {
-                        num = 3;
-                    } else if (load_value >= 35 && load_value < 45) {
-                        num = 4;
-                    } else if (load_value >= 45 && load_value < 55) {
-                        num = 5;
-                    } else if (load_value >= 55 && load_value < 65) {
-                        num = 6;
-                    } else if (load_value >= 65 && load_value < 75) {
-                        num = 7;
-                    } else if (load_value >= 75 && load_value < 85) {
-                        num = 8;
-                    } else if (load_value >= 85 && load_value < 95) {
-                        num = 9;
-                    } else {
-                        num = 10;
-                    }
+                    num = parseInt((parseFloat(resp[i].sensors.load.value))/10);
+
                     var container = {
                         id: 0,
                         coords: {},
@@ -277,6 +348,7 @@
             } else {
                 uncheckAll(collectionName);
             }
+
         }
 
         function checkAll(collectionName) {
