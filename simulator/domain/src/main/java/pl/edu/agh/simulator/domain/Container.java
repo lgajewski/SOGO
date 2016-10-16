@@ -13,6 +13,8 @@ public class Container {
 
     private Location location;
 
+    private String address;
+
     private Map<String, Sensor> sensors;
 
     public Container(){
@@ -57,5 +59,13 @@ public class Container {
 
     public void addSensor(String sensorType, Sensor sensor){
         sensors.put(sensorType, sensor);
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

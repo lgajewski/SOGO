@@ -33,7 +33,13 @@
         $scope.addTruck = addTruck;
         $scope.containerToAdd = {};
         $scope.containerToAdd.type = 'blue';
+        $scope.containerToAdd.sensors = {
+            load: {
+                value: 0.0
+            }
+        };
         $scope.truckToAdd = {};
+        $scope.truckToAdd.load = 0;
 
         var marker;
         var mapCenter = new google.maps.LatLng($scope.mapOptions.center.latitude, $scope.mapOptions.center.longitude);
@@ -96,8 +102,8 @@
             }
         });
 
-
-
+        var geocoder = new google.maps.Geocoder;
+        $scope.geocodeLatLng = geocodeLatLng;
 
         // Server Side Events
         configureSse();
@@ -143,6 +149,11 @@
                 marker.setMap(null);
                 $scope.containerToAdd = {};
                 $scope.containerToAdd.type = 'blue';
+                $scope.containerToAdd.sensors = {
+                    load: {
+                        value: 0.0
+                    }
+                };
             })
         }
 
@@ -151,6 +162,7 @@
                 loadTrucks();
                 marker.setMap(null);
                 $scope.truckToAdd = {};
+                $scope.truckToAdd.load = 0;
             })
         }
 
@@ -261,14 +273,12 @@
             }
         }
 
-
-
-
         function showRoute(registration) {
             loadRoute(registration, (route) => {
                 DirectionsService.displayRoute($scope.mapOptions.control.getGMap(), route)
             });
         }
+
 
         function loadRoute(registration, callback) {
             Restangular.all('routes/' + registration).getList().then(function (resp) {
@@ -296,8 +306,16 @@
                     truck.coords.latitude = resp[i].location.latitude;
                     truck.coords.longitude = resp[i].location.longitude;
                     truck.capacity = resp[i].capacity;
-                    truck.load = resp[i].load + ' kg';
+                    truck.load = resp[i].load;
                     truck.registration = resp[i].registration;
+                    if (resp[i].address == undefined || resp[i].address == "") {
+                        geocodeLatLng(resp[i].location.latitude, resp[i].location.longitude, function(result, obj){
+                            obj.address = result;
+                            Restangular.all('trucks').customPUT(obj).then(function (resp) {
+                            })
+                        }, resp[i])
+                    }
+                    truck.address = resp[i].address;
                     $scope.items.trucks.push(truck);
 
                     if ($scope.checkAllElements['trucks']) {
@@ -307,6 +325,27 @@
                 }
 
             })
+        }
+        var delay = 100;
+        function geocodeLatLng(lat, lng, callback, obj) {
+            var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
+            geocoder.geocode({'location': latlng}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        callback(results[0].formatted_address, obj);
+                    } else {
+                        console.log('No results found');
+                    }
+                } else {
+                    if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+                        delay = delay + 10;
+                        console.log(delay);
+                        // setTimeout(geocodeLatLng(lat, lng, callback, obj), delay);
+                    } else {
+                        console.log('Geocoder failed due to: ' + status);
+                    }
+                }
+            });
         }
 
         function loadContainers() {
@@ -341,6 +380,15 @@
                     container.capacity = resp[i].capacity;
                     container.load = parseFloat(resp[i].sensors.load.value).toFixed(2) + '%';
                     container.sensors = resp[i].sensors;
+                    if (resp[i].address == undefined || resp[i].address == "") {
+                        geocodeLatLng(resp[i].location.latitude, resp[i].location.longitude, function(result, obj){
+                            obj.address = result;
+                            console.log(obj);
+                            Restangular.all('containers').customPUT(obj).then(function (resp) {
+                            })
+                        }, resp[i])
+                    }
+                    container.address = resp[i].address;
                     $scope.items[resp[i].type].push(container);
 
                     if(isError(container)){
@@ -348,14 +396,12 @@
                         container.options.icon.url = 'assets/images/trash_' + resp[i].type + '_error.png';
                     }
 
-
                     if (($scope.checkAllElements['yellow'] && container.type == 'yellow')
                         || ($scope.checkAllElements['green'] && container.type == 'green')
                     ||  ($scope.checkAllElements['blue'] && container.type == 'blue')){
                         // select automatically
                         $scope.selection.push(container);
                     }
-
                 }
 
             })

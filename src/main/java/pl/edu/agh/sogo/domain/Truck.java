@@ -17,6 +17,8 @@ public class Truck {
 
     private Location location;
 
+    private String address;
+
     public Truck(){}
 
     public Truck(String registration, int capacity) {
@@ -70,6 +72,15 @@ public class Truck {
             ", registration = " + registration +
             ", capacity = " + capacity +
             ", load = " + load +
+            ", address = "+ address +
             "}";
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

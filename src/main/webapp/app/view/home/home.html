@@ -156,31 +156,7 @@
                                     bounds="mapOptions.bounds" control="mapOptions.control">
                     <div ng-repeat="marker in selection">
                     <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
-                        <ui-gmap-window>
-                        <table style="width:100%">
-                        <tbody>
-                        <tr>
-                        <td>Id:</td>
-                        <td>{{marker.id}}</td>
-                        </tr>
-                        <tr>
-                        <td>Type:</td>
-                        <td>{{marker.type}}</td>
-                        </tr>
-                        <tr>
-                        <td>Location:</td>
-                        <td>{{marker.coords.latitude + ', ' + marker.coords.longitude}}</td>
-                        </tr>
-                        <tr>
-                        <td>Capacity:</td>
-                        <td>{{marker.capacity}} kg</td>
-                        </tr>
-                        <tr>
-                        <td>Load:</td>
-                        <td>{{marker.load}}</td>
-                        </tr>
-                        </tbody>
-                        </table>
+                        <ui-gmap-window templateUrl="'app/view/home/markerTemplateHTML.html'" templateParameter="marker">
                         </ui-gmap-window>
                     </ui-gmap-marker>
                     </div>
@@ -330,8 +306,6 @@
                 <div id="map-canvas-addtruck" class="angular-google-map-container"></div>
                 <label>Capacity</label>
                 <input class="form-control" ng-model="truckToAdd.capacity">
-                <label>Load</label>
-                <input class="form-control" ng-model="truckToAdd.load">
             </div>
             <div class="modal-footer">
                 <button type="button" id="btn-cancelAddTruck" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -375,8 +349,6 @@
                 </div>
                 <label>Capacity</label>
                 <input class="form-control" ng-model="containerToAdd.capacity">
-                <label>Filling percentage({{containerToAdd.sensors.load.value}}%)</label>
-                <input class="form-control" type="range" min="0" max="100" step="0.01"  ng-model="containerToAdd.sensors.load.value"/>
             </div>
             <div class="modal-footer">
                 <button type="button" id="btn-cancelAddContainer" class="btn btn-default" data-dismiss="modal">Cancel</button>

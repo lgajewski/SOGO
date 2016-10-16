@@ -19,6 +19,8 @@ public class Container {
     @GeoSpatialIndexed
     private Location location;
 
+    private String address;
+
     private Map<String, Sensor> sensors;
 
     public Container(){
@@ -69,7 +71,16 @@ public class Container {
         return "{id = " + id +
             ", type = " + type +
             ", capacity = " + capacity +
-            ", location = "+location +
+            ", location = "+ location +
+            ", address = "+ address +
             ", sensors = {" + sensors.entrySet().stream().map(a ->a.getValue().toString()).collect(Collectors.joining(", ")) + "}}";
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
