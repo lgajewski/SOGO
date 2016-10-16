@@ -199,31 +199,8 @@
 
             var onContainerUpdated = function (event) {
                 var updatedContainer = JSON.parse(event.data);
-                var num;
                 var load_value = parseFloat(updatedContainer.sensors.load.value).toFixed(2);
-                if (load_value >= 0 && load_value < 5) {
-                    num = 0;
-                } else if (load_value >= 5 && load_value < 15) {
-                    num = 1;
-                } else if (load_value >= 15 && load_value < 25) {
-                    num = 2;
-                } else if (load_value >= 25 && load_value < 35) {
-                    num = 3;
-                } else if (load_value >= 35 && load_value < 45) {
-                    num = 4;
-                } else if (load_value >= 45 && load_value < 55) {
-                    num = 5;
-                } else if (load_value >= 55 && load_value < 65) {
-                    num = 6;
-                } else if (load_value >= 65 && load_value < 75) {
-                    num = 7;
-                } else if (load_value >= 75 && load_value < 85) {
-                    num = 8;
-                } else if (load_value >= 85 && load_value < 95) {
-                    num = 9;
-                } else {
-                    num = 10;
-                }
+                var num = parseInt(load_value/10);
 
                 $scope.$apply(function () {
                     var updatedContainer = JSON.parse(event.data);
@@ -339,7 +316,6 @@
             $scope.items.broken = [];
             Restangular.all('containers').getList().then(function (resp) {
                 var num;
-                var load_value;
                 for (var i = 0; i < resp.length; i++) {
                     num = parseInt((parseFloat(resp[i].sensors.load.value))/10);
 
