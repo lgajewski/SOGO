@@ -155,11 +155,15 @@
             <div class="panel-body">
                 <ui-gmap-google-map center='mapOptions.center' zoom='mapOptions.zoom' events="mapOptions.events" options="mapOptions.options"
                                     bounds="mapOptions.bounds" control="mapOptions.control">
-                    <div ng-repeat="marker in selection">
-                    <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
-                        <ui-gmap-window templateUrl="'app/view/home/markerTemplateHTML.html'" templateParameter="marker">
-                        </ui-gmap-window>
-                    </ui-gmap-marker>
+                    <!--<div ng-repeat="marker in selection">-->
+                    <!--<ui-gmap-marker coords="marker.coords" doCluster="true" clusterOptions="mapOptions.options.cluster" options="marker.options" events="marker.events" idkey="marker.id">-->
+                        <!--<ui-gmap-window templateUrl="'app/view/home/markerTemplateHTML.html'" templateParameter="marker">-->
+                        <!--</ui-gmap-window>-->
+                    <!--</ui-gmap-marker>-->
+                    <div>
+                    <ui-gmap-markers models="selection" coords="'coords'" icon="'options.icon'" type="'cluster'" typeOptions="mapOptions.options.cluster" click="displayInfoWindow">
+
+                    </ui-gmap-markers>
                     </div>
 
                 </ui-gmap-google-map>
