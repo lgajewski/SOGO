@@ -1,0 +1,17 @@
+{
+    "FAIL_SIGN_IN": "Failed to sign in!",
+    "FAIL_SIGN_UP": "Failed to sign up!",
+    "CHECK_CREDENTIALS": "Please check your credentials and try again.",
+    "LOGIN": "Login",
+    "PASSWORD": "Password",
+    "NAME": "Name",
+    "SURNAME": "Surname",
+    "EMAIL": "Email",
+    "REPEAT": "Repeat email",
+    "LOG_IN": "Log in",
+    "SIGN_UP": "Sign up",
+    "FORGOT": " Forgot your password?",
+    "ACCOUNT": "Already have an account?",
+    "GARB_COLL": "garbage collector",
+    "ADMIN_WORK": "administrative worker"
+}

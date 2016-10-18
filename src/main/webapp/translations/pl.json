@@ -1,0 +1,17 @@
+{
+    "FAIL_SIGN_IN": "Nie udało się zalogować!",
+    "FAIL_SIGN_UP": "Nie udało się zarejestrować!",
+    "CHECK_CREDENTIALS": "Proszę sprawdź wpisane dane i spróbuj ponownie.",
+    "LOGIN": "Login",
+    "PASSWORD": "Hasło",
+    "NAME": "Imię",
+    "SURNAME": "Nazwisko",
+    "EMAIL": "Email",
+    "REPEAT": "Powtórz hasło",
+    "LOG_IN": "Zaloguj się",
+    "SIGN_UP": "Zarejestruj się",
+    "FORGOT": "Zapomniałeś hasła?",
+    "ACCOUNT": "Masz już konto?",
+    "GARB_COLL": "zbieracz odpadów",
+    "ADMIN_WORK": "pracownik administracyjny"
+}
