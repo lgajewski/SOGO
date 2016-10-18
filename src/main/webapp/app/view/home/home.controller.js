@@ -102,8 +102,8 @@
             }
         });
 
-        var geocoder = new google.maps.Geocoder;
-        $scope.geocodeLatLng = geocodeLatLng;
+        // var geocoder = new google.maps.Geocoder;
+        // $scope.geocodeLatLng = geocodeLatLng;
 
         // Server Side Events
         configureSse();
@@ -205,6 +205,8 @@
                     if (truck) {
                         truck.coords.longitude = updatedTruck.location.longitude;
                         truck.coords.latitude = updatedTruck.location.latitude;
+                        truck.address = updatedTruck.address;
+                        truck.load = updatedTruck.load;
                     }
                 });
             };
@@ -308,13 +310,6 @@
                     truck.capacity = resp[i].capacity;
                     truck.load = resp[i].load;
                     truck.registration = resp[i].registration;
-                    if (resp[i].address == undefined || resp[i].address == "") {
-                        geocodeLatLng(resp[i].location.latitude, resp[i].location.longitude, function(result, obj){
-                            obj.address = result;
-                            Restangular.all('trucks').customPUT(obj).then(function (resp) {
-                            })
-                        }, resp[i])
-                    }
                     truck.address = resp[i].address;
                     $scope.items.trucks.push(truck);
 
@@ -323,29 +318,9 @@
                         $scope.selection.push(truck);
                     }
                 }
+                console.log($scope.items.trucks);
 
             })
-        }
-        var delay = 100;
-        function geocodeLatLng(lat, lng, callback, obj) {
-            var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
-            geocoder.geocode({'location': latlng}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        callback(results[0].formatted_address, obj);
-                    } else {
-                        console.log('No results found');
-                    }
-                } else {
-                    if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-                        delay = delay + 10;
-                        console.log(delay);
-                        // setTimeout(geocodeLatLng(lat, lng, callback, obj), delay);
-                    } else {
-                        console.log('Geocoder failed due to: ' + status);
-                    }
-                }
-            });
         }
 
         function loadContainers() {
@@ -380,14 +355,6 @@
                     container.capacity = resp[i].capacity;
                     container.load = parseFloat(resp[i].sensors.load.value).toFixed(2) + '%';
                     container.sensors = resp[i].sensors;
-                    if (resp[i].address == undefined || resp[i].address == "") {
-                        geocodeLatLng(resp[i].location.latitude, resp[i].location.longitude, function(result, obj){
-                            obj.address = result;
-                            console.log(obj);
-                            Restangular.all('containers').customPUT(obj).then(function (resp) {
-                            })
-                        }, resp[i])
-                    }
                     container.address = resp[i].address;
                     $scope.items[resp[i].type].push(container);
 

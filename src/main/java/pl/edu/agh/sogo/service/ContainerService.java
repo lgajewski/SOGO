@@ -6,6 +6,7 @@ import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Sensor;
 import pl.edu.agh.sogo.persistence.ContainerRepository;
 import pl.edu.agh.sogo.service.exceptions.ObjectNotFoundException;
+import pl.edu.agh.sogo.service.util.GoogleMapsReverseGeocoder;
 
 import java.util.Collection;
 
@@ -14,6 +15,9 @@ public class ContainerService {
 
     @Autowired
     private ContainerRepository containerRepository;
+
+    @Autowired
+    private GoogleMapsReverseGeocoder googleMapsReverseGeocoder;
 
     public Collection<Container> getContainers() {
         return containerRepository.findAll();
@@ -24,6 +28,11 @@ public class ContainerService {
     }
 
     public void add(Container container) {
+        try {
+            container.setAddress(googleMapsReverseGeocoder.reverseGeocode(container.getLocation().getLatitude(), container.getLocation().getLongitude()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         containerRepository.save(container);
     }
 
@@ -31,6 +40,11 @@ public class ContainerService {
         if (containerRepository.findOne(container.getId()) == null) {
             throw new ObjectNotFoundException("Container", " with device " + container);
         } else {
+            try {
+                container.setAddress(googleMapsReverseGeocoder.reverseGeocode(container.getLocation().getLatitude(), container.getLocation().getLongitude()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             containerRepository.save(container);
         }
     }
