@@ -1,7 +1,9 @@
 package pl.edu.agh.sogo.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "trucks")
 public class Truck {
     @Id
     private String id;
