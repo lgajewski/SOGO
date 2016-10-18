@@ -161,6 +161,37 @@ public class UserController {
         return ResponseEntity.ok().headers(HeaderUtil.createAlert("A user is deleted with identifier " + login, login)).build();
     }
 
+    /**
+     * PUT  /users/self : Updates currently logged User.
+     *
+     * @param managedUserDTO the user to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated user,
+     * or with status 400 (Bad Request) if the login or email is already in use,
+     * or with status 500 (Internal Server Error) if the user couldn't be updated
+     */
+    @RequestMapping(value = "/self", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ManagedUserDTO> updateUser(Principal principal, @RequestBody ManagedUserDTO managedUserDTO) {
+        if(principal.getName().equals(managedUserDTO.getLogin())) {
+            log.debug("REST request to update User : {}", managedUserDTO);
+            Optional<User> existingUser = userRepository.findOneByEmail(managedUserDTO.getEmail());
+            if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "E-mail already in use")).body(null);
+            }
+            existingUser = userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase());
+            if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use")).body(null);
+            }
+            userService.updateUser(managedUserDTO.getId(), managedUserDTO.getLogin(), managedUserDTO.getFirstName(),
+                managedUserDTO.getLastName(), managedUserDTO.getEmail(), managedUserDTO.isActivated(),
+                managedUserDTO.getLangKey(), managedUserDTO.getAuthorities());
+
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createAlert("A user is updated with identifier " + managedUserDTO.getLogin(), managedUserDTO.getLogin()))
+                .body(new ManagedUserDTO(userService.getUserById(managedUserDTO.getId())));
+        }
+        return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "diferentuserupdate", "Trying to update different user")).body(null);
+    }
+
     @RequestMapping("/user")
     public Principal user(Principal user) {
         return user;

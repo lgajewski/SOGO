@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$scope', 'Restangular'];
+    ProfileController.$inject = ['$scope', '$rootScope', 'Restangular'];
 
-    function ProfileController($scope, Restangular) {
+    function ProfileController($scope, $rootScope, Restangular) {
         $scope.updateUser = updateUser;
         getCurrentUser();
 
@@ -15,11 +15,13 @@
         function getCurrentUser(){
             Restangular.all('auth').get('user').then(function (resp) {
                 $scope.currentUser = resp.plain();
+                $rootScope.currentUser = $scope.currentUser;
             })
         }
 
         function updateUser(){
-            Restangular.all('users').customPUT($scope.currentUser).then(function (response) {
+            console.log($scope.currentUser);
+            Restangular.all('users/self').customPUT($scope.currentUser).then(function (resp) {
                 getCurrentUser();
             })
         }

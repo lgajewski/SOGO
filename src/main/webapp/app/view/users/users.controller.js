@@ -37,7 +37,7 @@
             user.login = item.login;
             user.password = "";
             console.log(user);
-            Restangular.one('users').put(user).then(function () {
+            Restangular.one('users').customPUT(user).then(function () {
                 $scope.getUsers();
             });
         };
@@ -52,10 +52,10 @@
             user.langKey = item.langKey;
             user.lastName = item.lastName;
             user.login = item.login;
-            user.password = "";
+            user.password = "abcd1234";
 
             console.log(user);
-            Restangular.one('users').put(user).then(function () {
+            Restangular.one('users').customPUT(user).then(function () {
                 $scope.getUsers();
             });
         };
