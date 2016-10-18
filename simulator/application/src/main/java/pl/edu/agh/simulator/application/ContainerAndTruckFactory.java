@@ -17,6 +17,7 @@ public class ContainerAndTruckFactory {
             Truck truck = new Truck("KRA "+r.nextInt(10)+r.nextInt(10)+r.nextInt(10)+r.nextInt(10), r.nextInt(1000)+1000);
             truck.setLocation(new Location(50.047+(r.nextDouble()*24/1000), 19.915+(r.nextDouble()*54/1000)));
             truck.setUser(null);
+            truck.setAddress(null);
             truck.setLoad(r.nextInt(1000));
             trucks.add(truck);
         }
@@ -32,6 +33,7 @@ public class ContainerAndTruckFactory {
 
             container.setCapacity(100+i);
             container.setType(types[r.nextInt(3)]);
+            container.setAddress(null);
             Sensor loadSensor = new Sensor<Double>();
             loadSensor.setErrorCode(0);
             loadSensor.setValue(r.nextDouble()*100);

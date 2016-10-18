@@ -2,9 +2,11 @@ package pl.edu.agh.sogo.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+@Document(collection = "routes")
 public class Route {
     @Id
     private String id;

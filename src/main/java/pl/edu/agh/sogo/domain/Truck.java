@@ -1,7 +1,9 @@
 package pl.edu.agh.sogo.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "trucks")
 public class Truck {
     @Id
     private String id;
@@ -16,6 +18,8 @@ public class Truck {
 //    private User user;
 
     private Location location;
+
+    private String address;
 
     public Truck(){}
 
@@ -70,6 +74,15 @@ public class Truck {
             ", registration = " + registration +
             ", capacity = " + capacity +
             ", load = " + load +
+            ", address = "+ address +
             "}";
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

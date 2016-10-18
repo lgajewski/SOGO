@@ -20,6 +20,11 @@
         $scope.getContainers();
         $scope.containerToAdd = {};
         $scope.containerToAdd.type = 'blue';
+        $scope.containerToAdd.sensors = {
+            load: {
+                value: 0.0
+            }
+        };
 
 
         $scope.dtOptions = DTOptionsBuilder.newOptions()
@@ -53,9 +58,6 @@
         $scope.containerShowMap = new google.maps.Map(document.getElementById("map-canvas-showcontainer"), $scope.defaultMapProperties);
 
         var marker;
-
-
-
 
 
         google.maps.event.addListener($scope.containerAddMap, 'click', function(event){
@@ -152,16 +154,20 @@
                 }
             });
 
-            if(item.sensors) {
+            if(item.id) {
                 var contentString = '<table style="width:100%">'
                     + '<tbody>'
-                    + '<tr>'
-                    + '<td>Id:</td>'
-                    + '<td>' + item.id + '</td>'
-                    + '</tr>'
+                    // + '<tr>'
+                    // + '<td>Id:</td>'
+                    // + '<td>' + item.id + '</td>'
+                    // + '</tr>'
                     + '<tr>'
                     + '<td>Type:</td>'
                     + '<td>' + item.type + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Location:</td>'
+                    + '<td>' + item.address + '</td>'
                     + '</tr>'
                     + '<tr>'
                     + '<td>Capacity:</td>'
@@ -208,6 +214,11 @@
                 }
                 $scope.containerToAdd = {};
                 $scope.containerToAdd.type = 'blue';
+                $scope.containerToAdd.sensors = {
+                    load: {
+                        value: 0.0
+                    }
+                };
             })
         }
 

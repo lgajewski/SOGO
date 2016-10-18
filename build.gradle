@@ -69,6 +69,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
+    mavenCentral()
 }
 
 /* PROJECT DEPENDENCIES */
@@ -83,6 +84,8 @@ dependencies {
 
     compile "org.apache.geronimo.javamail:geronimo-javamail_1.4_mail:1.8.4"
     compile "commons-lang:commons-lang:2.6"
+
+    compile 'com.google.maps:google-maps-services:0.1.16'
 
     compile "javax.inject:javax.inject:1"
 

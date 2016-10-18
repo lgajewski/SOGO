@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.sogo.service.UserService;
-import pl.edu.agh.sogo.web.dto.UserDTO;
+import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
 
 import javax.inject.Inject;
 import java.security.Principal;
@@ -48,10 +48,10 @@ public class AuthController {
     @RequestMapping(value = "/user",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> getUser(Principal principal) {
+    public ResponseEntity<ManagedUserDTO> getUser(Principal principal) {
         log.info("[GET][/api/user] getUser()");
         return userService.getUserByLogin(principal.getName())
-            .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
+            .map(user -> new ResponseEntity<>(new ManagedUserDTO(user), HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 

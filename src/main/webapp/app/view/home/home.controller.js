@@ -33,7 +33,13 @@
         $scope.addTruck = addTruck;
         $scope.containerToAdd = {};
         $scope.containerToAdd.type = 'blue';
+        $scope.containerToAdd.sensors = {
+            load: {
+                value: 0.0
+            }
+        };
         $scope.truckToAdd = {};
+        $scope.truckToAdd.load = 0;
 
         var marker;
         var mapCenter = new google.maps.LatLng($scope.mapOptions.center.latitude, $scope.mapOptions.center.longitude);
@@ -49,6 +55,43 @@
                     console.log('idle');
                 }
             }
+        };
+
+
+        $scope.displayInfoWindow = function displayInfoWindow(selectedMarker, event, selectedItem){
+            var infoWindow = new google.maps.InfoWindow({
+                content: "<table style='width:100%'>" +
+                    "<tbody>" +
+                        "<tr>" +
+                            "<td>Id:</td>" +
+                            "<td>"+selectedItem.id+"</td>" +
+                        "</tr>" +
+                        (selectedItem.registration ?
+                        "<tr>" +
+                            "<td>Registration:</td>" +
+                            "<td>"+selectedItem.registration+"</td>" +
+                        "</tr>" : "") +
+                        "<tr>" +
+                            "<td>Type:</td>" +
+                            "<td>"+selectedItem.type+"</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                            "<td>Location:</td>" +
+                            "<td>"+selectedItem.address+"</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                            "<td>Capacity:</td>" +
+                            "<td>"+selectedItem.capacity+"kg</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                            "<td>Load:</td>" +
+                            "<td>"+selectedItem.load + (selectedItem.type == 'truck' ? 'kg':'%')+"</td>" +
+                        "</tr>" +
+                    "</tbody>" +
+                "</table>"
+            });
+            console.log(infoWindow);
+            infoWindow.open(selectedMarker.getMap(), selectedMarker)
         };
 
 
@@ -97,8 +140,6 @@
         });
 
 
-
-
         // Server Side Events
         configureSse();
 
@@ -143,6 +184,11 @@
                 marker.setMap(null);
                 $scope.containerToAdd = {};
                 $scope.containerToAdd.type = 'blue';
+                $scope.containerToAdd.sensors = {
+                    load: {
+                        value: 0.0
+                    }
+                };
             })
         }
 
@@ -151,6 +197,7 @@
                 loadTrucks();
                 marker.setMap(null);
                 $scope.truckToAdd = {};
+                $scope.truckToAdd.load = 0;
             })
         }
 
@@ -193,6 +240,8 @@
                     if (truck) {
                         truck.coords.longitude = updatedTruck.location.longitude;
                         truck.coords.latitude = updatedTruck.location.latitude;
+                        truck.address = updatedTruck.address;
+                        truck.load = updatedTruck.load;
                     }
                 });
             };
@@ -203,7 +252,7 @@
                 var num = parseInt(load_value/10);
 
                 $scope.$apply(function () {
-                    var updatedContainer = JSON.parse(event.data);
+                    // var updatedContainer = JSON.parse(event.data);
                     var container = $scope.items[updatedContainer.type].find(c => c.id === updatedContainer.id);
                     if (container) {
                         container.capacity = updatedContainer.capacity;
@@ -215,7 +264,9 @@
                         container.options.icon.url = 'assets/images/trash' + num + '_' + updatedContainer.type + '.png';
 
                         if(isError(container)){
-                            $scope.items['broken'].push(container);
+                            if(!$scope.items['broken'].find(c => c.id === updatedContainer.id)){
+                                $scope.items['broken'].push(container);
+                            }
                             container.options.icon.url = 'assets/images/trash_' + updatedContainer.type + '_error.png';
                         }
                     }
@@ -247,7 +298,21 @@
                     scaleControl: false,
                     draggable: true,
                     maxZoom: 22,
-                    minZoom: 0
+                    minZoom: 0,
+                    cluster: {
+                        minimumClusterSize : 5,
+                        zoomOnClick: true,
+                        // styles: [{
+                        //     url: "assets/images/ic_map_trash_blue.png",
+                        //     width:60,
+                        //     height:60,
+                        //     textColor: 'black',
+                        //     textSize: 14,
+                        //     fontFamily: 'Open Sans'
+                        // }],
+                        averageCenter: true,
+                        clusterClass: 'cluster-icon'
+                    }
                 },
                 clusterOptions: {},
                 clusterEvents: {},
@@ -261,14 +326,12 @@
             }
         }
 
-
-
-
         function showRoute(registration) {
             loadRoute(registration, (route) => {
                 DirectionsService.displayRoute($scope.mapOptions.control.getGMap(), route)
             });
         }
+
 
         function loadRoute(registration, callback) {
             Restangular.all('routes/' + registration).getList().then(function (resp) {
@@ -296,8 +359,9 @@
                     truck.coords.latitude = resp[i].location.latitude;
                     truck.coords.longitude = resp[i].location.longitude;
                     truck.capacity = resp[i].capacity;
-                    truck.load = resp[i].load + ' kg';
+                    truck.load = resp[i].load;
                     truck.registration = resp[i].registration;
+                    truck.address = resp[i].address;
                     $scope.items.trucks.push(truck);
 
                     if ($scope.checkAllElements['trucks']) {
@@ -305,6 +369,7 @@
                         $scope.selection.push(truck);
                     }
                 }
+                console.log($scope.items.trucks);
 
             })
         }
@@ -341,6 +406,7 @@
                     container.capacity = resp[i].capacity;
                     container.load = parseFloat(resp[i].sensors.load.value).toFixed(2) + '%';
                     container.sensors = resp[i].sensors;
+                    container.address = resp[i].address;
                     $scope.items[resp[i].type].push(container);
 
                     if(isError(container)){
@@ -348,14 +414,12 @@
                         container.options.icon.url = 'assets/images/trash_' + resp[i].type + '_error.png';
                     }
 
-
                     if (($scope.checkAllElements['yellow'] && container.type == 'yellow')
                         || ($scope.checkAllElements['green'] && container.type == 'green')
                     ||  ($scope.checkAllElements['blue'] && container.type == 'blue')){
                         // select automatically
                         $scope.selection.push(container);
                     }
-
                 }
 
             })

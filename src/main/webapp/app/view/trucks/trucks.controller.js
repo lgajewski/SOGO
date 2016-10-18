@@ -32,6 +32,7 @@
 
         $scope.activeObject = ActiveItemService.getObject();
         $scope.truckToAdd = {};
+        $scope.truckToAdd.load = 0;
         $scope.truckToEdit = {};
         var mapCenter = new google.maps.LatLng(50.0613356, 19.9379844);
 
@@ -126,16 +127,20 @@
                 }
             });
 
-            if(item) {
+            if(item.id) {
                 var contentString = '<table style="width:100%">'
                     + '<tbody>'
-                    + '<tr>'
-                    + '<td>Id:</td>'
-                    + '<td>' + item.id + '</td>'
-                    + '</tr>'
+                    // + '<tr>'
+                    // + '<td>Id:</td>'
+                    // + '<td>' + item.id + '</td>'
+                    // + '</tr>'
                     + '<tr>'
                     + '<td>Registration:</td>'
                     + '<td>' + item.registration + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Location:</td>'
+                    + '<td>' + item.address + '</td>'
                     + '</tr>'
                     + '<tr>'
                     + '<td>Capacity:</td>'
@@ -194,6 +199,7 @@
                     marker.setMap(null);
                 }
                 $scope.truckToAdd = {};
+                $scope.truckToAdd.load = 0;
             })
         }
 
