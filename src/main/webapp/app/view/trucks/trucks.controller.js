@@ -127,16 +127,20 @@
                 }
             });
 
-            if(item) {
+            if(item.id) {
                 var contentString = '<table style="width:100%">'
                     + '<tbody>'
-                    + '<tr>'
-                    + '<td>Id:</td>'
-                    + '<td>' + item.id + '</td>'
-                    + '</tr>'
+                    // + '<tr>'
+                    // + '<td>Id:</td>'
+                    // + '<td>' + item.id + '</td>'
+                    // + '</tr>'
                     + '<tr>'
                     + '<td>Registration:</td>'
                     + '<td>' + item.registration + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Location:</td>'
+                    + '<td>' + item.address + '</td>'
                     + '</tr>'
                     + '<tr>'
                     + '<td>Capacity:</td>'

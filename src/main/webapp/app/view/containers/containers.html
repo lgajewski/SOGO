@@ -13,16 +13,18 @@
                 <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" width="100%" class="table table-striped table-bordered table-hover" id="containers">
                     <thead>
                     <tr>
-                        <th>ID</th>
+                        <!--<th>ID</th>-->
+                        <th>Location</th>
                         <th>Type</th>
                         <th>Capacity[kg]</th>
-                        <th>Filling percentage</th>
+                        <th>Filling %</th>
                         <th>Options</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in items">
-                        <td>{{item.id}}</td>
+                        <!--<td>{{item.id}}</td>-->
+                        <td>{{item.address}}</td>
                         <td>{{item.type}}</td>
                         <td>{{item.capacity}}</td>
                         <td>{{item.sensors.load.value.toFixed(2)}}%</td>

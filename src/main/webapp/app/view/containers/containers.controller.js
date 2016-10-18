@@ -154,16 +154,20 @@
                 }
             });
 
-            if(item.sensors) {
+            if(item.id) {
                 var contentString = '<table style="width:100%">'
                     + '<tbody>'
-                    + '<tr>'
-                    + '<td>Id:</td>'
-                    + '<td>' + item.id + '</td>'
-                    + '</tr>'
+                    // + '<tr>'
+                    // + '<td>Id:</td>'
+                    // + '<td>' + item.id + '</td>'
+                    // + '</tr>'
                     + '<tr>'
                     + '<td>Type:</td>'
                     + '<td>' + item.type + '</td>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<td>Location:</td>'
+                    + '<td>' + item.address + '</td>'
                     + '</tr>'
                     + '<tr>'
                     + '<td>Capacity:</td>'
