@@ -3,7 +3,8 @@
 
     angular
         .module('sogo')
-        .controller('LoginController', LoginController);
+        .controller('LoginController', LoginController)
+        .controller('LanguageSwitchController', LanguageSwitchController);
 
     LoginController.$inject = ['$state', '$timeout', 'Auth'];
 
@@ -53,4 +54,5 @@
             $state.go('requestReset');
         }
     }
+    
 })();

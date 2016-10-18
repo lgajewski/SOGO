@@ -19,7 +19,10 @@
     "datatables-responsive": "1.0.6",
     "datatables.net-buttons": "1.2.2",
     "datatables.net-buttons-dt": "1.2.2",
-    "checklist-model": "0.10.0"
+    "checklist-model": "0.10.0",
+    "angular-translate": "2.12.1",
+    "angular-translate-loader-static-files": "2.12.1",
+    "flag-icon-css": "2.6.0"
   },
   "resolutions": {
     "angular": "1.5.8"

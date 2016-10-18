@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ lang }}">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +11,7 @@
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
     <link href="bower_components/components-font-awesome/css/font-awesome.css" rel="stylesheet"/>
     <link href="bower_components/angular-loading-bar/build/loading-bar.css" rel="stylesheet"/>
+    <link href="bower_components/flag-icon-css/css/flag-icon.css" rel="stylesheet"/>
 
     <!-- The main CSS files -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -50,6 +51,8 @@
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5nmqhScXjuLEpFhwwszBVsKmb2OWSoQ4&libraries=drawing">
     </script>
+    <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
+    <script type="text/javascript" src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
     <!--<script src="bower_components/angular-datatables/angular-datatables.min.js"></script>-->
 
     <!-- DataTables JavaScript -->
@@ -87,6 +90,9 @@
 
     <!--Checklist-model-->
     <script src="bower_components/checklist-model/checklist-model.js"></script>
+
+    <!--Laguage support-->
+    <script type="text/javascript" src="assets/js/language.controller.js"></script>
 
 </body>
 </html>
