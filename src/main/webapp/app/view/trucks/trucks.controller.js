@@ -32,6 +32,7 @@
 
         $scope.activeObject = ActiveItemService.getObject();
         $scope.truckToAdd = {};
+        $scope.truckToAdd.load = 0;
         $scope.truckToEdit = {};
         var mapCenter = new google.maps.LatLng(50.0613356, 19.9379844);
 
@@ -194,6 +195,7 @@
                     marker.setMap(null);
                 }
                 $scope.truckToAdd = {};
+                $scope.truckToAdd.load = 0;
             })
         }
 

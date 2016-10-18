@@ -20,6 +20,11 @@
         $scope.getContainers();
         $scope.containerToAdd = {};
         $scope.containerToAdd.type = 'blue';
+        $scope.containerToAdd.sensors = {
+            load: {
+                value: 0.0
+            }
+        };
 
 
         $scope.dtOptions = DTOptionsBuilder.newOptions()
@@ -53,9 +58,6 @@
         $scope.containerShowMap = new google.maps.Map(document.getElementById("map-canvas-showcontainer"), $scope.defaultMapProperties);
 
         var marker;
-
-
-
 
 
         google.maps.event.addListener($scope.containerAddMap, 'click', function(event){
@@ -208,6 +210,11 @@
                 }
                 $scope.containerToAdd = {};
                 $scope.containerToAdd.type = 'blue';
+                $scope.containerToAdd.sensors = {
+                    load: {
+                        value: 0.0
+                    }
+                };
             })
         }
 
