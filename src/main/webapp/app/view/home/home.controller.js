@@ -259,6 +259,7 @@
                         container.capacity = updatedContainer.capacity;
                         container.coords.longitude = updatedContainer.location.longitude;
                         container.coords.latitude = updatedContainer.location.latitude;
+                        container.address = updatedContainer.address;
                         container.type = updatedContainer.type;
                         container.load = parseFloat(updatedContainer.sensors.load.value).toFixed(2);
                         container.sensors = updatedContainer.sensors;
@@ -348,6 +349,7 @@
                     var truck = {
                         id: 0,
                         coords: {},
+                        address: "",
                         capacity: 0,
                         load: 0,
                         type: "truck",
@@ -388,6 +390,7 @@
                     var container = {
                         id: 0,
                         coords: {},
+                        address: "",
                         capacity: 0,
                         load: 0,
                         type: "",
@@ -403,11 +406,11 @@
                     container.id = resp[i].id;
                     container.coords.latitude = resp[i].location.latitude;
                     container.coords.longitude = resp[i].location.longitude;
+                    container.address = resp[i].address;
                     container.type = resp[i].type;
                     container.capacity = resp[i].capacity;
                     container.load = parseFloat(resp[i].sensors.load.value).toFixed(2) + '%';
                     container.sensors = resp[i].sensors;
-                    container.address = resp[i].address;
                     $scope.items[resp[i].type].push(container);
 
                     if(isError(container)){
