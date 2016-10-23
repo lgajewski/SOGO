@@ -10,6 +10,7 @@
                     suffix: '.json'
                 })
                 .preferredLanguage('en')
-                .useMissingTranslationHandlerLog();
+                .useMissingTranslationHandlerLog()
+                .useSanitizeValueStrategy('escapeParameters')
         }])
 })();

@@ -4,10 +4,9 @@
     angular
         .module('sogo')
         .controller('LanguageSwitchController', LanguageSwitchController);
-
-    $rootScope.lang = 'en';
-
+    
     function LanguageSwitchController($scope, $rootScope, $translate){
+        $rootScope.lang = 'en';
 
         $scope.changeLanguage = function(langKey) {
             $translate.use(langKey);
