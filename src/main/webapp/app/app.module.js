@@ -14,13 +14,4 @@
             'datatables',
             'pascalprecht.translate'
         ])
-        .config(['$translateProvider', function($translateProvider) {
-        $translateProvider
-            .useStaticFilesLoader({
-                prefix: '/translations/',
-                suffix: '.json'
-            })
-            .preferredLanguage('en')
-            .useMissingTranslationHandlerLog();
-    }])
 })();

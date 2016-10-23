@@ -14,59 +14,12 @@
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
-            <!--<li class="dropdown">-->
-            <!--<a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>-->
-            <!--<ul class="dropdown-menu message-dropdown">-->
-            <!--<li class="message-preview">-->
-            <!--<a href="">-->
-            <!--<div class="media">-->
-            <!--<span class="pull-left">-->
-            <!--<img class="media-object" src="http://placehold.it/50x50" alt="">-->
-            <!--</span>-->
-            <!--<div class="media-body">-->
-            <!--<h5 class="media-heading"><strong>John Smith</strong>-->
-            <!--</h5>-->
-            <!--<p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>-->
-            <!--<p>Lorem ipsum dolor sit amet, consectetur...</p>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</a>-->
-            <!--</li>-->
-            <!--<li class="message-preview">-->
-            <!--<a href="">-->
-            <!--<div class="media">-->
-            <!--<span class="pull-left">-->
-            <!--<img class="media-object" src="http://placehold.it/50x50" alt="">-->
-            <!--</span>-->
-            <!--<div class="media-body">-->
-            <!--<h5 class="media-heading"><strong>John Smith</strong>-->
-            <!--</h5>-->
-            <!--<p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>-->
-            <!--<p>Lorem ipsum dolor sit amet, consectetur...</p>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</a>-->
-            <!--</li>-->
-            <!--<li class="message-preview">-->
-            <!--<a href="">-->
-            <!--<div class="media">-->
-            <!--<span class="pull-left">-->
-            <!--<img class="media-object" src="http://placehold.it/50x50" alt="">-->
-            <!--</span>-->
-            <!--<div class="media-body">-->
-            <!--<h5 class="media-heading"><strong>John Smith</strong>-->
-            <!--</h5>-->
-            <!--<p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>-->
-            <!--<p>Lorem ipsum dolor sit amet, consectetur...</p>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</a>-->
-            <!--</li>-->
-            <!--<li class="message-footer">-->
-            <!--<a href="#">Read All New Messages</a>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</li>-->
+            <li class="lang">
+                <div ng-controller="LanguageSwitchController">
+                    <span class="flag-icon flag-icon-pl" ng-click="changeLanguage('pl')" translate="BUTTON_LANG_PL"></span>
+                    <span class="flag-icon flag-icon-gb" ng-click="changeLanguage('en')" translate="BUTTON_LANG_EN"></span>
+                </div>
+            </li>
             <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b
                     class="caret"></b></a>
@@ -100,17 +53,14 @@
                     class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="" ui-sref="navbar.profile"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        <a href="" ui-sref="navbar.profile" translate="PROFILE"><i class="fa fa-fw fa-user"></i></a>
                     </li>
-                    <!--<li>-->
-                    <!--<a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>-->
-                    <!--</li>-->
                     <li>
-                        <a><i class="fa fa-fw fa-gear"></i> Settings</a>
+                        <a translate="SETTINGS"><i class="fa fa-fw fa-gear"></i></a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#" ng-click="co.logout()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        <a href="#" ng-click="co.logout()" translate="LOG_OUT"><i class="fa fa-fw fa-power-off"></i></a>
                     </li>
                 </ul>
             </li>
@@ -119,40 +69,17 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
                 <li id="focus">
-                    <a ui-sref="navbar.home"><i class="fa fa-fw fa-home"></i> Home</a>
+                    <a ui-sref="navbar.home" translate="HOME"><i class="fa fa-fw fa-home"></i></a>
                 </li>
                 <li>
-                    <a ui-sref="navbar.trucks"><i class="fa fa-fw fa-truck"></i> Trucks</a>
+                    <a ui-sref="navbar.trucks" translate="TRUCKS"><i class="fa fa-fw fa-truck"></i></a>
                 </li>
                 <li>
-                    <a ui-sref="navbar.containers"><i class="fa fa-fw fa-trash-o"></i> Containers</a>
+                    <a ui-sref="navbar.containers" translate="CONTAINERS"><i class="fa fa-fw fa-trash-o"></i></a>
                 </li>
                 <li>
-                    <a ui-sref="navbar.users"><i class="fa fa-fw fa-users"></i> Users</a>
+                    <a ui-sref="navbar.users" translate="USERS"><i class="fa fa-fw fa-users"></i></a>
                 </li>
-                <!--<li>-->
-                <!--<a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>-->
-                <!--<ul id="demo" class="collapse">-->
-                <!--<li>-->
-                <!--<a href="#">Dropdown Item</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="#">Dropdown Item</a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>-->
-                <!--</li>-->
             </ul>
         </div>
         <!-- /.navbar-collapse -->

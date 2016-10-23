@@ -3,12 +3,13 @@
 
     angular
         .module('sogo')
-        .controller('LanguageSwitchController', LanguageSwitchController);
+        .factory('TranslateService', TranslateService);
+
+    TranslateService.$inject = [];
 
     $rootScope.lang = 'en';
 
-    function LanguageSwitchController($scope, $rootScope, $translate){
-
+    function TranslateService() {
         $scope.changeLanguage = function(langKey) {
             $translate.use(langKey);
         };

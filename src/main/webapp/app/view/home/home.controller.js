@@ -5,14 +5,15 @@
         .module('sogo')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService' ,'uiGmapIsReady'];
+    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService' ,'uiGmapIsReady', '$http'];
 
-    function HomeController($scope, Restangular, SseService, DirectionsService, uiGmapIsReady) {
+    function HomeController($scope, Restangular, SseService, DirectionsService, uiGmapIsReady, $http) {
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
         $scope.selection = [];
         $scope.showRoute = showRoute;
+        $scope.errorCodes = errorCodes;
         $scope.checkAllElements = {'trucks':false, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
@@ -492,6 +493,14 @@
             for (var i = 0; i < $scope.items[collectionName].length; i++) {
                 toggleSelection($scope.items[collectionName][i]);
             }
+        }
+
+        function errorCodes(container) {
+            $http.get('resources/errorcodes.properties').then(function (response) {
+                for(var sensor in container.sensors){
+                    $scope.res = response.data[container.sensors[sensor].errorCode];
+                }
+            });
         }
     }
 })();
