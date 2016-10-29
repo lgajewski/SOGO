@@ -13,6 +13,7 @@ import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
 
 import javax.inject.Inject;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,12 +44,13 @@ public class UserService {
         user.setLangKey((managedUserDTO.getLangKey() == null) ? "en" : managedUserDTO.getLangKey());
         Set<Authority> authorities = new HashSet<>();
         if (managedUserDTO.getAuthorities() != null) {
-            managedUserDTO.getAuthorities().stream().forEach(
-                authority -> authorities.add(authorityRepository.findOne(authority))
-            );
+            authorities = (managedUserDTO.getAuthorities().stream()
+                .map(authority -> authorityRepository.findOne(authority))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet()));
         }
         user.setAuthorities(authorities);
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        String encryptedPassword = passwordEncoder.encode(managedUserDTO.getPassword());
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(System.currentTimeMillis());

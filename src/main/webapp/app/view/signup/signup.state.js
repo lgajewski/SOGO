@@ -8,7 +8,8 @@
                 .state('signup', {
                     url: '/signup',
                     templateUrl: 'app/view/signup/signup.html',
-                    controller: 'SignupController'
+                    controller: 'SignupController',
+                    controllerAs: 'vm'
                 })
         })
 })();

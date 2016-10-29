@@ -11,45 +11,49 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-md-12">
-                        <div class="alert alert-danger" ng-show="false">
-                            <strong><p translate="FAIL_SIGN_UP"></p></strong><p translate="CHECK_CREDENTIALS"></p>
+                        <div class="alert alert-success" ng-show="vm.success">
+                            <strong>Registration saved!</strong> Please check your email for confirmation.
                         </div>
+
+                        <div class="alert alert-danger" ng-show="vm.error">
+                            <strong>Registration failed!</strong>
+                        </div>
+
                     </div>
                     <div class="col-md-12">
-                    <form role="form" ng-submit="vm.login($event)">
+                    <form role="form" ng-submit="vm.signup()" ng-show="!vm.success">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="{{'NAME'|translate}}" name="name" type="text">
+                                <input class="form-control" placeholder="{{'NAME'|translate}}" name="name" type="text" autofocus ng-model="vm.account.firstName">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'SURNAME'|translate}} name="surname" type="text">
+                                <input class="form-control" placeholder={{'SURNAME'|translate}} name="surname" type="text" ng-model="vm.account.lastName">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'LOGIN'|translate}} name="login" type="text">
+                                <input class="form-control" placeholder={{'LOGIN'|translate}} name="login" type="text" ng-model="vm.account.login">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'EMAIL'|translate}} name="email" type="email">
+                                <input class="form-control" placeholder={{'EMAIL'|translate}} name="email" type="email" ng-model="vm.account.email">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'PASSWORD'|translate}} name="password" type="password">
+                                <input class="form-control" placeholder={{'PASSWORD'|translate}} name="password" type="password" ng-model="vm.account.password">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'REPEAT'|translate}} name="repeat" type="password">
+                                <input class="form-control" placeholder={{'REPEAT'|translate}} name="repeat" type="password" ng-model="vm.account.repeat">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" name="position" id="position">
+                                <select class="form-control" name="position" id="position" ng-model="vm.account.authorities" multiple>
                                     <option translate="GARB_COLL"></option>
                                     <option translate="ADMIN_WORK"></option>
                                 </select>
                             </div>
                             <div class="col-sm-12 text-center">
-                                <input type="submit" id="btn-login" class="btn btn-lg btn-block" value={{'SIGN_UP'|translate}}
-                                       ui-sref="login">
+                                <input type="submit" id="btn-login" class="btn btn-lg btn-block" value={{'SIGN_UP'|translate}} />
                             </div>
                         </fieldset>
                     </form>
                         </div>
-                    <div class="forget"><p translate="ACCOUNT"></p><a ui-sref="login" TRANSLATE="LOG_IN"></a></div>
+                    <div class="col-md-12 forget"><p translate="ACCOUNT"></p><a ui-sref="login" translate="LOG_IN"></a></div>
                 </div>
             </div>
         </div>

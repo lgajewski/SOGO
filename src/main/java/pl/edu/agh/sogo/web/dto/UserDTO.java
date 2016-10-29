@@ -34,7 +34,7 @@ public class UserDTO {
     private boolean activated = false;
 
     @Size(min = 2, max = 5)
-    private String langKey;
+    private String langKey = "en";
 
     private Set<String> authorities;
 
