@@ -7,7 +7,8 @@
             $stateProvider
                 .state('signup', {
                     url: '/signup',
-                    templateUrl: 'app/view/signup/signup.html'
+                    templateUrl: 'app/view/signup/signup.html',
+                    controller: 'SignupController'
                 })
         })
 })();
