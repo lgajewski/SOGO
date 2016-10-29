@@ -58,10 +58,10 @@ public class UserService {
         return user;
     }
 
-    public void updateUser(String id, String login, String firstName, String lastName, String email,
+    public void updateUser(String login, String firstName, String lastName, String email,
                            boolean activated, String langKey, Set<String> authorities) {
         userRepository
-            .findOneById(id)
+            .findOneByLogin(login)
             .ifPresent(u -> {
                 u.setLogin(login);
                 u.setFirstName(firstName);
@@ -92,5 +92,51 @@ public class UserService {
 
     public User getUserById(String id) {
         return userRepository.findOne(id);
+    }
+
+    public Optional<User> activateRegistration(String key) {
+        log.debug("Activating user for activation key {}", key);
+        return userRepository.findOneByActivationKey(key)
+            .map(user -> {
+                // activate given user for the registration key.
+                user.setActivated(true);
+                user.setActivationKey(null);
+                userRepository.save(user);
+                log.debug("Activated user: {}", user);
+                return user;
+            });
+    }
+
+    public void changePassword(String login, String password) {
+        userRepository.findOneByLogin(login).ifPresent(u -> {
+            String encryptedPassword = passwordEncoder.encode(password);
+            u.setPassword(encryptedPassword);
+            userRepository.save(u);
+            log.debug("Changed password for User: {}", u);
+        });
+    }
+
+    public Optional<User> requestPasswordReset(String mail) {
+        return userRepository.findOneByEmail(mail)
+            .filter(User::getActivated)
+            .map(user -> {
+                user.setResetKey(RandomUtil.generateResetKey());
+                user.setResetDate(System.currentTimeMillis());
+                userRepository.save(user);
+                return user;
+            });
+    }
+
+    public Optional<User> completePasswordReset(String newPassword, String key) {
+        log.debug("Reset user password for reset key {}", key);
+
+        return userRepository.findOneByResetKey(key)
+            .map(user -> {
+                user.setPassword(passwordEncoder.encode(newPassword));
+                user.setResetKey(null);
+                user.setResetDate(0);
+                userRepository.save(user);
+                return user;
+            });
     }
 }

@@ -6,13 +6,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+import static pl.edu.agh.sogo.security.SecurityConstants.PASSWORD_MAX_LENGTH;
+import static pl.edu.agh.sogo.security.SecurityConstants.PASSWORD_MIN_LENGTH;
+
 /**
  * View Model extending the UserDTO, which is meant to be used in the user management UI.
  */
 public class ManagedUserDTO extends UserDTO {
-
-    private static final int PASSWORD_MIN_LENGTH = 4;
-    private static final int PASSWORD_MAX_LENGTH = 100;
 
     private String id;
 
