@@ -25,14 +25,14 @@
                 <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="badge">{{brokenContainers.length}}</span><b class="caret"></b></a>
 
                 <ul class="dropdown-menu notifications" role="menu">
-                    <div class="notification-heading"><h4 class="menu-title">Notifications</h4><h4 class="menu-title pull-right"><a href="" data-toggle="modal" data-target="#myViewDetailsModalLabel">View all<i class="glyphicon glyphicon-circle-arrow-right"></i></a></h4>
+                    <div class="notification-heading"><h4 class="menu-title" translate="NOTIFICATIONS"></h4><h4 class="menu-title pull-right"><a href="" data-toggle="modal" data-target="#myViewDetailsModalLabel" translate="VIEW_ALL"><i class="glyphicon glyphicon-circle-arrow-right"></i></a></h4>
                     </div>
                     <li class="divider"></li>
                     <div class="notifications-wrapper">
                         <a class="content" href="" ng-repeat="container in brokenContainers">
                             <div class="notification-item">
-                                <h4 class="item-title">Container <b>{{container.id}}</b> reported an error!</h4>
-                                <p class="item-info">(location: {{container.address}})</p>
+                                <h4 class="item-title">{{'CONTAINER'|translate}} <b>{{container.id}}</b> {{'ERROR_REPORT'|translate}}</h4>
+                                <p class="item-info">({{'LOCATION'|translate}}: {{container.address}})</p>
                             </div>
                         </a>
                     </div>
