@@ -33,6 +33,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UserController {
 
+    public static final String ERROR_USER_EXISTS = "error.userexists";
+    public static final String ERROR_EMAIL_EXISTS = "error.emailexists";
     private final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Inject
@@ -65,11 +67,11 @@ public class UserController {
         //Lowercase the user login before comparing with database
         if (userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase()).isPresent()) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createAlert("userexists", "Login already in use"))
+                .headers(HeaderUtil.createAlert(ERROR_USER_EXISTS, "Login already in use"))
                 .body(null);
         } else if (userRepository.findOneByEmail(managedUserDTO.getEmail()).isPresent()) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createAlert("emailexists", "Email already in use"))
+                .headers(HeaderUtil.createAlert(ERROR_EMAIL_EXISTS, "Email already in use"))
                 .body(null);
         } else {
             User newUser = userService.createUser(managedUserDTO);
@@ -100,11 +102,11 @@ public class UserController {
         log.debug("REST request to update User : {}", managedUserDTO);
         Optional<User> existingUser = userRepository.findOneByEmail(managedUserDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("emailexists", "E-mail already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert(ERROR_EMAIL_EXISTS, "E-mail already in use")).body(null);
         }
         existingUser = userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("userexists", "Login already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert(ERROR_USER_EXISTS, "Login already in use")).body(null);
         }
         userService.updateUser(managedUserDTO.getLogin(), managedUserDTO.getFirstName(),
             managedUserDTO.getLastName(), managedUserDTO.getEmail(), managedUserDTO.isActivated(),

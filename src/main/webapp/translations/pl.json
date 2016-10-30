@@ -37,5 +37,11 @@
     "TRUCK": "Ciężarówka",
     "ROUTE": "Trasa",
     "SHOW": "Pokaż",
-    "SHOW_BROKEN": "Pokaż uszkodzone"
+    "SHOW_BROKEN": "Pokaż uszkodzone",
+    "REGISTER_SUCCEED": "Zarejestrowano!",
+    "REGISTER_FAILED": "Rejestracja nie udała się!",
+    "REGISTER_CONFIRMATION": "Wiadomość email została wysłana na podany adres.",
+    "error.internalServerError": "Błąd systemu",
+    "error.emailexists": "Ten adres email jest już obecnie używany",
+    "error.userexists": "Wybrany login już istnieje."
 }

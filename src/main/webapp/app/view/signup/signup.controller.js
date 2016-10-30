@@ -29,7 +29,7 @@
 
                 vm.error = null;
             }).catch(function (error) {
-                vm.error = error.headers("x-sogo-message") || error.data.description || "Please try again";
+                vm.error = error.headers("x-sogo-alert") || error.data.message || "Please try again";
             });
         }
     }
