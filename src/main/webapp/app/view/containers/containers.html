@@ -13,6 +13,7 @@
                     <tr>
                         <!--<th>ID</th>-->
                         <th>Location</th>
+                        <th>Status</th>
                         <th>Type</th>
                         <th>Capacity[kg]</th>
                         <th>Filling %</th>
@@ -23,6 +24,10 @@
                     <tr ng-repeat="item in items">
                         <!--<td>{{item.id}}</td>-->
                         <td>{{item.address}}</td>
+                        <td>
+                            <button ng-if="isError(item)" type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" class="btn btn-danger" data-toggle="modal" data-target=".status-modal"><i class="fa fa-warning" aria-hidden="true"></i></button>
+                            <button ng-if="!isError(item)" type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" class="btn btn-success" data-toggle="modal" data-target=".status-modal"><i class="fa fa-check" aria-hidden="true"></i></button>
+                        </td>
                         <td>{{item.type}}</td>
                         <td>{{item.capacity}}</td>
                         <td>{{item.sensors.load.value.toFixed(2)}}%</td>
@@ -143,6 +148,41 @@
             </div>
             <div class="modal-body">
                 <div id="map-canvas-showcontainer" class="angular-google-map-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myContainerStatusModalLabel" class="modal fade status-modal" tabindex="-1" role="dialog" aria-labelledby="myContainerStatusModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">
+                    Container status
+                </h4>
+            </div>
+            <div class="modal-body">
+                <table datatable="ng" dt-column-defs="dtColumnDefsSensors" width="100%" class="table table-striped table-bordered table-hover" id="sensors">
+                    <thead>
+                    <tr>
+                        <th>Sensor</th>
+                        <th>Value</th>
+                        <th>ErrorCode</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="(sensorName, sensor) in containerToEdit.sensors">
+                        <td>{{sensorName}}</td>
+                        <td>{{sensor.value}}</td>
+                        <td>{{sensor.errorCode}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
