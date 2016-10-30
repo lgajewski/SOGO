@@ -18,6 +18,7 @@ import pl.edu.agh.sogo.web.util.HeaderUtil;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
@@ -58,17 +59,17 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Secured(SecurityConstants.ADMIN)
-    public ResponseEntity<?> createUser(@RequestBody ManagedUserDTO managedUserDTO, HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<?> createUser(@Valid @RequestBody ManagedUserDTO managedUserDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserDTO);
 
         //Lowercase the user login before comparing with database
         if (userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase()).isPresent()) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use"))
+                .headers(HeaderUtil.createAlert("userexists", "Login already in use"))
                 .body(null);
         } else if (userRepository.findOneByEmail(managedUserDTO.getEmail()).isPresent()) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "Email already in use"))
+                .headers(HeaderUtil.createAlert("emailexists", "Email already in use"))
                 .body(null);
         } else {
             User newUser = userService.createUser(managedUserDTO);
@@ -95,17 +96,17 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Secured(SecurityConstants.ADMIN)
-    public ResponseEntity<ManagedUserDTO> updateUser(@RequestBody ManagedUserDTO managedUserDTO) {
+    public ResponseEntity<ManagedUserDTO> updateUser(@Valid @RequestBody ManagedUserDTO managedUserDTO) {
         log.debug("REST request to update User : {}", managedUserDTO);
         Optional<User> existingUser = userRepository.findOneByEmail(managedUserDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "E-mail already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("emailexists", "E-mail already in use")).body(null);
         }
         existingUser = userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("userexists", "Login already in use")).body(null);
         }
-        userService.updateUser(managedUserDTO.getId(), managedUserDTO.getLogin(), managedUserDTO.getFirstName(),
+        userService.updateUser(managedUserDTO.getLogin(), managedUserDTO.getFirstName(),
             managedUserDTO.getLastName(), managedUserDTO.getEmail(), managedUserDTO.isActivated(),
             managedUserDTO.getLangKey(), managedUserDTO.getAuthorities());
 
@@ -171,25 +172,11 @@ public class UserController {
      */
     @RequestMapping(value = "/self", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ManagedUserDTO> updateUser(Principal principal, @RequestBody ManagedUserDTO managedUserDTO) {
-        if(principal.getName().equals(managedUserDTO.getLogin())) {
-            log.debug("REST request to update User : {}", managedUserDTO);
-            Optional<User> existingUser = userRepository.findOneByEmail(managedUserDTO.getEmail());
-            if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
-                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "E-mail already in use")).body(null);
-            }
-            existingUser = userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase());
-            if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
-                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use")).body(null);
-            }
-            userService.updateUser(managedUserDTO.getId(), managedUserDTO.getLogin(), managedUserDTO.getFirstName(),
-                managedUserDTO.getLastName(), managedUserDTO.getEmail(), managedUserDTO.isActivated(),
-                managedUserDTO.getLangKey(), managedUserDTO.getAuthorities());
-
-            return ResponseEntity.ok()
-                .headers(HeaderUtil.createAlert("A user is updated with identifier " + managedUserDTO.getLogin(), managedUserDTO.getLogin()))
-                .body(new ManagedUserDTO(userService.getUserById(managedUserDTO.getId())));
+        if (principal.getName().equals(managedUserDTO.getLogin())) {
+            return updateUser(managedUserDTO);
         }
-        return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "diferentuserupdate", "Trying to update different user")).body(null);
+
+        return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("diferentuserupdate", "Trying to update different user")).body(null);
     }
 
     @RequestMapping("/user")

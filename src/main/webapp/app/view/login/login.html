@@ -4,8 +4,8 @@
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
                     <div ng-controller="LanguageSwitchController" align="right">
-                        <span class="flag-icon flag-icon-pl" ng-click="changeLanguage('pl')" translate="BUTTON_LANG_PL"></span>
-                        <span class="flag-icon flag-icon-gb" ng-click="changeLanguage('en')" translate="BUTTON_LANG_EN"></span>
+                        <a href class="flag-icon flag-icon-pl" ng-click="changeLanguage('pl')"></a>
+                        <a href class="flag-icon flag-icon-gb" ng-click="changeLanguage('en')"></a>
                     </div>
                     <img id="login-img" src="/assets/images/web_logo.png"/>
                 </div>
@@ -17,7 +17,7 @@
                     </div>
 
                     <div class="col-md-10 col-md-offset-1">
-                        <form role="form" ng-submit="vm.login($event)">
+                        <form role="form" ng-submit="vm.login()">
                             <fieldset>
                                 <div class="form-group">
                                     <input id="username" class="form-control" placeholder={{'LOGIN'|translate}} name="email"
