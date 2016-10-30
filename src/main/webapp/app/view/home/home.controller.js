@@ -14,7 +14,7 @@
         $scope.selection = [];
         $scope.showRoute = showRoute;
         $scope.errorCodes = errorCodes;
-        $scope.savePropsToFile = savePropsToFile;
+        $scope.savePropsToVariable = savePropsToVariable;
         $scope.checkAllElements = {'trucks':false, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
@@ -48,7 +48,7 @@
         var mapCenter = new google.maps.LatLng($scope.mapOptions.center.latitude, $scope.mapOptions.center.longitude);
         var prop;
 
-        savePropsToFile();
+        savePropsToVariable();
 
         $scope.mapProp = {
             center: mapCenter,
@@ -502,14 +502,14 @@
             }
         }
 
-        function savePropsToFile() {
+        function savePropsToVariable() {
             $http.get('resources/errorcodes.properties').then(function (response) {
-                prop = response;
+                prop = response.data;
             })
         }
 
         function errorCodes(container) {
-            $scope.alerts = [];
+            console.log(container);
             for(var sensor in container.sensors){
                 var ec = container.sensors[sensor].errorCode;
 
@@ -527,7 +527,7 @@
                     alert.containerAddress = container.address;
                     alert.sensor = sensor;
                     alert.errorCode = ec;
-                    alert.errorMessage = prop.data[ec];
+                    alert.errorMessage = prop[ec];
                     $scope.alerts.push(alert);
                 }
             }

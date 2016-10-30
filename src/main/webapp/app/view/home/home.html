@@ -343,7 +343,7 @@
                 <table id="brokenContainersTable" class="table table-striped table-bordered table-hover">
                     <tr ng-repeat="item in items.broken">
                         <td ng-init="errorCodes(item)">Container {{item.id}} at {{item.address}}:
-                            <div ng-repeat="alert in alerts">{{alert.sensor}} reported error {{alert.errorCode}} ({{alert.errorMessage}})</div>
+                            <div ng-repeat="alert in alerts" ng-if="alert.containerAddress == item.address">{{alert.sensor}} reported error {{alert.errorCode}} ({{alert.errorMessage}})</div>
                             </td>
                     </tr>
                 </table>
