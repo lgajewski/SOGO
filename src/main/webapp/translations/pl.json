@@ -49,6 +49,7 @@
     "error.internalServerError": "Błąd systemu",
     "error.emailexists": "Ten adres email jest już obecnie używany",
     "error.userexists": "Wybrany login już istnieje.",
+    "error.invalidemail": "Niepoprawny adres email!"
     "REGISTRATION": "Rejestracja",
     "CAPACITY": "Pojemność",
     "TYPE": "Typ",
@@ -72,5 +73,10 @@
     "PROFILE_PAGE": "Edytuj profil",
     "NEW_PASSWORD": "Nowe hasło",
     "CONFIRM_PASSWORD": "Powtórz hasło",
-    "SAVE_CHANGES": "Zapisz zmiany"
+    "SAVE_CHANGES": "Zapisz zmiany",
+    "STATUS": "Status",
+    "CONTAINER_STATUS": "Status kontenera",
+    "SENSOR": "Czujnik",
+    "VALUE": "Wartość",
+    "ERROR_CODE": "Kod błędu"
 }

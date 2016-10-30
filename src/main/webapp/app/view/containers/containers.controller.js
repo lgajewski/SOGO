@@ -16,6 +16,7 @@
         $scope.deleteContainer = deleteContainer;
         $scope.getContainers = getContainers;
         $scope.addContainer = addContainer;
+        $scope.isError = isError;
         $scope.activeObject = ActiveItemService.getObject();
         $scope.getContainers();
         $scope.containerToAdd = {};
@@ -35,7 +36,14 @@
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
             DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(4).notSortable()
+            DTColumnDefBuilder.newColumnDef(4),
+            DTColumnDefBuilder.newColumnDef(5).notSortable()
+        ];
+
+        $scope.dtColumnDefsSensors = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2)
         ];
 
         var mapCenter = new google.maps.LatLng(50.0613356, 19.9379844);
@@ -138,6 +146,15 @@
             }
         });
 
+        function isError(container){
+            for(var index in container.sensors){
+                if(container.sensors[index].errorCode > 0){
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
         function addMarker(latLng, icon, map, item){
             //clear the previous marker and circle.
             if(marker != null){
@@ -230,10 +247,10 @@
             $scope.activeObject.options.icon = 'assets/images/ic_map_trash_' + item.type + '.png';
         }
 
-        function setContainerToEdit(container){
-            $scope.containerToEdit = _.clone(container)
-
+        function setContainerToEdit(container) {
+            $scope.containerToEdit = _.clone(container);
         }
+
 
         function editContainer(container){
             Restangular.all('containers').customPUT(container).then(function () {

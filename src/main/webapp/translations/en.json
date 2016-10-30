@@ -49,6 +49,7 @@
     "error.internalServerError": "Internal server error",
     "error.emailexists": "Email already in use",
     "error.userexists": "Login already in use",
+    "error.invalidemail": "Invalid email address!",
     "REGISTRATION": "Registration",
     "CAPACITY": "Capacity",
     "TYPE": "Type",
@@ -72,5 +73,10 @@
     "PROFILE_PAGE": "Profile page",
     "NEW_PASSWORD": "New password",
     "CONFIRM_PASSWORD": "Confirm password",
-    "SAVE_CHANGES": "Save changes"
+    "SAVE_CHANGES": "Save changes",
+    "STATUS": "Status",
+    "CONTAINER_STATUS": "Container status",
+    "SENSOR": "Sensor",
+    "VALUE": "Value",
+    "ERROR_CODE": "Error code"
 }
