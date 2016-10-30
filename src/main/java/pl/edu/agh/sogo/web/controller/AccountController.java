@@ -1,11 +1,15 @@
 package pl.edu.agh.sogo.web.controller;
 
+import org.hibernate.validator.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.sogo.domain.User;
 import pl.edu.agh.sogo.persistence.UserRepository;
 import pl.edu.agh.sogo.service.MailService;
@@ -134,7 +138,7 @@ public class AccountController {
     @RequestMapping(value = "/reset_password/init",
         method = RequestMethod.POST,
         produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<?> requestPasswordReset(@RequestBody String mail, HttpServletRequest request) {
+    public ResponseEntity<?> requestPasswordReset(@Email @RequestBody String mail, HttpServletRequest request) {
         return userService.requestPasswordReset(mail)
             .map(user -> {
                 String baseUrl = request.getScheme() +
@@ -145,8 +149,7 @@ public class AccountController {
                     request.getContextPath();
                 mailService.sendPasswordResetMail(user, baseUrl);
                 return ResponseEntity.ok();
-                // TODO alert key ?
-            }).orElse(ResponseEntity.badRequest().headers(HeaderUtil.createAlert("email", "e-mail address not registered"))).body(null);
+            }).orElse(ResponseEntity.badRequest().headers(HeaderUtil.createAlert("error.invalidemail", "e-mail address not registered"))).body(null);
     }
 
     /**

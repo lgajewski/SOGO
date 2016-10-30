@@ -11,8 +11,11 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-md-12">
-                        <div class="alert alert-danger" ng-show="vm.authenticationError">
+                        <div class="alert alert-danger" ng-show="vm.alert.authentication">
                             <strong><p translate="FAIL_SIGN_IN"></p></strong><p translate="CHECK_CREDENTIALS"></p>
+                        </div>
+                        <div class="alert alert-danger" ng-show="vm.alert.recovery">
+                            {{vm.alert.recovery|translate}}
                         </div>
                     </div>
 
@@ -48,21 +51,23 @@
      aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">X</span>
-                    <span class="sr-only" translate="CLOSE"></span>
-                </button>
-                <h4 class="modal-title" translate="RECOVERY"></h4>
-            </div>
-            <div class="modal-body">
-                <p translate="RECOVER_EMAIL"></p>
-                <input type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off">
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btn-cancel" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
-                <button type="button" class="btn btn-custom" data-dismiss="modal" translate="RECOVER"></button>
-            </div>
+            <form ng-submit="vm.recover()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">X</span>
+                        <span class="sr-only" translate="CLOSE"></span>
+                    </button>
+                    <h4 class="modal-title" translate="RECOVERY"></h4>
+                </div>
+                <div class="modal-body">
+                    <p translate="RECOVER_EMAIL"></p>
+                        <input ng-model="vm.recoveryEmail" type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-cancel" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
+                    <button type="submit" class="btn btn-custom" translate="RECOVER"></button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

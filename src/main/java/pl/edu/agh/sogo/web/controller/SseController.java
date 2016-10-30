@@ -24,7 +24,6 @@ public class SseController {
 
     @RequestMapping
     public SseEmitter provideEmitter() throws IOException {
-        log.info("[GET][/api/sse] provideEmitter()");
         return sseService.provide();
     }
 

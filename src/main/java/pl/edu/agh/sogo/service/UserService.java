@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.sogo.domain.Authority;
 import pl.edu.agh.sogo.domain.User;
 import pl.edu.agh.sogo.persistence.AuthorityRepository;
 import pl.edu.agh.sogo.persistence.UserRepository;
@@ -12,7 +11,6 @@ import pl.edu.agh.sogo.service.util.RandomUtil;
 import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
 
 import javax.inject.Inject;
-import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -122,7 +120,7 @@ public class UserService {
 
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmail(mail)
-            .filter(User::getActivated)
+            .filter(User::isActivated)
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
                 user.setResetDate(System.currentTimeMillis());

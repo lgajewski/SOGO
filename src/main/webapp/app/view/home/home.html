@@ -271,16 +271,16 @@
                 <h4 class="modal-title" translate="ADD_TRUCK"></h4>
             </div>
             <div class="modal-body" id="addTruckModalBody">
-                <label>Registration</label>
+                <label translate="REGISTRATION"></label>
                 <input class="form-control" ng-model="truckToAdd.registration">
-                <label>Location</label>
+                <label translate="LOCATION"></label>
                 <div id="map-canvas-addtruck" class="angular-google-map-container"></div>
-                <label>Capacity</label>
+                <label translate="CAPACITY"></label>
                 <input class="form-control" ng-model="truckToAdd.capacity">
             </div>
             <div class="modal-footer">
                 <button type="button" id="btn-cancelAddTruck" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addTruck(truckToAdd)">Add</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addTruck(truckToAdd)" translate="ADD"></button>
             </div>
         </div>
     </div>
@@ -298,32 +298,32 @@
                 <h4 class="modal-title" translate="ADD_CONTAINER"></h4>
             </div>
             <div class="modal-body">
-                <label>Type</label>
+                <label translate="TYPE"></label>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd1" value="blue"  ng-model="containerToAdd.type">blue
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd1" value="blue"  ng-model="containerToAdd.type"> {{'BLUE'|translate}}
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd2" value="green"  ng-model="containerToAdd.type">green
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd2" value="green"  ng-model="containerToAdd.type"> {{'GREEN'|translate}}
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd3" value="yellow" ng-model="containerToAdd.type">yellow
+                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd3" value="yellow" ng-model="containerToAdd.type"> {{'YELLOW'|translate}}
                     </label>
                 </div>
-                <label>Location</label>
+                <label translate="LOCATION"></label>
                 <div id="map-canvas-addcontainer" class="angular-google-map-container">
 
                 </div>
-                <label>Capacity</label>
+                <label translate="CAPACITY"></label>
                 <input class="form-control" ng-model="containerToAdd.capacity">
             </div>
             <div class="modal-footer">
                 <button type="button" id="btn-cancelAddContainer" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addContainer(containerToAdd)">Add</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addContainer(containerToAdd)" translate="ADD"></button>
             </div>
         </div>
     </div>
@@ -342,7 +342,7 @@
             <div class="modal-body" id="ViewDetailsModalBody">
                 <table id="brokenContainersTable" class="table table-striped table-bordered table-hover">
                     <tr ng-repeat="item in items.broken">
-                        <td ng-init="errorCodes(item)">Container {{item.id}}: {{res}}</td>
+                        <td ng-init="errorCodes(item)">{{'CONTAINER'|translate}} {{item.id}}: {{res}}</td>
                     </tr>
                 </table>
             </div>

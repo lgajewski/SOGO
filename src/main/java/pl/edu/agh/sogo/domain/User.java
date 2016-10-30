@@ -119,7 +119,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public boolean getActivated() {
+    public boolean isActivated() {
         return activated;
     }
 

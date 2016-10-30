@@ -2,26 +2,26 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                    Profile page
+                    {{'PROFILE_PAGE'|translate}}
             </div>
 
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">First name:</label>
+                        <label class="col-lg-3 control-label" translate="NAME"></label>
                         <div class="col-lg-8">
                             <input class="form-control" type="text" ng-model="currentUser.firstName">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Last name:</label>
+                        <label class="col-lg-3 control-label" translate="SURNAME"></label>
                         <div class="col-lg-8">
                             <input class="form-control" type="text" ng-model="currentUser.lastName">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Email:</label>
+                        <label class="col-lg-3 control-label" translate="EMAIL"></label>
                         <div class="col-lg-8">
                             <input class="form-control" type="email" ng-model="currentUser.email">
                         </div>
@@ -33,19 +33,19 @@
                         <!--</div>-->
                     <!--</div>-->
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Password:</label>
+                        <label class="col-lg-3 control-label" translate="PASSWORD"></label>
                         <div class="col-lg-8">
                             <input class="form-control" type="password" ng-model="currentUser.currentPassword">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">New password:</label>
+                        <label class="col-lg-3 control-label" translate="NEW_PASSWORD"></label>
                         <div class="col-lg-8">
                             <input class="form-control" type="password" ng-model="currentUser.newPassword">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Confirm new password:</label>
+                        <label class="col-lg-3 control-label" translate="CONFIRM_PASSWORD"></label>
                         <div class="col-lg-8">
                             <input class="form-control" type="password" ng-model="currentUser.newPasswordConfirm">
                         </div>
@@ -53,7 +53,7 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label"></label>
                         <div class="col-lg-8">
-                            <input type="button" class="btn btn-primary" value="Save Changes" ng-click="updateUser()">
+                            <button type="button" class="btn btn-primary" ng-click="updateUser()" translate="SAVE_CHANGES"></button>
                         </div>
                     </div>
                 </form>

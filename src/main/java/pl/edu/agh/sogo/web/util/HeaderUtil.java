@@ -12,7 +12,7 @@ public class HeaderUtil {
     private static final Logger log = LoggerFactory.getLogger(HeaderUtil.class);
 
     public static HttpHeaders createAlert(String key, String message) {
-        log.error("Alert occurred. {}: {}", key, message);
+        log.warn("Alert occurred. {}: {}", key, message);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-SOGO-alert", key);

@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 @Service
 public class SseService {
@@ -17,14 +20,8 @@ public class SseService {
 
     public SseEmitter provide() {
         final SseEmitter sseEmitter = new SseEmitter();
-        sseEmitter.onCompletion(() -> {
-            log.info("onCompletion: " + Thread.currentThread());
-            cache.remove(sseEmitter);
-        });
-        sseEmitter.onTimeout(() -> {
-            log.info("onTimeout: " + Thread.currentThread());
-            sseEmitter.complete();
-        });
+        sseEmitter.onCompletion(() -> cache.remove(sseEmitter));
+        sseEmitter.onTimeout(sseEmitter::complete);
 
         cache.add(sseEmitter);
 

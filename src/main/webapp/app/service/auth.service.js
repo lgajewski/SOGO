@@ -12,7 +12,8 @@
             login: login,
             logout: logout,
             authorize: authorize,
-            register: register
+            register: register,
+            recover: recover
         };
 
         return service;
@@ -45,6 +46,10 @@
 
         function register(managedUserDTO) {
             return Restangular.all("account").all("register").post(managedUserDTO);
+        }
+
+        function recover(email) {
+            return Restangular.all("account/reset_password/init").post(email);
         }
     }
 })();
