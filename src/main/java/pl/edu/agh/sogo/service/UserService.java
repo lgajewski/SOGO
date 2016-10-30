@@ -12,7 +12,9 @@ import pl.edu.agh.sogo.service.util.RandomUtil;
 import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -40,28 +42,25 @@ public class UserService {
         user.setFirstName(managedUserDTO.getFirstName());
         user.setLastName(managedUserDTO.getLastName());
         user.setEmail(managedUserDTO.getEmail());
-        user.setLangKey((managedUserDTO.getLangKey() == null) ? "en" : managedUserDTO.getLangKey());
-        Set<Authority> authorities = new HashSet<>();
-        if (managedUserDTO.getAuthorities() != null) {
-            managedUserDTO.getAuthorities().stream().forEach(
-                authority -> authorities.add(authorityRepository.findOne(authority))
-            );
-        }
-        user.setAuthorities(authorities);
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-        user.setPassword(encryptedPassword);
+        user.setLangKey(managedUserDTO.getLangKey());
+        user.setAuthorities(managedUserDTO.getAuthorities().stream()
+            .map(authorityName -> authorityRepository.findOne(authorityName))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet()));
+
+        user.setPassword(passwordEncoder.encode(managedUserDTO.getPassword()));
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(System.currentTimeMillis());
-        user.setActivated(true);
+        user.setActivated(false);
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
         return user;
     }
 
-    public void updateUser(String id, String login, String firstName, String lastName, String email,
+    public void updateUser(String login, String firstName, String lastName, String email,
                            boolean activated, String langKey, Set<String> authorities) {
         userRepository
-            .findOneById(id)
+            .findOneByLogin(login)
             .ifPresent(u -> {
                 u.setLogin(login);
                 u.setFirstName(firstName);
@@ -86,11 +85,62 @@ public class UserService {
         });
     }
 
+    public void activateUser(String login) {
+        userRepository.findOneByLogin(login)
+            .ifPresent(user -> {
+                user.setActivated(true);
+                userRepository.save(user);
+                log.debug("Activated user: {}", user);
+            });
+    }
+
+    public void deactivateUser(String login) {
+        userRepository.findOneByLogin(login)
+            .ifPresent(user -> {
+                user.setActivated(false);
+                userRepository.save(user);
+                log.debug("Activated user: {}", user);
+            });
+    }
+
     public Optional<User> getUserByLogin(String login) {
         return userRepository.findOneByLogin(login);
     }
 
     public User getUserById(String id) {
         return userRepository.findOne(id);
+    }
+
+    public void changePassword(String login, String password) {
+        userRepository.findOneByLogin(login).ifPresent(u -> {
+            String encryptedPassword = passwordEncoder.encode(password);
+            u.setPassword(encryptedPassword);
+            userRepository.save(u);
+            log.debug("Changed password for User: {}", u);
+        });
+    }
+
+    public Optional<User> requestPasswordReset(String mail) {
+        return userRepository.findOneByEmail(mail)
+            .filter(User::getActivated)
+            .map(user -> {
+                user.setResetKey(RandomUtil.generateResetKey());
+                user.setResetDate(System.currentTimeMillis());
+                userRepository.save(user);
+                return user;
+            });
+    }
+
+    public Optional<User> completePasswordReset(String newPassword, String key) {
+        log.debug("Reset user password for reset key {}", key);
+
+        return userRepository.findOneByResetKey(key)
+            .map(user -> {
+                user.setPassword(passwordEncoder.encode(newPassword));
+                user.setResetKey(null);
+                user.setResetDate(0);
+                userRepository.save(user);
+                return user;
+            });
     }
 }

@@ -35,17 +35,21 @@ public class ContainerAndTruckFactory {
             container.setType(types[r.nextInt(3)]);
             container.setAddress(null);
             Sensor loadSensor = new Sensor<Double>();
-            loadSensor.setErrorCode(r.nextInt(4));
+            int errorCodeRange = 1;
+            if(r.nextInt(2) > 0){
+                errorCodeRange = 4;
+            }
+            loadSensor.setErrorCode(r.nextInt(errorCodeRange));
             loadSensor.setValue(r.nextDouble()*100);
             container.addSensor("load", loadSensor);
 
             Sensor smellSensor = new Sensor<Double>();
-            smellSensor.setErrorCode(r.nextInt(4));
+            smellSensor.setErrorCode(r.nextInt(errorCodeRange));
             smellSensor.setValue(r.nextInt(10));
             container.addSensor("smell", smellSensor);
 
             Sensor deviceSensor = new Sensor<Integer>();
-            deviceSensor.setErrorCode(r.nextInt(4));
+            deviceSensor.setErrorCode(r.nextInt(errorCodeRange));
             deviceSensor.setValue(r.nextInt(100));
             container.addSensor("device", deviceSensor);
             container.setLocation(new Location(50.047+(r.nextDouble()*24/1000), 19.915+(r.nextDouble()*54/1000)));

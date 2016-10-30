@@ -4,60 +4,59 @@
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
                     <div ng-controller="LanguageSwitchController" align="right">
-                        <span class="flag-icon flag-icon-pl" ng-click="changeLanguage('pl')" translate="BUTTON_LANG_PL"></span>
-                        <span class="flag-icon flag-icon-gb" ng-click="changeLanguage('en')" translate="BUTTON_LANG_EN"></span>
+                        <a href class="flag-icon flag-icon-pl" ng-click="changeLanguage('pl')"></a>
+                        <a href class="flag-icon flag-icon-gb" ng-click="changeLanguage('en')"></a>
                     </div>
                     <img id="login-img" src="/assets/images/web_logo.png"/>
                 </div>
-                <div class="col-md-12">
-                    <div class="alert alert-danger" ng-show="vm.authenticationError">
-                        <strong><p translate="FAIL_SIGN_UP"></p></strong><p translate="CHECK_CREDENTIALS"></p>
-                    </div>
-                </div>
                 <div class="panel-body">
-                    <form role="form" ng-submit="vm.login($event)">
+                    <div class="col-md-12">
+                        <div class="alert alert-success" ng-show="vm.success">
+                            <strong translate="REGISTER_SUCCEED"></strong> {{'REGISTER_CONFIRMATION'|translate}}
+                        </div>
+
+                        <div class="alert alert-danger" ng-show="vm.error">
+                            <strong translate="REGISTER_FAILED"></strong> {{vm.error|translate}}
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                    <form role="form" ng-submit="vm.signup()" ng-show="!vm.success">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="{{'NAME'|translate}}" name="name" type="text">
+                                <input class="form-control" placeholder="{{'NAME'|translate}}" name="name" type="text" autofocus ng-model="vm.account.firstName">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'SURNAME'|translate}} name="surname" type="text">
+                                <input class="form-control" placeholder={{'SURNAME'|translate}} name="surname" type="text" ng-model="vm.account.lastName">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'LOGIN'|translate}} name="login" type="text">
+                                <input class="form-control" placeholder={{'LOGIN'|translate}} name="login" type="text" ng-model="vm.account.login">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'EMAIL'|translate}} name="email" type="email">
+                                <input class="form-control" placeholder={{'EMAIL'|translate}} name="email" type="email" ng-model="vm.account.email">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'PASSWORD'|translate}} name="password" type="password">
+                                <input class="form-control" placeholder={{'PASSWORD'|translate}} name="password" type="password" ng-model="vm.account.password">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder={{'REPEAT'|translate}} name="repeat" type="password">
+                                <input class="form-control" placeholder={{'REPEAT'|translate}} name="repeat" type="password" ng-model="vm.account.repeat">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" name="position" id="position">
-                                    <option translate="GARB_COLL"></option>
-                                    <option translate="ADMIN_WORK"></option>
+                                <select class="form-control" name="position" id="position" ng-model="vm.account.authorities" multiple>
+                                    <option value="ROLE_USER" translate="GARB_COLL"></option>
+                                    <option value="ROLE_ADMIN" translate="ADMIN_WORK"></option>
                                 </select>
                             </div>
                             <div class="col-sm-12 text-center">
-                                <input type="submit" id="btn-login" class="btn btn-lg btn-block" value={{'SIGN_UP'|translate}}
-                                       ui-sref="login">
+                                <input type="submit" id="btn-login" class="btn btn-lg btn-block" value={{'SIGN_UP'|translate}} />
                             </div>
                         </fieldset>
                     </form>
-                    <div class="forget"><p translate="ACCOUNT"></p><a ui-sref="login" TRANSLATE="LOG_IN"></a></div>
+                        </div>
+                    <div class="col-md-12 forget"><p translate="ACCOUNT"></p><a ui-sref="login" translate="LOG_IN"></a></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<footer id="footer">
-    <div class="container">
-        <div class="row">
-            <p><strong>Copyright: </strong> Chrząstek, Gajewski, Siatka, Wrona</p>
-        </div>
-    </div>
-</footer>

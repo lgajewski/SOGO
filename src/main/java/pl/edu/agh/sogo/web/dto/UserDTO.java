@@ -8,6 +8,7 @@ import pl.edu.agh.sogo.security.SecurityConstants;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,12 +35,9 @@ public class UserDTO {
     private boolean activated = false;
 
     @Size(min = 2, max = 5)
-    private String langKey;
+    private String langKey = "en";
 
-    private Set<String> authorities;
-
-    public UserDTO() {
-    }
+    private Set<String> authorities = new HashSet<>();
 
     public UserDTO(User user) {
         this(user.getLogin(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getActivated(),

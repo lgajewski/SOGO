@@ -12,8 +12,6 @@ import java.util.Optional;
  */
 public interface UserRepository extends MongoRepository<User, String> {
 
-    Optional<User> findOneByActivationKey(String activationKey);
-
     Optional<User> findOneByResetKey(String resetKey);
 
     Optional<User> findOneByEmail(String email);

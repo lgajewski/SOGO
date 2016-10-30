@@ -11,7 +11,8 @@
         var service = {
             login: login,
             logout: logout,
-            authorize: authorize
+            authorize: authorize,
+            register: register
         };
 
         return service;
@@ -40,6 +41,10 @@
         function logout() {
             // logout from the server
             return Restangular.all("logout").post();
+        }
+
+        function register(managedUserDTO) {
+            return Restangular.all("account").all("register").post(managedUserDTO);
         }
     }
 })();
