@@ -20,20 +20,10 @@ public class ManagedUserDTO extends UserDTO {
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
-    public ManagedUserDTO() {
-    }
-
     public ManagedUserDTO(User user) {
         super(user);
         this.id = user.getId();
         this.password = null;
-    }
-
-    public ManagedUserDTO(String id, String login, String password, String firstName, String lastName,
-                          String email, boolean activated, Set<String> authorities) {
-        super(login, firstName, lastName, email, activated, authorities);
-        this.id = id;
-        this.password = password;
     }
 
     public String getId() {

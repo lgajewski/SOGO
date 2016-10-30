@@ -12,11 +12,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+
+import static pl.edu.agh.sogo.security.SecurityConstants.PASSWORD_MAX_LENGTH;
+import static pl.edu.agh.sogo.security.SecurityConstants.PASSWORD_MIN_LENGTH;
 
 /**
  * A user.
@@ -37,7 +38,7 @@ public class User implements Serializable {
 
     @JsonIgnore
     @NotNull
-    @Size(min = 60, max = 60)
+    @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
     @Size(max = 50)
@@ -50,15 +51,10 @@ public class User implements Serializable {
 
     @Indexed
     @Email
-    @Size(max = 100)
+    @Size(min = 5, max = 100)
     private String email;
 
     private boolean activated = false;
-
-    @Size(max = 20)
-    @Field("activation_key")
-    @JsonIgnore
-    private String activationKey;
 
     @Size(max = 20)
     @Field("reset_key")
@@ -66,7 +62,7 @@ public class User implements Serializable {
 
     @Size(min = 2, max = 5)
     @Field("lang_key")
-    private String langKey;
+    private String langKey = "en";
 
     @Field("reset_date")
     private long resetDate;
@@ -131,14 +127,6 @@ public class User implements Serializable {
         this.activated = activated;
     }
 
-    public String getActivationKey() {
-        return activationKey;
-    }
-
-    public void setActivationKey(String activationKey) {
-        this.activationKey = activationKey;
-    }
-
     public String getResetKey() {
         return resetKey;
     }
@@ -198,7 +186,6 @@ public class User implements Serializable {
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
             ", activated='" + activated + '\'' +
-            ", activationKey='" + activationKey + '\'' +
             "}";
     }
 }

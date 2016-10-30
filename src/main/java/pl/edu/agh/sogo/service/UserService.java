@@ -12,6 +12,7 @@ import pl.edu.agh.sogo.service.util.RandomUtil;
 import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,20 +42,16 @@ public class UserService {
         user.setFirstName(managedUserDTO.getFirstName());
         user.setLastName(managedUserDTO.getLastName());
         user.setEmail(managedUserDTO.getEmail());
-        user.setLangKey((managedUserDTO.getLangKey() == null) ? "en" : managedUserDTO.getLangKey());
-        Set<Authority> authorities = new HashSet<>();
-        if (managedUserDTO.getAuthorities() != null) {
-            authorities = (managedUserDTO.getAuthorities().stream()
-                .map(authority -> authorityRepository.findOne(authority))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet()));
-        }
-        user.setAuthorities(authorities);
-        String encryptedPassword = passwordEncoder.encode(managedUserDTO.getPassword());
-        user.setPassword(encryptedPassword);
+        user.setLangKey(managedUserDTO.getLangKey());
+        user.setAuthorities(managedUserDTO.getAuthorities().stream()
+            .map(authorityName -> authorityRepository.findOne(authorityName))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet()));
+
+        user.setPassword(passwordEncoder.encode(managedUserDTO.getPassword()));
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(System.currentTimeMillis());
-        user.setActivated(true);
+        user.setActivated(false);
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
         return user;
@@ -88,25 +85,30 @@ public class UserService {
         });
     }
 
+    public void activateUser(String login) {
+        userRepository.findOneByLogin(login)
+            .ifPresent(user -> {
+                user.setActivated(true);
+                userRepository.save(user);
+                log.debug("Activated user: {}", user);
+            });
+    }
+
+    public void deactivateUser(String login) {
+        userRepository.findOneByLogin(login)
+            .ifPresent(user -> {
+                user.setActivated(false);
+                userRepository.save(user);
+                log.debug("Activated user: {}", user);
+            });
+    }
+
     public Optional<User> getUserByLogin(String login) {
         return userRepository.findOneByLogin(login);
     }
 
     public User getUserById(String id) {
         return userRepository.findOne(id);
-    }
-
-    public Optional<User> activateRegistration(String key) {
-        log.debug("Activating user for activation key {}", key);
-        return userRepository.findOneByActivationKey(key)
-            .map(user -> {
-                // activate given user for the registration key.
-                user.setActivated(true);
-                user.setActivationKey(null);
-                userRepository.save(user);
-                log.debug("Activated user: {}", user);
-                return user;
-            });
     }
 
     public void changePassword(String login, String password) {
