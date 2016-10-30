@@ -28,6 +28,9 @@ import java.util.Optional;
 @RequestMapping("/api/account")
 public class AccountController {
 
+    public static final String ERROR_USER_EXISTS = "error.userexists";
+    public static final String ERROR_EMAIL_EXISTS = "error.emailexists";
+
     private final Logger log = LoggerFactory.getLogger(AccountController.class);
 
     @Inject
@@ -50,11 +53,12 @@ public class AccountController {
         method = RequestMethod.POST,
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<?> registerAccount(@Valid @RequestBody ManagedUserDTO managedUserDTO, HttpServletRequest request) {
+        log.debug("REST request to save User : {}", managedUserDTO);
 
         return userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase())
-            .map(user -> ResponseEntity.badRequest().headers(HeaderUtil.createAlert("userexists", "Login already in use")).body((String) null))
+            .map(user -> ResponseEntity.badRequest().headers(HeaderUtil.createAlert(ERROR_USER_EXISTS, "Login already in use")).body(null))
             .orElseGet(() -> userRepository.findOneByEmail(managedUserDTO.getEmail())
-                .map(user -> ResponseEntity.badRequest().headers(HeaderUtil.createAlert("emailexists", "Email already in use")).body((String) null))
+                .map(user -> ResponseEntity.badRequest().headers(HeaderUtil.createAlert(ERROR_EMAIL_EXISTS, "Email already in use")).body(null))
                 .orElseGet(() -> {
                     User user = userService.createUser(managedUserDTO);
                     String baseUrl = request.getScheme() + // "http"
@@ -65,24 +69,9 @@ public class AccountController {
                         request.getContextPath();              // "/myContextPath" or "" if deployed in root context
 
                     mailService.sendActivationEmail(user, baseUrl);
-                    return new ResponseEntity<>(HttpStatus.CREATED);
+                    return new ResponseEntity<>(user, HttpStatus.CREATED);
                 })
             );
-    }
-
-    /**
-     * GET  /activate : activate the registered user.
-     *
-     * @param key the activation key
-     * @return the ResponseEntity with status 200 (OK) and the activated user in body, or status 500 (Internal Server Error) if the user couldn't be activated
-     */
-    @RequestMapping(value = "/activate",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
-        return userService.activateRegistration(key)
-            .map(user -> new ResponseEntity<String>(HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     /**
@@ -109,7 +98,7 @@ public class AccountController {
     public ResponseEntity<String> saveAccount(@Valid @RequestBody UserDTO userDTO, Principal principal) {
         Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userDTO.getLogin()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("emailexists", "Email already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert(ERROR_EMAIL_EXISTS, "Email already in use")).body(null);
         }
         return userRepository
             .findOneByLogin(principal.getName())
@@ -156,6 +145,7 @@ public class AccountController {
                     request.getContextPath();
                 mailService.sendPasswordResetMail(user, baseUrl);
                 return ResponseEntity.ok();
+                // TODO alert key ?
             }).orElse(ResponseEntity.badRequest().headers(HeaderUtil.createAlert("email", "e-mail address not registered"))).body(null);
     }
 

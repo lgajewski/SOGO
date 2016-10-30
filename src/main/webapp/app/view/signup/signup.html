@@ -12,11 +12,11 @@
                 <div class="panel-body">
                     <div class="col-md-12">
                         <div class="alert alert-success" ng-show="vm.success">
-                            <strong>Registration saved!</strong> Please check your email for confirmation.
+                            <strong translate="REGISTER_SUCCEED"></strong> {{'REGISTER_CONFIRMATION'|translate}}
                         </div>
 
                         <div class="alert alert-danger" ng-show="vm.error">
-                            <strong>Registration failed!</strong>
+                            <strong translate="REGISTER_FAILED"></strong> {{vm.error|translate}}
                         </div>
 
                     </div>
@@ -43,8 +43,8 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" name="position" id="position" ng-model="vm.account.authorities" multiple>
-                                    <option translate="GARB_COLL"></option>
-                                    <option translate="ADMIN_WORK"></option>
+                                    <option value="ROLE_USER" translate="GARB_COLL"></option>
+                                    <option value="ROLE_ADMIN" translate="ADMIN_WORK"></option>
                                 </select>
                             </div>
                             <div class="col-sm-12 text-center">

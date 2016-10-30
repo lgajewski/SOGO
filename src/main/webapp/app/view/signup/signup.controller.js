@@ -26,8 +26,10 @@
             Auth.register(vm.account)
             .then(function () {
                 vm.success = true;
+
+                vm.error = null;
             }).catch(function (error) {
-                vm.error = true;
+                vm.error = error.headers("x-sogo-alert") || error.data.message || "Please try again";
             });
         }
     }

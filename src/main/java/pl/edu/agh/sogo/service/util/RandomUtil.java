@@ -22,15 +22,6 @@ public final class RandomUtil {
     }
 
     /**
-     * Generates an activation key.
-     *
-     * @return the generated activation key
-     */
-    public static String generateActivationKey() {
-        return RandomStringUtils.randomNumeric(DEF_COUNT);
-    }
-
-    /**
     * Generates a reset key.
     *
     * @return the generated reset key

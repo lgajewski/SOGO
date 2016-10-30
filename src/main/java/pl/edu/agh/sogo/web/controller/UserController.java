@@ -33,6 +33,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UserController {
 
+    public static final String ERROR_USER_EXISTS = "error.userexists";
+    public static final String ERROR_EMAIL_EXISTS = "error.emailexists";
     private final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Inject
@@ -65,11 +67,11 @@ public class UserController {
         //Lowercase the user login before comparing with database
         if (userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase()).isPresent()) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createAlert("userexists", "Login already in use"))
+                .headers(HeaderUtil.createAlert(ERROR_USER_EXISTS, "Login already in use"))
                 .body(null);
         } else if (userRepository.findOneByEmail(managedUserDTO.getEmail()).isPresent()) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createAlert("emailexists", "Email already in use"))
+                .headers(HeaderUtil.createAlert(ERROR_EMAIL_EXISTS, "Email already in use"))
                 .body(null);
         } else {
             User newUser = userService.createUser(managedUserDTO);
@@ -81,7 +83,7 @@ public class UserController {
                 request.getContextPath();              // "/myContextPath" or "" if deployed in root context
             mailService.sendCreationEmail(newUser, baseUrl);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
-                .headers(HeaderUtil.createAlert("A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
+                .headers(HeaderUtil.createAlert("usercreated", "A user is created with identifier " + newUser.getLogin()))
                 .body(newUser);
         }
     }
@@ -96,23 +98,61 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Secured(SecurityConstants.ADMIN)
-    public ResponseEntity<ManagedUserDTO> updateUser(@Valid @RequestBody ManagedUserDTO managedUserDTO) {
+    public ResponseEntity<ManagedUserDTO> updateUser(@Valid @RequestBody ManagedUserDTO managedUserDTO) throws URISyntaxException {
         log.debug("REST request to update User : {}", managedUserDTO);
         Optional<User> existingUser = userRepository.findOneByEmail(managedUserDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("emailexists", "E-mail already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert(ERROR_EMAIL_EXISTS, "E-mail already in use")).body(null);
         }
         existingUser = userRepository.findOneByLogin(managedUserDTO.getLogin().toLowerCase());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("userexists", "Login already in use")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert(ERROR_USER_EXISTS, "Login already in use")).body(null);
         }
         userService.updateUser(managedUserDTO.getLogin(), managedUserDTO.getFirstName(),
             managedUserDTO.getLastName(), managedUserDTO.getEmail(), managedUserDTO.isActivated(),
             managedUserDTO.getLangKey(), managedUserDTO.getAuthorities());
 
-        return ResponseEntity.ok()
+        return ResponseEntity.created(new URI("/api/users/" + managedUserDTO.getLogin()))
             .headers(HeaderUtil.createAlert("A user is updated with identifier " + managedUserDTO.getLogin(), managedUserDTO.getLogin()))
             .body(new ManagedUserDTO(userService.getUserById(managedUserDTO.getId())));
+    }
+
+    /**
+     * POST  /users/:login/activate : activate the "login" user.
+     *
+     * @param login the login of the user to activate
+     * @return the ResponseEntity with status 200 (OK) or with status 404 (Not Found)
+     */
+    @RequestMapping(value = "/{login:" + SecurityConstants.LOGIN_REGEX + "}/activate", method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(SecurityConstants.ADMIN)
+    public ResponseEntity<?> activateUser(@PathVariable String login) {
+        log.debug("REST request to get User : {}", login);
+        return userService.getUserByLogin(login)
+            .map(user -> {
+                userService.activateUser(login);
+                return ResponseEntity.ok().build();
+            })
+            .orElse(ResponseEntity.notFound().headers(HeaderUtil.createAlert("error.invalidlogin", "Login not found")).build());
+    }
+
+    /**
+     * POST  /users/:login/deactivate : deactivate the "login" user.
+     *
+     * @param login the login of the user to deactivate
+     * @return the ResponseEntity with status 200 (OK) or with status 404 (Not Found)
+     */
+    @RequestMapping(value = "/{login:" + SecurityConstants.LOGIN_REGEX + "}/deactivate", method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(SecurityConstants.ADMIN)
+    public ResponseEntity<?> deactivateUser(@PathVariable String login) {
+        log.debug("REST request to get User : {}", login);
+        return userService.getUserByLogin(login)
+            .map(user -> {
+                userService.deactivateUser(login);
+                return ResponseEntity.ok().build();
+            })
+            .orElse(ResponseEntity.notFound().headers(HeaderUtil.createAlert("error.invalidlogin", "Login not found")).build());
     }
 
     /**
@@ -157,26 +197,13 @@ public class UserController {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Secured(SecurityConstants.ADMIN)
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
-        log.debug("REST request to delete User: {}", login);
-        userService.deleteUser(login);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert("A user is deleted with identifier " + login, login)).build();
-    }
-
-    /**
-     * PUT  /users/self : Updates currently logged User.
-     *
-     * @param managedUserDTO the user to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated user,
-     * or with status 400 (Bad Request) if the login or email is already in use,
-     * or with status 500 (Internal Server Error) if the user couldn't be updated
-     */
-    @RequestMapping(value = "/self", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ManagedUserDTO> updateUser(Principal principal, @RequestBody ManagedUserDTO managedUserDTO) {
-        if (principal.getName().equals(managedUserDTO.getLogin())) {
-            return updateUser(managedUserDTO);
-        }
-
-        return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("diferentuserupdate", "Trying to update different user")).body(null);
+        return userService.getUserByLogin(login)
+            .map(u -> {
+                userService.deleteUser(login);
+                return ResponseEntity.ok().headers(HeaderUtil.createAlert("A user is deleted with identifier " + login, login)).build();
+            })
+            .orElse(ResponseEntity.badRequest().headers(HeaderUtil.createAlert("invalidlogin", "There is no user " +
+                "with login:" + login)).build());
     }
 
     @RequestMapping("/user")

@@ -37,5 +37,11 @@
     "TRUCK": "Truck",
     "ROUTE": "Route",
     "SHOW": "Show",
-    "SHOW_BROKEN": "Show broken"
+    "SHOW_BROKEN": "Show broken",
+    "REGISTER_SUCCEED": "Registration saved!",
+    "REGISTER_FAILED": "Registration failed!",
+    "REGISTER_CONFIRMATION": "Please check your email for confirmation.",
+    "error.internalServerError": "Internal server error",
+    "error.emailexists": "Email already in use",
+    "error.userexists": "Login already in use"
 }
