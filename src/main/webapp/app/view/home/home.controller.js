@@ -26,6 +26,7 @@
             green: [],
             broken: []
         };
+        $scope.alerts = [];
         $scope.users = [];
         $scope.active = {'trucks': false, 'yellow': false, 'blue':false, 'green':false};
         $scope.showList = showList;
@@ -503,16 +504,31 @@
 
         function savePropsToFile() {
             $http.get('resources/errorcodes.properties').then(function (response) {
-                console.log("prop\n");
                 prop = response;
             })
         }
 
         function errorCodes(container) {
+            $scope.alerts = [];
             for(var sensor in container.sensors){
                 var ec = container.sensors[sensor].errorCode;
+
                 if(ec != 0){
-                    $scope.res = prop.data[ec];
+
+                    var alert = {
+                        containerId: 0,
+                        containerAddress: "",
+                        sensor: "",
+                        errorCode: 0,
+                        errorMessage: ""
+                    }
+
+                    alert.containerId = container.id;
+                    alert.containerAddress = container.address;
+                    alert.sensor = sensor;
+                    alert.errorCode = ec;
+                    alert.errorMessage = prop.data[ec];
+                    $scope.alerts.push(alert);
                 }
             }
         }
