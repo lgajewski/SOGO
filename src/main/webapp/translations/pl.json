@@ -49,7 +49,7 @@
     "error.internalServerError": "Błąd systemu",
     "error.emailexists": "Ten adres email jest już obecnie używany",
     "error.userexists": "Wybrany login już istnieje.",
-    "error.invalidemail": "Niepoprawny adres email!"
+    "error.invalidemail": "Niepoprawny adres email!",
     "REGISTRATION": "Rejestracja",
     "CAPACITY": "Pojemność",
     "TYPE": "Typ",
