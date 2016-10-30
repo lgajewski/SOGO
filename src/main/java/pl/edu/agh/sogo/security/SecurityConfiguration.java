@@ -67,10 +67,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http
-            .csrf().disable()
-//            .ignoringAntMatchers("/websocket/**")
-//        .and()
-//            .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
+            .csrf()
+            .ignoringAntMatchers("/websocket/**")
+        .and()
+            .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .exceptionHandling()
             .accessDeniedHandler(new CustomAccessDeniedHandler())
             .authenticationEntryPoint(authenticationEntryPoint)

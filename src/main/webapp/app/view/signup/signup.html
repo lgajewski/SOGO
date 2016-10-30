@@ -16,7 +16,7 @@
                         </div>
 
                         <div class="alert alert-danger" ng-show="vm.error">
-                            <strong>Registration failed!</strong>
+                            <strong>Registration failed!</strong> {{vm.error}}
                         </div>
 
                     </div>
@@ -43,8 +43,8 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" name="position" id="position" ng-model="vm.account.authorities" multiple>
-                                    <option translate="GARB_COLL"></option>
-                                    <option translate="ADMIN_WORK"></option>
+                                    <option value="ROLE_USER" translate="GARB_COLL"></option>
+                                    <option value="ROLE_ADMIN" translate="ADMIN_WORK"></option>
                                 </select>
                             </div>
                             <div class="col-sm-12 text-center">
