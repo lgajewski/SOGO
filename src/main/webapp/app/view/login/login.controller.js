@@ -45,7 +45,7 @@
                 vm.alert.authentication = null;
 
                 $state.go('navbar.home')
-            }).catch(function () {
+            }).catch(function (error) {
                 vm.alert.authentication = error.headers("x-sogo-alert") || error.data.message || "Please try again";
             });
         }
