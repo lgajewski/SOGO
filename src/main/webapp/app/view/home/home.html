@@ -342,7 +342,8 @@
             <div class="modal-body" id="ViewDetailsModalBody">
                 <table id="brokenContainersTable" class="table table-striped table-bordered table-hover">
                     <tr ng-repeat="item in items.broken">
-                        <td ng-init="errorCodes(item)">{{'CONTAINER'|translate}} {{item.id}}: {{res}}</td>
+                        <td ng-init="errorCodes(item)">Container {{item.id}} at {{item.address}}:
+                            !sensorName! reported error ({{res}})</td>
                     </tr>
                 </table>
             </div>
