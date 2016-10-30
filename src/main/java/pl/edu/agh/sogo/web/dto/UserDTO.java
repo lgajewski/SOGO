@@ -39,8 +39,10 @@ public class UserDTO {
 
     private Set<String> authorities = new HashSet<>();
 
+    public UserDTO() {}
+
     public UserDTO(User user) {
-        this(user.getLogin(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getActivated(),
+        this(user.getLogin(), user.getFirstName(), user.getLastName(), user.getEmail(), user.isActivated(),
             user.getAuthorities().stream()
                 .map(Authority::getName)
                 .collect(Collectors.toSet()));

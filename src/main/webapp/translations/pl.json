@@ -43,5 +43,6 @@
     "REGISTER_CONFIRMATION": "Wiadomość email została wysłana na podany adres.",
     "error.internalServerError": "Błąd systemu",
     "error.emailexists": "Ten adres email jest już obecnie używany",
-    "error.userexists": "Wybrany login już istnieje."
+    "error.userexists": "Wybrany login już istnieje.",
+    "error.invalidemail": "Niepoprawny adres email!"
 }

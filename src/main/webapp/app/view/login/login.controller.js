@@ -10,14 +10,19 @@
     function LoginController($state, $timeout, Auth) {
         var vm = this;
 
-        vm.authenticationError = false;
+        vm.recoveryEmail = null;
+        vm.recover = recover;
+
+        vm.alert = {
+            authentication: null,
+            recovery: null
+        };
+
         vm.cancel = cancel;
         vm.credentials = {};
         vm.login = login;
         vm.password = null;
         vm.register = register;
-        vm.rememberMe = true;
-        vm.requestResetPassword = requestResetPassword;
         vm.username = null;
 
         $timeout(function () {
@@ -29,7 +34,7 @@
                 username: null,
                 password: null
             };
-            vm.authenticationError = false;
+            vm.alert.authentication = null;
         }
 
         function login() {
@@ -37,11 +42,11 @@
                 username: vm.username,
                 password: vm.password
             }).then(function () {
-                vm.authenticationError = false;
+                vm.alert.authentication = null;
 
                 $state.go('navbar.home')
             }).catch(function () {
-                vm.authenticationError = true;
+                vm.alert.authentication = error.headers("x-sogo-alert") || error.data.message || "Please try again";
             });
         }
 
@@ -49,8 +54,16 @@
             $state.go('register');
         }
 
-        function requestResetPassword() {
-            $state.go('requestReset');
+        function recover() {
+            Auth.recover(vm.recoveryEmail)
+                .then(function () {
+                    vm.alert.recovery = null;
+                }).catch(function (error) {
+                    vm.alert.recovery = error.headers("x-sogo-alert") || error.data.message || "Please try again";
+            });
+
+            // dismiss modal
+            $('.forget-modal').modal('hide');
         }
     }
 })();

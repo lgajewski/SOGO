@@ -43,5 +43,6 @@
     "REGISTER_CONFIRMATION": "Please check your email for confirmation.",
     "error.internalServerError": "Internal server error",
     "error.emailexists": "Email already in use",
-    "error.userexists": "Login already in use"
+    "error.userexists": "Login already in use",
+    "error.invalidemail": "Invalid email address!"
 }
