@@ -12,7 +12,7 @@
                 <div class="panel-body">
                     <div class="col-md-12">
                         <div class="alert alert-danger" ng-show="vm.alert.authentication">
-                            <strong><p translate="FAIL_SIGN_IN"></p></strong><p translate="CHECK_CREDENTIALS"></p>
+                            <strong><p translate="FAIL_SIGN_IN"></p></strong>{{vm.alert.authentication|translate}}
                         </div>
                         <div class="alert alert-danger" ng-show="vm.alert.recovery">
                             {{vm.alert.recovery|translate}}

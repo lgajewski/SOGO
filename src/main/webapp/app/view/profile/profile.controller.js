@@ -23,7 +23,7 @@
 
             var onFailure = function (error) {
                 vm.success = null;
-                vm.alert = error.headers("x-sogo-alert") || error.data.message || "Please try again";
+                vm.alert = error.headers("x-sogo-alert") || "error.unknown";
             };
 
             // update user

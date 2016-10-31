@@ -30,7 +30,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     @Override
     public UserDetails loadUserByUsername(final String login) {
-        log.debug("Authenticating {}", login);
+        log.info("Authenticating {}", login);
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         Optional<User> userFromDatabase = userRepository.findOneByLogin(lowercaseLogin);
         return userFromDatabase.map(user -> {
@@ -50,7 +50,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     /**
      * This exception is throw in case of a not activated user trying to authenticate.
      */
-    private class UserNotActivatedException extends AuthenticationException {
+    public class UserNotActivatedException extends AuthenticationException {
 
         private static final long serialVersionUID = 1L;
 

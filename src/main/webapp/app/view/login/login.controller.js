@@ -46,7 +46,7 @@
 
                 $state.go('navbar.home')
             }).catch(function (error) {
-                vm.alert.authentication = error.headers("x-sogo-alert") || error.data.message || "Please try again";
+                vm.alert.authentication = error.headers("x-sogo-alert") || "error.unknown";
             });
         }
 
@@ -59,7 +59,7 @@
                 .then(function () {
                     vm.alert.recovery = null;
                 }).catch(function (error) {
-                    vm.alert.recovery = error.headers("x-sogo-alert") || error.data.message || "Please try again";
+                    vm.alert.recovery = error.headers("x-sogo-alert") || "error.unknown";
             });
 
             // dismiss modal
