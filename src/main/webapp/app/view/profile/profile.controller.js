@@ -5,27 +5,40 @@
         .module('sogo')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$scope', '$rootScope', 'Restangular'];
+    ProfileController.$inject = ['user', 'Account'];
 
-    function ProfileController($scope, $rootScope, Restangular) {
-        $scope.updateUser = updateUser;
-        getCurrentUser();
+    function ProfileController(user, Account) {
+        var vm = this;
 
+        vm.alert = null;
+        vm.user = user;
+        vm.newPassword = null;
+        vm.save = save;
 
-        function getCurrentUser(){
-            Restangular.all('auth').get('user').then(function (resp) {
-                $scope.currentUser = resp.plain();
-                $rootScope.currentUser = $scope.currentUser;
-            })
+        function save() {
+            var onSuccess = function () {
+                vm.success = true;
+                vm.alert = null;
+            };
+
+            var onFailure = function (error) {
+                vm.success = null;
+                vm.alert = error.headers("x-sogo-alert") || error.data.message || "Please try again";
+            };
+
+            // update user
+            Account.update(vm.user)
+                .then(function () {
+                    onSuccess();
+
+                    // change password if necessary
+                    if (vm.newPassword) {
+                        Account.changePassword(vm.newPassword)
+                            .then(onSuccess)
+                            .catch(onFailure);
+                    }
+                })
+                .catch(onFailure);
         }
-
-        function updateUser(){
-            console.log($scope.currentUser);
-            Restangular.all('users/self').customPUT($scope.currentUser).then(function (resp) {
-                getCurrentUser();
-            })
-        }
-
     }
-
 })();

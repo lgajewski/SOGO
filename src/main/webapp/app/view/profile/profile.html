@@ -7,53 +7,59 @@
 
             <!-- /.panel-heading -->
             <div class="panel-body">
-                <form class="form-horizontal" role="form">
+                <div class="alert alert-success" ng-show="vm.success">
+                    <strong translate="PROFILE_UPDATED"></strong>
+                </div>
+
+                <div class="alert alert-danger" ng-show="vm.alert">
+                    {{vm.alert|translate}}
+                </div>
+
+                <div class="alert alert-danger" ng-show="profileForm.confirm.$error.pwmatch">
+                    {{'error.passwordmismatch'|translate}}
+                </div>
+
+                <form name="profileForm" class="form-horizontal" role="form" ng-submit="profileForm.$valid && vm.save()">
                     <div class="form-group">
                         <label class="col-lg-3 control-label" translate="NAME"></label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" ng-model="currentUser.firstName">
+                            <input class="form-control" type="text" ng-model="vm.user.firstName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" translate="SURNAME"></label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="text" ng-model="currentUser.lastName">
+                            <input class="form-control" type="text" ng-model="vm.user.lastName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" translate="EMAIL"></label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="email" ng-model="currentUser.email">
+                            <input class="form-control" type="email" ng-model="vm.user.email">
                         </div>
                     </div>
-                    <!--<div class="form-group">-->
-                        <!--<label class="col-lg-3 control-label">Role:</label>-->
-                        <!--<div class="col-lg-8">-->
-                            <!--<input class="form-control" type="email" ng-model="currentUser.email">-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label" translate="PASSWORD"></label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="password" ng-model="currentUser.currentPassword">
+                            <input class="form-control" type="password" ng-model="vm.user.password" required minlength="4">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" translate="NEW_PASSWORD"></label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="password" ng-model="currentUser.newPassword">
+                            <input class="form-control" id="new-password" name="new" type="password" ng-model="vm.newPassword" minlength="4">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" translate="CONFIRM_PASSWORD"></label>
                         <div class="col-lg-8">
-                            <input class="form-control" type="password" ng-model="currentUser.newPasswordConfirm">
+                            <input class="form-control" type="password" name="confirm" ng-model="vm.newPasswordConfirm" pw-check="new-password" minlength="4">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label"></label>
                         <div class="col-lg-8">
-                            <button type="button" class="btn btn-primary" ng-click="updateUser()" translate="SAVE_CHANGES"></button>
+                            <button type="submit" class="btn btn-primary" ng-click="updateUser()" translate="SAVE_CHANGES"></button>
                         </div>
                     </div>
                 </form>
