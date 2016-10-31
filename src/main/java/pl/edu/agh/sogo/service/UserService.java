@@ -118,6 +118,12 @@ public class UserService {
         });
     }
 
+    public boolean isPasswordValid(String login, String password) {
+        return userRepository.findOneByLogin(login)
+            .map(user -> passwordEncoder.matches(password, user.getPassword()))
+            .orElse(false);
+    }
+
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmail(mail)
             .filter(User::isActivated)

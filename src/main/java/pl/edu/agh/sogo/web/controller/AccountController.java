@@ -34,6 +34,7 @@ public class AccountController {
 
     public static final String ERROR_USER_EXISTS = "error.userexists";
     public static final String ERROR_EMAIL_EXISTS = "error.emailexists";
+    public static final String ERROR_INVALID_PASSWORD = "error.invalidpassword";
 
     private final Logger log = LoggerFactory.getLogger(AccountController.class);
 
@@ -99,11 +100,20 @@ public class AccountController {
      */
     @RequestMapping(method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> saveAccount(@Valid @RequestBody UserDTO userDTO, Principal principal) {
+    public ResponseEntity<String> saveAccount(@Valid @RequestBody ManagedUserDTO userDTO, Principal principal) {
         Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userDTO.getLogin()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createAlert(ERROR_EMAIL_EXISTS, "Email already in use")).body(null);
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createAlert(ERROR_EMAIL_EXISTS, "Email already in use"))
+                .body(null);
         }
+
+        if (!userService.isPasswordValid(userDTO.getLogin(), userDTO.getPassword())) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createAlert(ERROR_INVALID_PASSWORD, "Invalid password for user: " + userDTO.getLogin()))
+                .body(null);
+        }
+
         return userRepository
             .findOneByLogin(principal.getName())
             .map(u -> {
