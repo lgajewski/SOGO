@@ -6,10 +6,6 @@
     padding: 5px 5px 5px 25px;
 }
 
-.modal-dialog {
-    width: 600px;
-}
-
 #login-img {
     max-width: 100%;
     margin-top: 20px;
@@ -51,6 +47,11 @@ body {
     body {
         margin-top: 50px;
     }
+
+    .modal-dialog {
+        width: 600px;
+    }
+
 }
 
 #wrapper {
