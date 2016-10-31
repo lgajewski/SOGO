@@ -53,8 +53,11 @@
             return Restangular.all("account/reset_password/init").post(email);
         }
 
-        function reset(login, newPassword) {
-            return RestAngular.all("account/reset_password_finish")
+        function reset(newPassword, key) {
+            return Restangular.all("account/reset_password/finish").post({
+                key: key,
+                newPassword: newPassword
+            })
         }
     }
 })();
