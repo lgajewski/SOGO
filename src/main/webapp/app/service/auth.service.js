@@ -11,10 +11,7 @@
         var service = {
             login: login,
             logout: logout,
-            authorize: authorize,
-            register: register,
-            recover: recover,
-            reset: reset
+            authorize: authorize
         };
 
         return service;
@@ -43,21 +40,6 @@
         function logout() {
             // logout from the server
             return Restangular.all("logout").post();
-        }
-
-        function register(managedUserDTO) {
-            return Restangular.all("account").all("register").post(managedUserDTO);
-        }
-
-        function recover(email) {
-            return Restangular.all("account/reset_password/init").post(email);
-        }
-
-        function reset(newPassword, key) {
-            return Restangular.all("account/reset_password/finish").post({
-                key: key,
-                newPassword: newPassword
-            })
         }
     }
 })();

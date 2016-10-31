@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$state', '$timeout', 'Auth'];
+    LoginController.$inject = ['$state', '$timeout', 'Auth', 'Account'];
 
-    function LoginController($state, $timeout, Auth) {
+    function LoginController($state, $timeout, Auth, Account) {
         var vm = this;
 
         vm.recoveryEmail = null;
@@ -55,7 +55,7 @@
         }
 
         function recover() {
-            Auth.recover(vm.recoveryEmail)
+            Account.recover(vm.recoveryEmail)
                 .then(function () {
                     vm.alert.recovery = null;
                 }).catch(function (error) {

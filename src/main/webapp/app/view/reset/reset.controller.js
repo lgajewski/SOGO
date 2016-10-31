@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('ResetController', ResetController);
 
-    ResetController.$inject = ['$stateParams', 'Auth'];
+    ResetController.$inject = ['$stateParams', 'Account'];
 
-    function ResetController($stateParams, Auth) {
+    function ResetController($stateParams, Account) {
         var vm = this;
 
         vm.keyMissing = angular.isUndefined($stateParams.key);
@@ -32,7 +32,7 @@
                 return;
             }
 
-            Auth.reset(vm.resetData.password, $stateParams.key)
+            Account.reset(vm.resetData.password, $stateParams.key)
                 .then(function () {
                     vm.success = true;
                     vm.error = null;

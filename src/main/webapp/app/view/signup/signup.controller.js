@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('SignupController', SignupController);
 
-    SignupController.$inject = ['Auth'];
+    SignupController.$inject = ['Account'];
 
-    function SignupController(Auth) {
+    function SignupController(Account) {
         var vm = this;
 
         vm.account = {
@@ -30,7 +30,7 @@
                 return;
             }
 
-            Auth.register(vm.account)
+            Account.register(vm.account)
                 .then(function () {
                     vm.success = true;
 
