@@ -5,10 +5,10 @@
         .module('sogo')
         .config(function ($stateProvider) {
             $stateProvider
-                .state('navbar', {
-                    abstract: true,
-                    templateUrl: 'app/view/navbar/navbar.html',
-                    controller: 'NavbarController',
+                .state('reset', {
+                    url: '/reset?key',
+                    templateUrl: 'app/view/reset/reset.html',
+                    controller: 'ResetController',
                     controllerAs: 'vm'
                 })
         })

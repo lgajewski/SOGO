@@ -3,34 +3,30 @@
 
     angular
         .module('sogo')
-        .controller('SignupController', SignupController);
+        .controller('ResetController', ResetController);
 
-    SignupController.$inject = ['Auth'];
+    ResetController.$inject = ['Auth'];
 
-    function SignupController(Auth) {
+    function ResetController(Auth) {
         var vm = this;
 
-        vm.account = {
+        vm.resetData = {
             login: '',
             password: '',
-            repeat: '',
-            firstName: '',
-            lastName: '',
-            email: '',
-            authorities: []
+            repeat: ''
         };
 
-        vm.signup = signup;
+        vm.reset = reset;
         vm.success = false;
 
-        function signup() {
-            if (vm.account.password !== vm.account.repeat) {
+        function reset() {
+            if (vm.resetData.password !== vm.resetData.repeat) {
                 vm.success = false;
                 vm.error = "error.passwordmismatch";
                 return;
             }
 
-            Auth.register(vm.account)
+            Auth.reset(vm.resetData.login, vm.resetData.password)
                 .then(function () {
                     vm.success = true;
 
