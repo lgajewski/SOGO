@@ -9,14 +9,7 @@
                     url: '/login',
                     templateUrl: 'app/view/login/login.html',
                     controller: 'LoginController',
-                    controllerAs: 'vm',
-                    resolve: {
-                        authorize: ['Auth',
-                            function (Auth) {
-                                return Auth.authorize();
-                            }
-                        ]
-                    }
+                    controllerAs: 'vm'
                 })
         })
 })();

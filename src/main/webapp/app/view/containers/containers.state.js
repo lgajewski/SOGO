@@ -5,7 +5,7 @@
         .module('sogo')
         .config(function ($stateProvider) {
             $stateProvider
-                .state('navbar.containers', {
+                .state('app.navbar.containers', {
                     url: '/containers',
                     templateUrl: 'app/view/containers/containers.html',
                     controller: 'ContainersController',

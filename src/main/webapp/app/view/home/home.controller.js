@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService' ,'uiGmapIsReady', '$http'];
+    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$http'];
 
-    function HomeController($scope, Restangular, SseService, DirectionsService, uiGmapIsReady, $http) {
+    function HomeController($scope, Restangular, SseService, DirectionsService, $http) {
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();

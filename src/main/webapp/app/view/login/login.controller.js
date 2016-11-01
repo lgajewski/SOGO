@@ -44,7 +44,7 @@
             }).then(function () {
                 vm.alert.authentication = null;
 
-                $state.go('navbar.home')
+                $state.go('app.navbar.home')
             }).catch(function (error) {
                 vm.alert.authentication = error.headers("x-sogo-alert") || "error.unknown";
             });

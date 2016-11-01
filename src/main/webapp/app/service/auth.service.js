@@ -11,23 +11,29 @@
         var service = {
             login: login,
             logout: logout,
-            authorize: authorize
+            authorize: authorize,
+            isAuthorized: isAuthorized
         };
 
         return service;
 
-        function authorize() {
+        function isAuthorized() {
             var deferred = $q.defer();
 
             Restangular.one("authenticate").get()
                 .then(function () {
-                    $state.go('navbar.home');
+                    deferred.resolve(true);
                 })
                 .catch(function () {
-                    deferred.resolve();
+                    deferred.resolve(false);
                 });
 
             return deferred.promise;
+        }
+
+        function authorize() {
+            // TODO state redirection
+            return true;
         }
 
         function login(credentials) {
