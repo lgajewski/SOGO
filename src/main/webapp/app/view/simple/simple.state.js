@@ -5,8 +5,9 @@
         .module('sogo')
         .config(function ($stateProvider) {
             $stateProvider
-                .state('app.simple', {
+                .state('simple', {
                     abstract: true,
+                    parent: 'app',
                     templateUrl: 'app/view/simple/simple.html'
                 })
         })

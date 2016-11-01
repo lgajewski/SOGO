@@ -5,13 +5,12 @@
         .module('sogo')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$rootScope', '$http', 'SseService', 'Auth' , 'Restangular'];
+    NavbarController.$inject = ['$scope', '$rootScope', '$http', 'Auth' , 'Restangular'];
 
-    function NavbarController($scope, $rootScope, $http, SseService, Auth, Restangular) {
+    function NavbarController($scope, $rootScope, $http, Auth, Restangular) {
         this.logout = Auth.logout;
         $scope.brokenContainers = [];
         $scope.errorsCounter = 0;
-        configureSse();
         getCurrentUser();
         errorCodes();
         loadContainers();
@@ -26,30 +25,6 @@
                 navMain.collapse('hide');
             });
         });
-
-        function configureSse() {
-            var onContainerUpdated = function (event) {
-                var updatedContainer = JSON.parse(event.data);
-
-                $scope.$apply(function () {
-                    // var updatedContainer = JSON.parse(event.data);
-                    var container = $scope.brokenContainers.find(c => c.id === updatedContainer.id);
-                    if (container) {
-                        container.address = updatedContainer.address;
-                        container.type = updatedContainer.type;
-                        container.sensors = updatedContainer.sensors;
-                    }
-                });
-            };
-
-            // register
-            SseService.register("container", onContainerUpdated);
-
-            // unregister on exit
-            $scope.$on("$destroy", function () {
-                SseService.unregister(onContainerUpdated);
-            });
-        }
 
         function getCurrentUser(){
             Restangular.all('auth').get('user').then(function (resp) {

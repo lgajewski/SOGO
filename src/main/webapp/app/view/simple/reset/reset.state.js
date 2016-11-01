@@ -5,8 +5,9 @@
         .module('sogo')
         .config(function ($stateProvider) {
             $stateProvider
-                .state('app.simple.reset', {
+                .state('reset', {
                     url: '/reset?key',
+                    parent: 'simple',
                     templateUrl: 'app/view/simple/reset/reset.html',
                     controller: 'ResetController',
                     controllerAs: 'vm'

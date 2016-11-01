@@ -5,19 +5,17 @@
         .module('sogo')
         .factory('Auth', Auth);
 
-    Auth.$inject = ['$q', '$state', 'Restangular'];
+    Auth.$inject = ['$rootScope', '$q', '$state', 'Restangular'];
 
-    function Auth($q, $state, Restangular) {
-        var service = {
+    function Auth($rootScope, $q, $state, Restangular) {
+        return {
             login: login,
             logout: logout,
             authorize: authorize,
-            isAuthorized: isAuthorized
+            isAuthenticated: isAuthenticated
         };
 
-        return service;
-
-        function isAuthorized() {
+        function isAuthenticated() {
             var deferred = $q.defer();
 
             Restangular.one("auth/authenticate").get()
@@ -32,8 +30,19 @@
         }
 
         function authorize() {
-            // TODO state redirection
-            return true;
+            Restangular.one("auth/authenticate").get()
+                .then(function () {
+                    // authenticated user can't access login and register pages
+                    if ($rootScope.toState.parent === 'simple') {
+                        $state.go('home');
+                    }
+                })
+                .catch(function () {
+                    // user isn't authenticated, redirect to login page
+                    if ($rootScope.toState.parent === 'navbar') {
+                        $state.go('login');
+                    }
+                });
         }
 
         function login(credentials) {

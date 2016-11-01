@@ -5,8 +5,9 @@
         .module('sogo')
         .config(function ($stateProvider) {
             $stateProvider
-                .state('app.navbar.profile', {
+                .state('profile', {
                     url: '/profile',
+                    parent: 'navbar',
                     templateUrl: 'app/view/navbar/profile/profile.html',
                     controller: 'ProfileController',
                     controllerAs: 'vm',

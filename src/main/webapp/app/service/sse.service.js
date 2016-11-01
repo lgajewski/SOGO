@@ -6,12 +6,12 @@
         .factory('SseService', SseService);
 
     function SseService() {
-        var service = {
+        var cache = [];
+        
+        return {
             register: register,
             unregister: unregister
         };
-
-        var cache = [];
 
         function register(eventName, callback) {
             var index = cache.map(e => e.cb).indexOf(callback);
@@ -41,6 +41,5 @@
             }
         }
 
-        return service;
     }
 })();

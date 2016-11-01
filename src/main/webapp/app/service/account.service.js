@@ -8,15 +8,13 @@
     Account.$inject = ['Restangular'];
 
     function Account(Restangular) {
-        var service = {
+        return {
             register: register,
             recover: recover,
             reset: reset,
             update: update,
             changePassword: changePassword
         };
-
-        return service;
 
         function register(managedUserDTO) {
             return Restangular.all("account").all("register").post(managedUserDTO);

@@ -15,9 +15,7 @@
         };
 
         $rootScope.$on('$translateChangeSuccess', function(event, data) {
-            var language = data.language;
-
-            $rootScope.lang = language;
+            $rootScope.lang = data.language;
         });
     }
 })();

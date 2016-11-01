@@ -14,4 +14,11 @@
             'datatables',
             'pascalprecht.translate'
         ])
+        .run(run);
+
+    run.$inject = ['stateHandler'];
+
+    function run(stateHandler) {
+        stateHandler.initialize();
+    }
 })();

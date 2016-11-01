@@ -5,8 +5,9 @@
         .module('sogo')
         .config(function ($stateProvider) {
             $stateProvider
-                .state('app.navbar.users', {
+                .state('users', {
                     url: '/users',
+                    parent: 'navbar',
                     templateUrl: 'app/view/navbar/users/users.html',
                     controller: 'UsersController'
                 })
