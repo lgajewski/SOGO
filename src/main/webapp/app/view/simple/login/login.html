@@ -1,0 +1,56 @@
+<div class="col-md-12">
+    <div class="alert alert-danger" ng-show="vm.alert.authentication">
+        <strong><p translate="FAIL_SIGN_IN"></p></strong>{{vm.alert.authentication|translate}}
+    </div>
+    <div class="alert alert-danger" ng-show="vm.alert.recovery">
+        {{vm.alert.recovery|translate}}
+    </div>
+</div>
+
+<div class="col-md-10 col-md-offset-1">
+    <form role="form" ng-submit="vm.login()">
+        <fieldset>
+            <div class="form-group">
+                <input id="username" class="form-control" placeholder={{'LOGIN'|translate}} name="email"
+                       type="text" autofocus ng-model="vm.username">
+            </div>
+            <div class="form-group">
+                <input id="password" class="form-control" placeholder={{'PASSWORD'|translate}} name="password"
+                       type="password" value="" ng-model="vm.password">
+            </div>
+            <div class="col-sm-12 text-center">
+                <input type="button" id="btn-signup" class="btn btn-lg btn-block" value="{{'SIGN_UP'|translate}}"
+                       ui-sref="app.simple.signup">
+                <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="{{'LOG_IN'|translate}}">
+            </div>
+        </fieldset>
+    </form>
+    <div class="forget">
+        <a href="" data-toggle="modal" data-target=".forget-modal"><p translate="FORGOT"></p></a>
+    </div>
+</div>
+
+<div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form ng-submit="vm.recover()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">X</span>
+                        <span class="sr-only" translate="CLOSE"></span>
+                    </button>
+                    <h4 class="modal-title" translate="RECOVERY"></h4>
+                </div>
+                <div class="modal-body">
+                    <p translate="RECOVER_EMAIL"></p>
+                        <input ng-model="vm.recoveryEmail" type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-cancel" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
+                    <button type="submit" class="btn btn-custom" translate="RECOVER"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

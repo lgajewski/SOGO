@@ -1,0 +1,35 @@
+<div class="col-md-12">
+    <div class="alert alert-success" ng-show="vm.success">
+        <strong translate="RESET_SUCCEED"></strong>
+    </div>
+
+    <div class="alert alert-danger" ng-show="vm.keyMissing">
+        {{'error.keymissing'|translate}}
+    </div>
+
+    <div class="alert alert-danger" ng-show="resetForm.repeat.$error.pwmatch">
+        {{'error.passwordmismatch'|translate}}
+    </div>
+
+</div>
+<div class="col-md-12">
+    <form name="resetForm" ng-submit="resetForm.$valid && vm.reset()" ng-show="!vm.success">
+        <fieldset>
+            <div class="form-group">
+                <input class="form-control" placeholder={{'PASSWORD_NEW'|translate}} id="password" name="password"
+                       type="password"
+                       ng-model="vm.resetData.password" required autofocus minlength="4">
+            </div>
+            <div class="form-group">
+                <input class="form-control" placeholder={{'REPEAT'|translate}} name="repeat" type="password"
+                       ng-model="vm.resetData.repeat" required pw-check="password">
+            </div>
+            <div class="col-sm-12 text-center">
+                <input type="submit" id="btn-login" class="btn btn-lg btn-block" value="{{'SAVE_CHANGES'|translate}}">
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="col-md-12 forget"><p translate="ACCOUNT"></p><a ui-sref="app.simple.login" translate="LOG_IN"></a></div>
+
+

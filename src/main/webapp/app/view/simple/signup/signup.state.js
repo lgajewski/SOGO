@@ -5,10 +5,10 @@
         .module('sogo')
         .config(function ($stateProvider) {
             $stateProvider
-                .state('app.login', {
-                    url: '/login',
-                    templateUrl: 'app/view/login/login.html',
-                    controller: 'LoginController',
+                .state('app.simple.signup', {
+                    url: '/signup',
+                    templateUrl: 'app/view/simple/signup/signup.html',
+                    controller: 'SignupController',
                     controllerAs: 'vm'
                 })
         })

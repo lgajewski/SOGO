@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <div ng-controller="LanguageSwitchController" align="right">
+                        <a href class="flag-icon flag-icon-pl" ng-click="changeLanguage('pl')"></a>
+                        <a href class="flag-icon flag-icon-gb" ng-click="changeLanguage('en')"></a>
+                    </div>
+                    <img id="login-img" src="/assets/images/web_logo.png"/>
+                </div>
+                <div class="panel-body" ui-view></div>
+            </div>
+        </div>
+    </div>
+</div>
