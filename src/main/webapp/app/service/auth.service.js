@@ -20,7 +20,7 @@
         function isAuthorized() {
             var deferred = $q.defer();
 
-            Restangular.one("authenticate").get()
+            Restangular.one("auth/authenticate").get()
                 .then(function () {
                     deferred.resolve(true);
                 })

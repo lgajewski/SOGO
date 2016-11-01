@@ -5,7 +5,7 @@
         .module('sogo')
         .config(function ($stateProvider) {
             $stateProvider
-                .state('login', {
+                .state('app.login', {
                     url: '/login',
                     templateUrl: 'app/view/login/login.html',
                     controller: 'LoginController',
