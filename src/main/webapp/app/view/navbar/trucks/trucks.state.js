@@ -7,7 +7,7 @@
             $stateProvider
                 .state('app.navbar.trucks', {
                     url: '/trucks',
-                    templateUrl: 'app/view/trucks/trucks.html',
+                    templateUrl: 'app/view/navbar/trucks/trucks.html',
                     controller: 'TrucksController'
                 })
         })

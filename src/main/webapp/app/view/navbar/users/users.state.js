@@ -7,7 +7,7 @@
             $stateProvider
                 .state('app.navbar.users', {
                     url: '/users',
-                    templateUrl: 'app/view/users/users.html',
+                    templateUrl: 'app/view/navbar/users/users.html',
                     controller: 'UsersController'
                 })
         })

@@ -7,7 +7,7 @@
             $stateProvider
                 .state('app.navbar.home', {
                     url: '/home',
-                    templateUrl: 'app/view/home/home.html',
+                    templateUrl: 'app/view/navbar/home/home.html',
                     controller: 'HomeController'
                 })
         })

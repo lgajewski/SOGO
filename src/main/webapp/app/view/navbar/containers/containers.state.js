@@ -7,7 +7,7 @@
             $stateProvider
                 .state('app.navbar.containers', {
                     url: '/containers',
-                    templateUrl: 'app/view/containers/containers.html',
+                    templateUrl: 'app/view/navbar/containers/containers.html',
                     controller: 'ContainersController',
                     service: 'ContainerService'
                 })

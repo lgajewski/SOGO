@@ -7,7 +7,7 @@
             $stateProvider
                 .state('app.navbar.profile', {
                     url: '/profile',
-                    templateUrl: 'app/view/profile/profile.html',
+                    templateUrl: 'app/view/navbar/profile/profile.html',
                     controller: 'ProfileController',
                     controllerAs: 'vm',
                     resolve: {
