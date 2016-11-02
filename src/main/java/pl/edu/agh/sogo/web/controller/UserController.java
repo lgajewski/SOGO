@@ -8,7 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.sogo.domain.Authority;
 import pl.edu.agh.sogo.domain.User;
+import pl.edu.agh.sogo.persistence.AuthorityRepository;
 import pl.edu.agh.sogo.persistence.UserRepository;
 import pl.edu.agh.sogo.security.SecurityConstants;
 import pl.edu.agh.sogo.service.MailService;
@@ -39,6 +41,9 @@ public class UserController {
 
     @Inject
     private UserRepository userRepository;
+
+    @Inject
+    private AuthorityRepository authorityRepository;
 
     @Inject
     private UserService userService;
@@ -209,5 +214,20 @@ public class UserController {
     @RequestMapping("/user")
     public Principal user(Principal user) {
         return user;
+    }
+
+    /**
+     * GET  /authorities : get all authorities.
+     *
+     * @return the ResponseEntity with status 200 (OK) and with body all authorities
+     */
+    @RequestMapping(value="authorities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(SecurityConstants.ADMIN)
+    public ResponseEntity<List<String>> getAllAuthorities() {
+        List<Authority> authorities = authorityRepository.findAll();
+        List<String> authoritiesList = authorities.stream()
+            .map(Authority::getName)
+            .collect(Collectors.toList());
+        return new ResponseEntity<>(authoritiesList, HttpStatus.OK);
     }
 }
