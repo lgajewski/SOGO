@@ -48,15 +48,19 @@
                     container.sensors = resp[i].sensors;
                     container.address = resp[i].address;
                     for(var sensor in container.sensors){
-                        if(container.sensors[sensor].errorCode > 0)
+                        if(container.sensors[sensor].errorCode > 0){
                             var errorMessage = {
                                 sensor: sensor,
                                 errorCode: container.sensors[sensor].errorCode,
                                 message: $scope.errorCodeDesciptions[container.sensors[sensor].errorCode]
                             };
-                        container.errorMessages.push(errorMessage);
+                            container.errorMessages.push(errorMessage);
+                        }
                     }
-                    $scope.brokenContainers.push(container);
+
+                    if(container.errorMessages.length > 0){
+                        $scope.brokenContainers.push(container);
+                    }
 
                 }
             })

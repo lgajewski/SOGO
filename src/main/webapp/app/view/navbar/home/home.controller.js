@@ -95,7 +95,6 @@
                     "</tbody>" +
                 "</table>"
             });
-            console.log(infoWindow);
             infoWindow.open(selectedMarker.getMap(), selectedMarker)
         };
 
@@ -509,7 +508,6 @@
         }
 
         function errorCodes(container) {
-            console.log(container);
             for(var sensor in container.sensors){
                 var ec = container.sensors[sensor].errorCode;
 

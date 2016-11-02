@@ -5,9 +5,10 @@
         .module('sogo')
         .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$scope', '$filter', 'Restangular', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
+    UsersController.$inject = ['$scope', 'Restangular', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
 
-    function UsersController($scope, $filter, Restangular, DTOptionsBuilder, DTColumnDefBuilder) {
+    function UsersController($scope, Restangular, DTOptionsBuilder, DTColumnDefBuilder) {
+        $scope.getAuthoritiesList = getAuthoritiesList;
         $scope.requests = [];
         $scope.users = [];
 
@@ -23,21 +24,29 @@
         ];
 
 
-
-
-        $scope.acceptUser = function (item) {
-            Restangular.one('users', item.login).post('activate').then(function () {
+        $scope.acceptUser = function (user) {
+            Restangular.one('users', user.login).post('activate').then(function () {
                 $scope.getUsers();
             });
         };
 
-        $scope.disableUser = function (item) {
-            Restangular.one('users', item.login).post('deactivate').then(function () {
+        $scope.disableUser = function (user) {
+            Restangular.one('users', user.login).post('deactivate').then(function () {
                 $scope.getUsers();
             });
         };
 
-        $scope.editUser = function (item) {
+        $scope.updateUser = function (user) {
+            user.password = "abcd1234";
+            if(user.authorities.length > 0) {
+                Restangular.one('users').customPUT(user).then(function () {
+                    $scope.getUsers();
+
+
+                });
+            } else {
+                console.log('User must have at least 1 role');
+            }
         };
 
         $scope.getUsers = function () {
@@ -53,10 +62,13 @@
                         $scope.requests.push($scope.items[i]);
                     }
                 }
-                // $scope.search();
+                $(document).ready(function() {
+                    $('.selectpicker').selectpicker();
+                });
             })
         };
         $scope.getUsers();
+        $scope.getAuthoritiesList();
 
         $scope.showDetail = function (item) {
             if ($scope.active != item.id) {
@@ -65,6 +77,16 @@
             else {
                 $scope.active = null;
             }
+        };
+
+        function getAuthoritiesList(){
+            Restangular.all('users/authorities').getList().then(function (data) {
+                $scope.authorities = [];
+                console.log(data);
+                for(var i=0;i<data.length;i++){
+                    $scope.authorities.push(data[i])
+                }
+            })
         };
 
         //

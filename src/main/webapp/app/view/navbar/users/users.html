@@ -21,8 +21,15 @@
                         <td>{{request.firstName + ' ' + request.lastName}}</td>
                         <td>{{request.login}}</td>
                         <td>{{request.email}}</td>
-                        <td>{{request.authorities}}</td>
-                        <td><button type="button" ng-click="acceptUser(request)"class="btn btn-success"><i class="fa fa-check"></i></button></td>
+                        <td>
+                            <select class="selectpicker" multiple data-selected-text-format="count" ng-model="request.authorities" ng-options="role for role in authorities">
+                            </select>
+
+                        </td>
+                        <td>
+                            <button type="button" ng-click="updateUser(request)" class="btn btn-primary"> <i class="fa fa-save"></i> </button>
+                            <button type="button" ng-click="acceptUser(request)"class="btn btn-success"><i class="fa fa-check"></i></button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -59,23 +66,15 @@
                         <td>{{user.firstName + ' ' + user.lastName}}</td>
                         <td>{{user.login}}</td>
                         <td>{{user.email}}</td>
-                        <!--<td>{{user.authorities}}-->
-                            <!--<div class="button-group">-->
-                            <!--<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog "></span> <span class="caret"></span></button>-->
-                            <!--<ul class="dropdown-menu">-->
-                                <!--<li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>Option 1</a></li>-->
-                                <!--<li><a href="#" class="small" data-value="option2" tabIndex="-1"><input type="checkbox"/>Option 2</a></li>-->
-                                <!--<li><a href="#" class="small" data-value="option3" tabIndex="-1"><input type="checkbox"/>Option 3</a></li>-->
-                                <!--<li><a href="#" class="small" data-value="option4" tabIndex="-1"><input type="checkbox"/>Option 4</a></li>-->
-                                <!--<li><a href="#" class="small" data-value="option5" tabIndex="-1"><input type="checkbox"/>Option 5</a></li>-->
-                                <!--<li><a href="#" class="small" data-value="option6" tabIndex="-1"><input type="checkbox"/>Option 6</a></li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
-                            <td><select multiple="multiple">
-                                <option ng-repeat="role in user.authorities" value="role">{{role}}</option>
+                        <td>
+                            <select class="selectpicker" multiple data-selected-text-format="count" ng-model="user.authorities" ng-options="role for role in authorities">
                             </select>
+
                         </td>
-                        <td><button type="button" ng-click="disableUser(user)" class="btn btn-danger"><i class="fa fa-close"></i></button></td>
+                        <td>
+                            <button type="button" ng-click="updateUser(user)" class="btn btn-primary"> <i class="fa fa-save"></i> </button>
+                            <button type="button" ng-click="disableUser(user)" class="btn btn-danger"><i class="fa fa-close"></i></button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -88,6 +87,13 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
+
+<script>
+
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+    });
+</script>
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <!--<script>-->
