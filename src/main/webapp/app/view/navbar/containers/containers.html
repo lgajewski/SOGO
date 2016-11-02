@@ -33,6 +33,7 @@
                         <td>{{item.sensors.load.value.toFixed(2)}}%</td>
                         <td>
                             <button type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".show-modal" class="btn btn-primary"><i class="fa fa-map-marker"></i></button>
+                            <button type="button" ng-click="setToRepair(item);" data-toggle="modal" data-target=".repair-modal" class="btn btn-info"><i class="fa fa-plus-circle"></i></button>
                             <button type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".edit-modal" class="btn btn-warning"><i class="fa fa-edit"></i></button>
                             <button type="button" ng-click="deleteContainer(item)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                         </td>
