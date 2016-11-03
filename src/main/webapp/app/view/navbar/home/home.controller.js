@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$http'];
+    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$http', '$filter'];
 
-    function HomeController($scope, Restangular, SseService, DirectionsService, $http) {
+    function HomeController($scope, Restangular, SseService, DirectionsService, $http, $filter) {
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
@@ -73,23 +73,23 @@
                         "</tr>" +
                         (selectedItem.registration ?
                         "<tr>" +
-                            "<td>Registration:</td>" +
+                            "<td>" + $filter('translate')('REGISTRATION') + ":</td>" +
                             "<td>"+selectedItem.registration+"</td>" +
                         "</tr>" : "") +
                         "<tr>" +
-                            "<td>Type:</td>" +
+                            "<td>" + $filter('translate')('TYPE') + ":</td>" +
                             "<td>"+selectedItem.type+"</td>" +
                         "</tr>" +
                         "<tr>" +
-                            "<td>Location:</td>" +
+                            "<td>" + $filter('translate')('ADDRESS') + ":</td>" +
                             "<td>"+selectedItem.address+"</td>" +
                         "</tr>" +
                         "<tr>" +
-                            "<td>Capacity:</td>" +
+                            "<td>" + $filter('translate')('CAPACITY') + ":</td>" +
                             "<td>"+selectedItem.capacity+"kg</td>" +
                         "</tr>" +
                         "<tr>" +
-                            "<td>Load:</td>" +
+                            "<td>" + $filter('translate')('LOAD') + ":</td>" +
                             "<td>"+selectedItem.load + (selectedItem.type == 'truck' ? 'kg':'%')+"</td>" +
                         "</tr>" +
                     "</tbody>" +
