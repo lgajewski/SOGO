@@ -15,7 +15,7 @@
         $scope.showRoute = showRoute;
         $scope.errorCodes = errorCodes;
         $scope.savePropsToVariable = savePropsToVariable;
-        $scope.checkAllElements = {'trucks':false, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
+        $scope.checkAllElements = {'trucks':true, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
         $scope.checkCollection = checkCollection;

@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('ContainersController', ContainersController);
 
-    ContainersController.$inject = ['$scope', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
+    ContainersController.$inject = ['$scope', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
 
-    function ContainersController($scope, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder) {
+    function ContainersController($scope, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
 
         $scope.setActiveObject = setActiveObject;
         $scope.editContainer = editContainer;
@@ -179,19 +179,19 @@
                     // + '<td>' + item.id + '</td>'
                     // + '</tr>'
                     + '<tr>'
-                    + '<td>Type:</td>'
+                    + '<td>' + $filter('translate')('TYPE') + ':</td>'
                     + '<td>' + item.type + '</td>'
                     + '</tr>'
                     + '<tr>'
-                    + '<td>Location:</td>'
+                    + '<td>' + $filter('translate')('ADDRESS') + ':</td>'
                     + '<td>' + item.address + '</td>'
                     + '</tr>'
                     + '<tr>'
-                    + '<td>Capacity:</td>'
+                    + '<td>' + $filter('translate')('CAPACITY') + ':</td>'
                     + '<td>' + item.capacity + 'kg</td>'
                     + '</tr>'
                     + '<tr>'
-                    + '<td>Load:</td>'
+                    + '<td>' + $filter('translate')('LOAD') + ':</td>'
                     + '<td>' + item.sensors.load.value.toFixed(2) + '%</td>'
                     + '</tr>'
                     + '</tbody>'

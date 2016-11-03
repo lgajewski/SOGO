@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('TrucksController', TrucksController);
 
-    TrucksController.$inject = ['$scope', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
+    TrucksController.$inject = ['$scope', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
 
-    function TrucksController($scope, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder) {
+    function TrucksController($scope, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
 
         $scope.getTrucks = getTrucks;
         $scope.deleteTruck = deleteTruck;
@@ -135,19 +135,19 @@
                     // + '<td>' + item.id + '</td>'
                     // + '</tr>'
                     + '<tr>'
-                    + '<td>Registration:</td>'
+                    + '<td>' + $filter('translate')('REGISTRATION') + ':</td>'
                     + '<td>' + item.registration + '</td>'
                     + '</tr>'
                     + '<tr>'
-                    + '<td>Location:</td>'
+                    + '<td>' + $filter('translate')('ADDRESS') + ':</td>'
                     + '<td>' + item.address + '</td>'
                     + '</tr>'
                     + '<tr>'
-                    + '<td>Capacity:</td>'
+                    + '<td>' + $filter('translate')('CAPACITY') + ':</td>'
                     + '<td>' + item.capacity + 'kg</td>'
                     + '</tr>'
                     + '<tr>'
-                    + '<td>Load:</td>'
+                    + '<td>' + $filter('translate')('LOAD') + ':</td>'
                     + '<td>' + item.load + 'kg</td>'
                     + '</tr>'
                     + '</tbody>'

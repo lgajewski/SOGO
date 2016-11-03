@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimulatorApp extends Application {
-    private static final String DEFAULT_SERVER_ADDRESS = "http://localhost:8081/";
+    private static final String DEFAULT_SERVER_ADDRESS = "http://localhost:8080/";
 
     public static void main(String[] args) {
         launch(args);
