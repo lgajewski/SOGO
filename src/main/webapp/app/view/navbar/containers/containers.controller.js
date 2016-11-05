@@ -26,7 +26,16 @@
                 value: 0.0
             }
         };
+        getRepairers();
 
+        function getRepairers(){
+            Restangular.all('users/ROLE_USER').getList().then(function (data) {
+                $scope.repairers = [];
+                for(var i=0; i<data.length;i++){
+                    $scope.repairers.push(data[i]);
+                }
+            })
+        }
 
         $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')

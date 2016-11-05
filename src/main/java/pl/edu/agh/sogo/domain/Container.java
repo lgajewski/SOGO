@@ -2,6 +2,7 @@ package pl.edu.agh.sogo.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
@@ -16,10 +17,14 @@ public class Container {
     private int capacity;
 
     private String type;
+
     @GeoSpatialIndexed
     private Location location;
 
     private String address;
+
+    @DBRef
+    private User repairer;
 
     private Map<String, Sensor> sensors;
 
@@ -73,6 +78,7 @@ public class Container {
             ", capacity = " + capacity +
             ", location = "+ location +
             ", address = "+ address +
+            ", repairer = "+ repairer +
             ", sensors = {" + sensors.entrySet().stream().map(a ->a.getValue().toString()).collect(Collectors.joining(", ")) + "}}";
     }
 
@@ -82,5 +88,13 @@ public class Container {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public User getRepairer() {
+        return repairer;
+    }
+
+    public void setRepairer(User repairer) {
+        this.repairer = repairer;
     }
 }

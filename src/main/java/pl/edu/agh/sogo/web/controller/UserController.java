@@ -230,4 +230,19 @@ public class UserController {
             .collect(Collectors.toList());
         return new ResponseEntity<>(authoritiesList, HttpStatus.OK);
     }
+
+    /**
+     * GET  /users/:role : get all users with given "role".
+     *
+     * @return the ResponseEntity with status 200 (OK) and with body selected users
+     */
+    @RequestMapping(value="/{role}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(SecurityConstants.ADMIN)
+    public ResponseEntity<List<ManagedUserDTO>> getAllUsersWithRole(@PathVariable(value = "role") Authority role) {
+        List<User> users = userRepository.findAll();
+        List<ManagedUserDTO> managedUserDTOs = users.stream().filter(u -> u.getAuthorities().contains(role))
+            .map(ManagedUserDTO::new)
+            .collect(Collectors.toList());
+        return new ResponseEntity<>(managedUserDTOs, HttpStatus.OK);
+    }
 }
