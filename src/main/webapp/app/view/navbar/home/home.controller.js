@@ -407,7 +407,7 @@
                     container.address = resp[i].address;
                     container.type = resp[i].type;
                     container.capacity = resp[i].capacity;
-                    container.load = parseFloat(resp[i].sensors.load.value).toFixed(2) + '%';
+                    container.load = parseFloat(resp[i].sensors.load.value).toFixed(2);
                     container.sensors = resp[i].sensors;
                     $scope.items[resp[i].type].push(container);
 
