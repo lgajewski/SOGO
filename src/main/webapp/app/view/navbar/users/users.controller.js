@@ -82,7 +82,6 @@
         function getAuthoritiesList(){
             Restangular.all('users/authorities').getList().then(function (data) {
                 $scope.authorities = [];
-                console.log(data);
                 for(var i=0;i<data.length;i++){
                     $scope.authorities.push(data[i])
                 }

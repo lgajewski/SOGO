@@ -57,9 +57,7 @@
             scrollwheel: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             events: {
-                idle: function () {
-                    console.log('idle');
-                }
+                idle: function () {}
             }
         };
 
@@ -324,9 +322,7 @@
                 refresh: false,
                 bounds: {},
                 events: {
-                    idle: function () {
-                        console.log('idle');
-                    }
+                    idle: function () {}
                 }
             }
         }
@@ -375,7 +371,6 @@
                         $scope.selection.push(truck);
                     }
                 }
-                console.log($scope.items.trucks);
 
             })
         }
