@@ -65,7 +65,6 @@
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             events: {
                 idle: function () {
-                    console.log('idle');
                 }
             }
         };

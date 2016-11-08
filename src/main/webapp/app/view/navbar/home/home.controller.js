@@ -57,9 +57,7 @@
             scrollwheel: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             events: {
-                idle: function () {
-                    console.log('idle');
-                }
+                idle: function () {}
             }
         };
 
@@ -324,9 +322,7 @@
                 refresh: false,
                 bounds: {},
                 events: {
-                    idle: function () {
-                        console.log('idle');
-                    }
+                    idle: function () {}
                 }
             }
         }
@@ -375,7 +371,6 @@
                         $scope.selection.push(truck);
                     }
                 }
-                console.log($scope.items.trucks);
 
             })
         }
@@ -412,7 +407,7 @@
                     container.address = resp[i].address;
                     container.type = resp[i].type;
                     container.capacity = resp[i].capacity;
-                    container.load = parseFloat(resp[i].sensors.load.value).toFixed(2) + '%';
+                    container.load = parseFloat(resp[i].sensors.load.value).toFixed(2);
                     container.sensors = resp[i].sensors;
                     $scope.items[resp[i].type].push(container);
 

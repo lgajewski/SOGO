@@ -7,7 +7,7 @@
 
     function SseService() {
         var cache = [];
-        
+
         return {
             register: register,
             unregister: unregister

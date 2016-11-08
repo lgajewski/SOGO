@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="56dp"
+            android:paddingLeft="64dp"
+            android:paddingRight="64dp"
+            android:paddingTop="56dp">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/logo"
+                android:src="@drawable/logo_sogo"
+                android:adjustViewBounds="true" />
+
+
+            <EditText
+                android:id="@+id/input_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/logo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="96dp"
+                android:background="@drawable/shape_rounded"
+                android:gravity="center"
+                android:hint="@string/login"
+                android:inputType="text"
+                android:padding="5dp" />
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/input_login"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_rounded"
+                android:gravity="center"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="5dp" />
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="false"
+                android:padding="12dp"
+                android:text="@string/login"
+                android:layout_below="@+id/input_password"
+                android:layout_marginTop="46dp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fragment_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</RelativeLayout>
