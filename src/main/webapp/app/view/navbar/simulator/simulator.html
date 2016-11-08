@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                    {{'SIMULATOR'|translate}}
+            </div>
+
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <form name="createTrucksForm" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" translate="TRUCKS"></label>
+                        <div class="col-sm-2">
+                            <input class="form-control" type="number" min="0" ng-model="trucksNo">
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary" ng-click="createTrucks()" translate="CREATE_TRUCKS"></button>
+                        </div>
+                    </div>
+                </form>
+                <form name="simulateTrucksForm" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" translate="SIMULATE_TRUCKS"></label>
+                        <div class="col-sm-2">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-click="simulateTrucks()" ng-checked="isTrucksSimulatorRunning">
+                                <label class="onoffswitch-label" for="myonoffswitch"></label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form name="createContainersForm" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" translate="CONTAINERS"></label>
+                        <div class="col-sm-2">
+                            <input class="form-control" type="number" min="0" ng-model="containersNo">
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary" ng-click="createContainers()" translate="CREATE_CONTAINERS"></button>
+                        </div>
+                    </div>
+                </form>
+                <form name="simulateContainersForm" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" translate="SIMULATE_CONTAINERS"></label>
+                        <div class="col-sm-2">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" ng-click="simulateContainers()" ng-checked="isContainerSimulatorRunning">
+                                <label class="onoffswitch-label" for="myonoffswitch2"></label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-primary" ng-click="generateRoutes()" translate="GENERATE_ROUTES"></button>
+                </div>
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<script>
+    $("[name='simulateTrucksCheckbox']").bootstrapSwitch();
+
+</script>

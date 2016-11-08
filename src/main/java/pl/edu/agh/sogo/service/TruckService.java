@@ -13,6 +13,8 @@ import java.util.Collection;
 
 @Service
 public class TruckService {
+    @Autowired
+    private SseService sseService;
 
     @Autowired
     private TruckRepository truckRepository;
@@ -74,6 +76,9 @@ public class TruckService {
                 e.printStackTrace();
             }
             truckRepository.save(truck);
+
+            // emit updated truck to browsers that subscribe on SSE
+            sseService.emit("truck", truck);
         }
     }
 }

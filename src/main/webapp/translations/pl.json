@@ -90,5 +90,6 @@
     "CONTAINER_STATUS": "Status kontenera",
     "SENSOR": "Czujnik",
     "VALUE": "Wartość",
-    "ERROR_CODE": "Kod błędu"
+    "ERROR_CODE": "Kod błędu",
+    "SIMULATOR": "Symulator"
 }

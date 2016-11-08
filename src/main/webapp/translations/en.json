@@ -90,5 +90,6 @@
     "CONTAINER_STATUS": "Container status",
     "SENSOR": "Sensor",
     "VALUE": "Value",
-    "ERROR_CODE": "Error code"
+    "ERROR_CODE": "Error code",
+    "SIMULATOR": "Simulator"
 }

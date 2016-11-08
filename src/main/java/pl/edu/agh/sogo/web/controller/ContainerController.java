@@ -25,8 +25,8 @@ public class ContainerController {
     @Autowired
     private ContainerService containerService;
 
-    @Autowired
-    private SseService sseService;
+//    @Autowired
+//    private SseService sseService;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
@@ -56,8 +56,7 @@ public class ContainerController {
         log.info("[PUT][/api/containers] updateContainer(" + container + ")");
         containerService.update(container);
 
-        // emit updated container to browsers that subscribe on SSE
-        sseService.emit("container", container);
+
     }
 
     @ResponseBody

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.service.RouteService;
-import pl.edu.agh.sogo.service.SseService;
 import pl.edu.agh.sogo.service.TruckService;
 
 import java.util.ArrayList;
@@ -26,8 +25,6 @@ public class TruckController {
     @Autowired
     private TruckService truckService;
 
-    @Autowired
-    private SseService sseService;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
@@ -77,8 +74,7 @@ public class TruckController {
 
         truckService.updateLocation(registration, location);
 
-        // emit updated truck to browsers that subscribe on SSE
-        sseService.emit("truck", truckService.findTruckByRegistration(registration));
+
     }
 }
 

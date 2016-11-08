@@ -12,6 +12,8 @@ import java.util.Collection;
 
 @Service
 public class ContainerService {
+    @Autowired
+    private SseService sseService;
 
     @Autowired
     private ContainerRepository containerRepository;
@@ -46,6 +48,8 @@ public class ContainerService {
                 e.printStackTrace();
             }
             containerRepository.save(container);
+            // emit updated container to browsers that subscribe on SSE
+            sseService.emit("container", container);
         }
     }
 
