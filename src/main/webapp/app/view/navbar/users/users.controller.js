@@ -5,12 +5,13 @@
         .module('sogo')
         .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$scope', 'Restangular', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
+    UsersController.$inject = ['$scope', 'authorities', 'Restangular', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
 
-    function UsersController($scope, Restangular, DTOptionsBuilder, DTColumnDefBuilder) {
-        $scope.getAuthoritiesList = getAuthoritiesList;
+    function UsersController($scope, authorities, Restangular, DTOptionsBuilder, DTColumnDefBuilder) {
+
         $scope.requests = [];
         $scope.users = [];
+        $scope.authorities = authorities;
 
         $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
@@ -68,7 +69,6 @@
             })
         };
         $scope.getUsers();
-        $scope.getAuthoritiesList();
 
         $scope.showDetail = function (item) {
             if ($scope.active != item.id) {
@@ -79,14 +79,6 @@
             }
         };
 
-        function getAuthoritiesList(){
-            Restangular.all('users/authorities').getList().then(function (data) {
-                $scope.authorities = [];
-                for(var i=0;i<data.length;i++){
-                    $scope.authorities.push(data[i])
-                }
-            })
-        };
 
         //
         // $scope.gap = 5;

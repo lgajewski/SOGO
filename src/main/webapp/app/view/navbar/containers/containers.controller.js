@@ -5,10 +5,10 @@
         .module('sogo')
         .controller('ContainersController', ContainersController);
 
-    ContainersController.$inject = ['$scope', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
+    ContainersController.$inject = ['$scope', 'containers', 'repairers', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
 
-    function ContainersController($scope, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
-
+    function ContainersController($scope, containers, repairers, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
+        $scope.items = containers;
         $scope.setActiveObject = setActiveObject;
         $scope.editContainer = editContainer;
         $scope.setContainerToEdit = setContainerToEdit;
@@ -18,7 +18,7 @@
         $scope.addContainer = addContainer;
         $scope.isError = isError;
         $scope.activeObject = ActiveItemService.getObject();
-        $scope.getContainers();
+        // $scope.getContainers();
         $scope.containerToAdd = {};
         $scope.containerToAdd.type = 'blue';
         $scope.containerToAdd.sensors = {
@@ -26,16 +26,8 @@
                 value: 0.0
             }
         };
-        getRepairers();
+        $scope.repairers = repairers;
 
-        function getRepairers(){
-            Restangular.all('users/ROLE_USER').getList().then(function (data) {
-                $scope.repairers = [];
-                for(var i=0; i<data.length;i++){
-                    $scope.repairers.push(data[i]);
-                }
-            })
-        }
 
         $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')

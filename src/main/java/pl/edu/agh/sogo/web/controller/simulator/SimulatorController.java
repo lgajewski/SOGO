@@ -13,6 +13,7 @@ import pl.edu.agh.sogo.service.simulator.SimulatorService;
 import pl.edu.agh.sogo.service.simulator.TruckSimulator;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -37,11 +38,12 @@ public class SimulatorController {
 
     private Thread truckSimulatorThread;
     private Thread containerSimulatorThread;
-    @Autowired
-    TruckSimulator truckSimulator;
 
     @Autowired
-    ContainerSimulator containerSimulator;
+    private TruckSimulator truckSimulator;
+
+    @Autowired
+    private ContainerSimulator containerSimulator;
 
     @PostConstruct
     public void initController(){
@@ -60,6 +62,7 @@ public class SimulatorController {
     @ResponseBody
     @RequestMapping(value = "/containers", method = RequestMethod.POST)
     public void createContainers(@RequestBody Integer numberOfContainers){
+        log.info("[POST][/api/containers] createContainers("+numberOfContainers+")");
         List<Container> containers = simulatorService.createContainers(numberOfContainers);
         for (Container container : containers){
             containerService.add(container);
@@ -67,14 +70,25 @@ public class SimulatorController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/containers", method = RequestMethod.PUT)
+    public void emptyContainers(){
+        log.info("[PUT][/api/containers] emptyContainers()");
+        List<Container> containers = new ArrayList<>(containerService.getContainers());
+        for (Container container : containers){
+            container.getSensors().get("load").setValue(0d);
+            containerService.update(container);
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/containers/simulate", method = RequestMethod.POST)
     public void simulateContainers(){
             if (!isContainerSimulationRunning) {
+                isContainerSimulationRunning = !isContainerSimulationRunning;
                 if(containerSimulatorThread.getState().name().equalsIgnoreCase("terminated")){
                     containerSimulatorThread = new Thread(containerSimulator);
                     containerSimulatorThread.start();
                 } else {
-                    isContainerSimulationRunning = !isContainerSimulationRunning;
                     synchronized (containerSimulator) {
                         containerSimulator.notify();
                     }
@@ -88,13 +102,14 @@ public class SimulatorController {
     @ResponseBody
     @RequestMapping(value = "/containers", method = RequestMethod.GET)
     public String getContainersSimulatorState(){
-        log.info("[GET][/api/simulator/trucks/] getContainersSimulatorState() returned " + isContainerSimulationRunning);
+        log.info("[GET][/api/simulator/containers] getContainersSimulatorState() returned " + isContainerSimulationRunning);
         return "{\"state\":"+isContainerSimulationRunning+"}";
     }
 
     @ResponseBody
     @RequestMapping(value = "/trucks", method = RequestMethod.POST)
     public void createTrucks(@RequestBody Integer numberOfTrucks){
+        log.info("[POST][/api/trucks] createTrucks("+numberOfTrucks+")");
         List<Truck> trucks = simulatorService.createTrucks(numberOfTrucks);
         for(Truck truck : trucks){
             truckService.add(truck);
@@ -128,6 +143,17 @@ public class SimulatorController {
     public String getTrucksSimulatorState(){
         log.info("[GET][/api/simulator/trucks/] getTrucksSimulatorState() returned " + isTruckSimulationRunning);
         return "{\"state\":"+isTruckSimulationRunning+"}";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/trucks", method = RequestMethod.PUT)
+    public void emptyTrucks(){
+        log.info("[PUT][/api/trucks] emptyTrucks()");
+        List<Truck> trucks = new ArrayList<>(truckService.getTrucks());
+        for (Truck truck : trucks){
+            truck.setLoad(0);
+            truckService.update(truck);
+        }
     }
 
 

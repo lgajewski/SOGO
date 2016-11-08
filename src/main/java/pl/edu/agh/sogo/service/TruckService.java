@@ -45,12 +45,17 @@ public class TruckService {
     }
 
     public void update(Truck truck) {
-        if (truckRepository.findByRegistration(truck.getRegistration()) == null) {
+        Truck oldTruck;
+        if ((oldTruck = truckRepository.findByRegistration(truck.getRegistration())) == null) {
             throw new ObjectNotFoundException("Truck", truck.getRegistration());
         } else {
             try {
-                truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
-            } catch (Exception e) {
+                if(Math.abs(oldTruck.getLocation().getLatitude() - truck.getLocation().getLatitude()) > 0.0001 || Math.abs(oldTruck.getLocation().getLongitude() - truck.getLocation().getLongitude()) > 0.0001){
+                    truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
+                } else {
+                    truck.setAddress(oldTruck.getAddress());
+                }
+             } catch (Exception e) {
                 e.printStackTrace();
             }
             truckRepository.save(truck);
@@ -78,7 +83,7 @@ public class TruckService {
             truckRepository.save(truck);
 
             // emit updated truck to browsers that subscribe on SSE
-            sseService.emit("truck", truck);
+//            sseService.emit("truck", truck);
         }
     }
 }

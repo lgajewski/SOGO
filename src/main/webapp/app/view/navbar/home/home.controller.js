@@ -60,40 +60,48 @@
                 idle: function () {}
             }
         };
+        var geocoder = new google.maps.Geocoder();
 
         $scope.displayInfoWindow = function displayInfoWindow(selectedMarker, event, selectedItem){
+            // var latlng = new google.maps.LatLng(selectedItem.coords.latitude, selectedItem.coords.longitude);
+            // var address = "";
+            // geocoder.geocode({'latLng':latlng}, function(results, status){
+            //     address=results[0].formatted_address;
+            //
+            // });
+
             var infoWindow = new google.maps.InfoWindow({
                 content: "<table style='width:100%'>" +
-                    "<tbody>" +
-                        "<tr>" +
-                            "<td>Id:</td>" +
-                            "<td>"+selectedItem.id+"</td>" +
-                        "</tr>" +
-                        (selectedItem.registration ?
-                        "<tr>" +
-                            "<td>" + $filter('translate')('REGISTRATION') + ":</td>" +
-                            "<td>"+selectedItem.registration+"</td>" +
-                        "</tr>" : "") +
-                        "<tr>" +
-                            "<td>" + $filter('translate')('TYPE') + ":</td>" +
-                            "<td>"+selectedItem.type+"</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                            "<td>" + $filter('translate')('ADDRESS') + ":</td>" +
-                            "<td>"+selectedItem.address+"</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                            "<td>" + $filter('translate')('CAPACITY') + ":</td>" +
-                            "<td>"+selectedItem.capacity+"kg</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                            "<td>" + $filter('translate')('LOAD') + ":</td>" +
-                            "<td>"+selectedItem.load + (selectedItem.type == 'truck' ? 'kg':'%')+"</td>" +
-                        "</tr>" +
-                    "</tbody>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Id:</td>" +
+                "<td>" + selectedItem.id + "</td>" +
+                "</tr>" +
+                (selectedItem.registration ?
+                "<tr>" +
+                "<td>" + $filter('translate')('REGISTRATION') + ":</td>" +
+                "<td>" + selectedItem.registration + "</td>" +
+                "</tr>" : "") +
+                "<tr>" +
+                "<td>" + $filter('translate')('TYPE') + ":</td>" +
+                "<td>" + selectedItem.type + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>" + $filter('translate')('ADDRESS') + ":</td>" +
+                "<td>" + selectedItem.address + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>" + $filter('translate')('CAPACITY') + ":</td>" +
+                "<td>" + selectedItem.capacity + "kg</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>" + $filter('translate')('LOAD') + ":</td>" +
+                "<td>" + selectedItem.load + (selectedItem.type == 'truck' ? 'kg':'%') + "</td>" +
+                "</tr>" +
+                "</tbody>" +
                 "</table>"
             });
-            infoWindow.open(selectedMarker.getMap(), selectedMarker)
+            infoWindow.open(selectedMarker.getMap(), selectedMarker);
         };
 
 

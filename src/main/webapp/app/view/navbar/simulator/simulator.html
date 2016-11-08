@@ -45,15 +45,24 @@
                         <label class="col-sm-3 control-label" translate="SIMULATE_CONTAINERS"></label>
                         <div class="col-sm-2">
                             <div class="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" ng-click="simulateContainers()" ng-checked="isContainerSimulatorRunning">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" ng-click="simulateContainers()" ng-checked="isContainersSimulatorRunning">
                                 <label class="onoffswitch-label" for="myonoffswitch2"></label>
                             </div>
                         </div>
                     </div>
                 </form>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary" ng-click="generateRoutes()" translate="GENERATE_ROUTES"></button>
+                <div class="btn-group">
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary" ng-click="generateRoutes()" translate="GENERATE_ROUTES"></button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary" ng-click="emptyTrucks()" translate="EMPTY_TRUCKS"></button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary" ng-click="emptyContainers()" translate="EMPTY_CONTAINERS"></button>
+                    </div>
                 </div>
+
 
             </div>
             <!-- /.panel-body -->

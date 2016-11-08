@@ -5,25 +5,31 @@
         .module('sogo')
         .controller('SimulatorController', SimulatorController);
 
-    SimulatorController.$inject = ['$scope', 'Restangular'];
+    SimulatorController.$inject = ['$scope', 'trucksSimulatorState', 'containersSimulatorState', 'Restangular'];
 
-    function SimulatorController($scope, Restangular) {
+    function SimulatorController($scope, trucksSimulatorState, containersSimulatorState, Restangular) {
         $scope.getTrucksSimulatorState = getTrucksSimulatorState;
         $scope.simulateTrucks = simulateTrucks;
         $scope.getContainersSimulatorState = getContainersSimulatorState;
         $scope.simulateContainers = simulateContainers;
         $scope.generateRoutes = generateRoutes;
         $scope.createTrucks = createTrucks;
+        $scope.emptyTrucks = emptyTrucks;
         $scope.createContainers = createContainers;
+        $scope.emptyContainers = emptyContainers;
         $scope.trucksNo = 1;
         $scope.containersNo = 1;
-
-        getTrucksSimulatorState();
-        getContainersSimulatorState();
+        $scope.isTrucksSimulatorRunning = trucksSimulatorState;
+        $scope.isContainersSimulatorRunning = containersSimulatorState;
 
         function createTrucks(){
             Restangular.all('simulator/trucks').customPOST($scope.trucksNo).then(function (data) {
                 $scope.trucksNo = 1;
+            })
+        }
+
+        function emptyTrucks(){
+            Restangular.all('simulator/trucks').customPUT().then(function (data) {
             })
         }
 
@@ -33,6 +39,10 @@
             })
         }
 
+        function emptyContainers(){
+            Restangular.all('simulator/containers').customPUT().then(function (data) {
+            })
+        }
 
         function simulateTrucks(){
             Restangular.all('simulator/trucks/simulate').customPOST().then(function (data) {

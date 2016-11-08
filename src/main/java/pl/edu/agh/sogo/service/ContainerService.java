@@ -39,17 +39,22 @@ public class ContainerService {
     }
 
     public void update(Container container) {
-        if (containerRepository.findOne(container.getId()) == null) {
+        Container oldContainer;
+        if ((oldContainer = containerRepository.findOne(container.getId())) == null) {
             throw new ObjectNotFoundException("Container", " with device " + container);
         } else {
             try {
-                container.setAddress(googleMapsReverseGeocoder.reverseGeocode(container.getLocation().getLatitude(), container.getLocation().getLongitude()));
+                if(Math.abs(oldContainer.getLocation().getLatitude() - container.getLocation().getLatitude()) > 0.0001 || Math.abs(oldContainer.getLocation().getLongitude() - container.getLocation().getLongitude()) > 0.0001){
+                    container.setAddress(googleMapsReverseGeocoder.reverseGeocode(container.getLocation().getLatitude(), container.getLocation().getLongitude()));
+                } else {
+                    container.setAddress(oldContainer.getAddress());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             containerRepository.save(container);
             // emit updated container to browsers that subscribe on SSE
-            sseService.emit("container", container);
+//            sseService.emit("container", container);
         }
     }
 

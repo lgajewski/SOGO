@@ -11,7 +11,7 @@
                     templateUrl: 'app/view/navbar/simulator/simulator.html',
                     controller: 'SimulatorController',
                     resolve: {
-                        isTrucksSimulatorRunning: function($q, Restangular) {
+                        trucksSimulatorState: function($q, Restangular) {
                             var deferred = $q.defer();
                             Restangular.all('simulator/trucks').customGET().then(function (data) {
                                 deferred.resolve(data.state);
@@ -19,7 +19,7 @@
 
                             return deferred.promise;
                         },
-                        isContainersSimulatorRunning: function($q, Restangular) {
+                        containersSimulatorState: function($q, Restangular) {
                             var deferred = $q.defer();
                             Restangular.all('simulator/containers').customGET().then(function (data) {
                                 deferred.resolve(data.state);

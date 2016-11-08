@@ -1,5 +1,7 @@
 package pl.edu.agh.sogo.service.simulator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.sogo.domain.Container;
@@ -13,6 +15,8 @@ import java.util.Random;
 @Service
 public class ContainerSimulator implements Runnable {
 
+    private static final Logger log = LoggerFactory.getLogger(SimulatorService.class);
+
     @Autowired
     private ContainerService containerService;
 
@@ -22,6 +26,7 @@ public class ContainerSimulator implements Runnable {
     @Override
     public void run() {
         try {
+            log.info("ContainerSimulator thread is running");
             Random rand = new Random();
             while(true) {
                 synchronized (this) {

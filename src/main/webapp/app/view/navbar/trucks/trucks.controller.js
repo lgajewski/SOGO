@@ -5,10 +5,10 @@
         .module('sogo')
         .controller('TrucksController', TrucksController);
 
-    TrucksController.$inject = ['$scope', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
+    TrucksController.$inject = ['$scope', 'trucks', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
 
-    function TrucksController($scope, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
-
+    function TrucksController($scope, trucks, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
+        $scope.items = trucks;
         $scope.getTrucks = getTrucks;
         $scope.deleteTruck = deleteTruck;
         $scope.addTruck = addTruck;
@@ -17,7 +17,6 @@
         $scope.setTruckToEdit = setTruckToEdit;
         $scope.editTruck = editTruck;
 
-        $scope.getTrucks();
 
         $scope.dtOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
