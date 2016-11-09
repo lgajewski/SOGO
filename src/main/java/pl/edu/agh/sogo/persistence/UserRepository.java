@@ -3,8 +3,6 @@ package pl.edu.agh.sogo.persistence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import pl.edu.agh.sogo.domain.User;
 
-import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.Optional;
 
 /**

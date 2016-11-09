@@ -5,14 +5,15 @@
         .module('sogo')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$rootScope', '$http', 'Auth' , 'Restangular'];
+    NavbarController.$inject = ['$scope', '$rootScope', '$http', 'currentUser', 'errorCodes', 'brokenContainers', 'Auth' , 'Restangular'];
 
-    function NavbarController($scope, $rootScope, $http, Auth, Restangular) {
+    function NavbarController($scope, $rootScope, $http, currentUser, errorCodes, brokenContainers, Auth, Restangular) {
         this.logout = Auth.logout;
         $scope.brokenContainers = [];
         $scope.errorsCounter = 0;
-        getCurrentUser();
-        errorCodes();
+        $rootScope.currentUser = currentUser;
+        $scope.errorCodeDescriptions = errorCodes;
+        $scope.brokenContainers = brokenContainers;
         loadContainers();
 
         $scope.$on('$viewContentLoaded', function(){
@@ -26,11 +27,11 @@
             });
         });
 
-        function getCurrentUser(){
-            Restangular.all('auth').get('user').then(function (resp) {
-                $rootScope.currentUser = resp.plain();
-            })
-        }
+        // function getCurrentUser(){
+        //     Restangular.all('auth').get('user').then(function (resp) {
+        //         $rootScope.currentUser = resp.plain();
+        //     })
+        // }
 
         function loadContainers() {
             $scope.brokenContainers = [];
@@ -52,7 +53,7 @@
                             var errorMessage = {
                                 sensor: sensor,
                                 errorCode: container.sensors[sensor].errorCode,
-                                message: $scope.errorCodeDesciptions[container.sensors[sensor].errorCode]
+                                message: $scope.errorCodeDescriptions[container.sensors[sensor].errorCode]
                             };
                             container.errorMessages.push(errorMessage);
                         }
@@ -66,10 +67,10 @@
             })
         }
 
-        function errorCodes() {
-            $http.get('resources/errorcodes.properties').then(function (response) {
-                $scope.errorCodeDesciptions = response.data;
-            });
-        }
+        // function errorCodes() {
+        //     $http.get('resources/errorcodes.properties').then(function (response) {
+        //         $scope.errorCodeDesciptions = response.data;
+        //     });
+        // }
     }
 })();

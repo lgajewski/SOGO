@@ -91,5 +91,13 @@
     "SENSOR": "Sensor",
     "VALUE": "Value",
     "ERROR_CODE": "Error code",
-    "SIMULATOR": "Simulator"
+    "SIMULATOR": "Simulator",
+    "CREATE_TRUCKS": "Create trucks",
+    "SIMULATE_TRUCKS": "Simulate trucks",
+    "CREATE_CONTAINERS": "Create containers",
+    "SIMULATE_CONTAINERS": "Simulate containers",
+    "CREATE": "Create",
+    "GENERATE_ROUTES": "Generate routes",
+    "EMPTY_TRUCKS": "Empty trucks",
+    "EMPTY_CONTAINERS": "Empty containers"
 }

@@ -9,12 +9,12 @@
             <div class="panel-body">
                 <form name="createTrucksForm" class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" translate="TRUCKS"></label>
+                        <label class="col-sm-3 control-label" translate="CREATE_TRUCKS"></label>
                         <div class="col-sm-2">
                             <input class="form-control" type="number" min="0" ng-model="trucksNo">
                         </div>
                         <div class="col-sm-3">
-                            <button type="submit" class="btn btn-primary" ng-click="createTrucks()" translate="CREATE_TRUCKS"></button>
+                            <button type="submit" class="btn btn-primary" ng-click="createTrucks()" translate="CREATE"></button>
                         </div>
                     </div>
                 </form>
@@ -31,12 +31,12 @@
                 </form>
                 <form name="createContainersForm" class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" translate="CONTAINERS"></label>
+                        <label class="col-sm-3 control-label" translate="CREATE_CONTAINERS"></label>
                         <div class="col-sm-2">
                             <input class="form-control" type="number" min="0" ng-model="containersNo">
                         </div>
                         <div class="col-sm-3">
-                            <button type="submit" class="btn btn-primary" ng-click="createContainers()" translate="CREATE_CONTAINERS"></button>
+                            <button type="submit" class="btn btn-primary" ng-click="createContainers()" translate="CREATE"></button>
                         </div>
                     </div>
                 </form>
@@ -72,8 +72,3 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-
-<script>
-    $("[name='simulateTrucksCheckbox']").bootstrapSwitch();
-
-</script>

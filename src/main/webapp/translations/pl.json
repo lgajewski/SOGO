@@ -91,5 +91,13 @@
     "SENSOR": "Czujnik",
     "VALUE": "Wartość",
     "ERROR_CODE": "Kod błędu",
-    "SIMULATOR": "Symulator"
+    "SIMULATOR": "Symulator",
+    "CREATE_TRUCKS": "Dodaj ciężarówki",
+    "SIMULATE_TRUCKS": "Symuluj ciężarówki",
+    "CREATE_CONTAINERS": "Dodaj kontenery",
+    "SIMULATE_CONTAINERS": "Symuluj kontenery",
+    "CREATE": "Dodaj",
+    "GENERATE_ROUTES": "Generuj trasy",
+    "EMPTY_TRUCKS": "Opróżnij ciężarówki",
+    "EMPTY_CONTAINERS": "Opróżnij kontenery"
 }
