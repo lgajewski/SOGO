@@ -248,7 +248,7 @@
         }
 
         function setContainerToEdit(container) {
-            $scope.containerToEdit = _.clone(container);
+            $scope.containerToEdit = _.cloneDeep(container);
         }
 
 
