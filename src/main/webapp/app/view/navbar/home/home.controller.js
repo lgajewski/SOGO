@@ -501,19 +501,11 @@
             }
         }
 
-        // function savePropsToVariable() {
-        //     $http.get('resources/errorcodes.properties').then(function (response) {
-        //         prop = response.data;
-        //     })
-        // }
-
         function errorCodes(container) {
-            console.log($scope.propsInVariable);
             for(var sensor in container.sensors){
                 var ec = container.sensors[sensor].errorCode;
 
                 if(ec != 0){
-
                     var alert = {
                         containerId: 0,
                         containerAddress: "",
