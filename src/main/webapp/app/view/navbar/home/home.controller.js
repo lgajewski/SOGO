@@ -5,16 +5,16 @@
         .module('sogo')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$http', '$filter'];
+    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$http', '$filter', 'savePropsToVariable'];
 
-    function HomeController($scope, Restangular, SseService, DirectionsService, $http, $filter) {
+    function HomeController($scope, Restangular, SseService, DirectionsService, $http, $filter, savePropsToVariable) {
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
         $scope.selection = [];
         $scope.showRoute = showRoute;
         $scope.errorCodes = errorCodes;
-        $scope.savePropsToVariable = savePropsToVariable;
+        $scope.propsInVariable = savePropsToVariable;
         $scope.checkAllElements = {'trucks':true, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
@@ -46,9 +46,6 @@
 
         var marker;
         var mapCenter = new google.maps.LatLng($scope.mapOptions.center.latitude, $scope.mapOptions.center.longitude);
-        var prop;
-
-        savePropsToVariable();
 
         $scope.mapProp = {
             center: mapCenter,
@@ -504,13 +501,14 @@
             }
         }
 
-        function savePropsToVariable() {
-            $http.get('resources/errorcodes.properties').then(function (response) {
-                prop = response.data;
-            })
-        }
+        // function savePropsToVariable() {
+        //     $http.get('resources/errorcodes.properties').then(function (response) {
+        //         prop = response.data;
+        //     })
+        // }
 
         function errorCodes(container) {
+            console.log($scope.propsInVariable);
             for(var sensor in container.sensors){
                 var ec = container.sensors[sensor].errorCode;
 
@@ -528,7 +526,7 @@
                     alert.containerAddress = container.address;
                     alert.sensor = sensor;
                     alert.errorCode = ec;
-                    alert.errorMessage = prop[ec];
+                    alert.errorMessage = $scope.propsInVariable[ec];
                     $scope.alerts.push(alert);
                 }
             }

@@ -9,7 +9,17 @@
                     url: '/home',
                     parent: 'navbar',
                     templateUrl: 'app/view/navbar/home/home.html',
-                    controller: 'HomeController'
+                    controller: 'HomeController',
+                    resolve: {
+                        savePropsToVariable: ['$http', function ($http) {
+                            return $http
+                                .get('resources/errorcodes.properties')
+                                .then(function (response) {
+                                // console.log(response.data);
+                                return response.data;
+                            });
+                        }]
+                    }
                 })
         })
 })();
