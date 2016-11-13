@@ -54,7 +54,7 @@ public class ContainerService {
             }
             containerRepository.save(container);
             // emit updated container to browsers that subscribe on SSE
-//            sseService.emit("container", container);
+            sseService.emit("container", container);
         }
     }
 

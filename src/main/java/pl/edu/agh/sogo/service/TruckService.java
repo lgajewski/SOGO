@@ -83,7 +83,7 @@ public class TruckService {
             truckRepository.save(truck);
 
             // emit updated truck to browsers that subscribe on SSE
-//            sseService.emit("truck", truck);
+            sseService.emit("truck", truck);
         }
     }
 }
