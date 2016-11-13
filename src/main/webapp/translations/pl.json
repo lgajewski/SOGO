@@ -99,5 +99,8 @@
     "CREATE": "Dodaj",
     "GENERATE_ROUTES": "Generuj trasy",
     "EMPTY_TRUCKS": "Opróżnij ciężarówki",
-    "EMPTY_CONTAINERS": "Opróżnij kontenery"
+    "EMPTY_CONTAINERS": "Opróżnij kontenery",
+    "ROUTES": "Trasy",
+    "SELECT_ROUTE": "Wybierz trasę",
+    "CURRENT_ROUTE": "Wybrane trasy"
 }

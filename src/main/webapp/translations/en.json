@@ -99,5 +99,8 @@
     "CREATE": "Create",
     "GENERATE_ROUTES": "Generate routes",
     "EMPTY_TRUCKS": "Empty trucks",
-    "EMPTY_CONTAINERS": "Empty containers"
+    "EMPTY_CONTAINERS": "Empty containers",
+    "ROUTES": "Routes",
+    "SELECT_ROUTE": "Select route",
+    "CURRENT_ROUTE": "Selected routes"
 }

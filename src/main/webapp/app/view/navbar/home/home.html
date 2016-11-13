@@ -78,17 +78,17 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-users fa-5x"></i>
+                        <i class="fa fa-location-arrow fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">{{users.length}}</div>
-                        <div translate="USERS"></div>
+                        <div class="huge">1</div>
+                        <div translate="CURRENT_ROUTE"></div>
                     </div>
                 </div>
             </div>
             <a href="">
-                <div class="panel-footer">
-                    <span class="pull-left" translate="VIEW_USERS"></span>
+                <div class="panel-footer" data-toggle="modal" data-target="#showRouteModalLabel">
+                    <span class="pull-left" translate="SELECT_ROUTE"></span>
                     <span class="pull-right"><i class="fa fa-plus"></i></span>
                     <div class="clearfix"></div>
                 </div>
@@ -156,7 +156,7 @@
                         <tr>
                             <th width="10%"><input type="checkbox" ng-model="checkAllElements['trucks']" ng-click="checkCollection('trucks')"></th>
                             <th translate="TRUCK"></th>
-                            <th translate="ROUTE"></th>
+                            <!--<th translate="ROUTE"></th>-->
                             <th width="10%">
                                 <a href="" ng-click="showList('trucks')">
                                     <span class="pull-right"><i class="fa fa-chevron-down"></i></span>
@@ -169,10 +169,14 @@
                                 <input type="text" id="truckSearchInput" onkeyup="searchTrucks()" placeholder="Search for registrations..">
                             </td>
                         </tr>
+
                         <tr ng-show="active['trucks']" ng-repeat="item in items.trucks">
-                            <td width="10%"><input type="checkbox" checklist-model="selection" checklist-value="item"></td>
+
+                            <td width="10%">
+                                <input type="checkbox" class="checkbox-primary" checklist-model="selection" checklist-value="item">
+                            </td>
                             <td>{{item.registration}}</td>
-                            <td><input type="radio" name="route" ng-click="showRoute(item.registration)"></td>
+                            <!--<td><input type="radio" name="route" ng-click="showRoute(item.registration)"></td>-->
                         </tr>
                     </table>
 
@@ -300,6 +304,35 @@
             <div class="modal-footer">
                 <button type="button" id="btn-cancelAddContainer" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
                 <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addContainer(containerToAdd)" translate="ADD"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="showRouteModalLabel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="showRouteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                    <span class="sr-only" translate="CLOSE"></span>
+                </button>
+                <h4 class="modal-title" translate="SELECT_ROUTE"></h4>
+            </div>
+            <div class="modal-body" id="ShowRouteModalBody">
+                <!--<input type="text" id="truckSearchInput" onkeyup="searchTrucks()" placeholder="Search for registrations..">-->
+                <div class="funkyradio">
+                    <div class="funkyradio-primary">
+                        <input type="radio" name="radio" ng-attr-id="{{'radio-none'}}" ng-click="showRoute(null)" checked/>
+                        <label ng-attr-for="{{'radio-none'}}">None</label>
+                    </div>
+                </div>
+                <div class="funkyradio" ng-repeat="truck in items.trucks">
+                    <div class="funkyradio-primary">
+                        <input type="radio" name="radio" ng-attr-id="{{'radio' + truck.id}}" ng-click="showRoute(truck.registration)"/>
+                        <label ng-attr-for="{{'radio' + truck.id}}">{{truck.registration}}</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

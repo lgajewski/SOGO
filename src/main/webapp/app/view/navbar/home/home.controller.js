@@ -279,7 +279,7 @@
                         }
                     }
                 });
-            }
+            };
 
             // register
             SseService.register("truck", onTruckUpdated);
@@ -512,7 +512,7 @@
                         sensor: "",
                         errorCode: 0,
                         errorMessage: ""
-                    }
+                    };
 
                     alert.containerId = container.id;
                     alert.containerAddress = container.address;
