@@ -5,32 +5,31 @@
         .module('sogo')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$http', '$filter', 'savePropsToVariable'];
+    HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$filter',
+        'savePropsToVariable', 'containers', 'trucks', 'fillingPercentageList'];
 
-    function HomeController($scope, Restangular, SseService, DirectionsService, $http, $filter, savePropsToVariable) {
+    function HomeController($scope, Restangular, SseService, DirectionsService, $filter,
+                            savePropsToVariable, containers, trucks, fillingPercentageList) {
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
-        $scope.selection = [];
+        $scope.selection = trucks;
         $scope.showRoute = showRoute;
         $scope.errorCodes = errorCodes;
-        $scope.propsInVariable = savePropsToVariable;
         $scope.checkAllElements = {'trucks':true, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
         $scope.toggleCollection = toggleCollection;
-        $scope.collectionsAvailable = [/*'trucks', */'yellow', 'green', 'blue'];
+        $scope.collectionsAvailable = ['yellow', 'green', 'blue'];
         $scope.checkCollection = checkCollection;
         $scope.items = {
-            trucks: [],
-            blue: [],
-            yellow: [],
-            green: [],
-            broken: []
+            trucks: trucks,
+            blue: containers.blue,
+            yellow: containers.yellow,
+            green: containers.green,
+            broken: containers.broken
         };
         $scope.alerts = [];
-        $scope.users = [];
         $scope.active = {'trucks': false, 'yellow': false, 'blue':false, 'green':false};
         $scope.showList = showList;
-        $scope.fillingPercentageList = [];
         $scope.selectContainers = selectContainers;
         $scope.addContainer = addContainer;
         $scope.addTruck = addTruck;
@@ -43,11 +42,13 @@
         };
         $scope.truckToAdd = {};
         $scope.truckToAdd.load = 0;
+        $scope.fillingPercentageList = fillingPercentageList;
 
+        var propsInVariable = savePropsToVariable;
         var marker;
         var mapCenter = new google.maps.LatLng($scope.mapOptions.center.latitude, $scope.mapOptions.center.longitude);
 
-        $scope.mapProp = {
+        var mapProp = {
             center: mapCenter,
             zoom: 14,
             draggable: true,
@@ -102,9 +103,8 @@
         };
 
 
-        $scope.containerMap = new google.maps.Map(document.getElementById("map-canvas-addcontainer"), $scope.mapProp);
-
-        $scope.truckMap = new google.maps.Map(document.getElementById("map-canvas-addtruck"), $scope.mapProp);
+        $scope.containerMap = new google.maps.Map(document.getElementById("map-canvas-addcontainer"), mapProp);
+        $scope.truckMap = new google.maps.Map(document.getElementById("map-canvas-addtruck"), mapProp);
 
         google.maps.event.addListener($scope.containerMap, 'click', function(event){
             addMarker(event.latLng, 'assets/images/ic_map_trash_' + $scope.containerToAdd.type + '.png',
@@ -150,11 +150,6 @@
         // Server Side Events
         configureSse();
 
-        // load data
-        loadContainers();
-        loadTrucks();
-        loadUsers();
-        setList();
 
         function addMarker(latLng, icon, map, item){
             //clear the previous marker and circle.
@@ -228,11 +223,11 @@
         }
 
 
-        function setList() {
-            for(var i = 100; i >= 10; i-=10){
-                $scope.fillingPercentageList.push(i);
-            }
-        }
+        // function setList() {
+        //     for(var i = 100; i >= 10; i-=10){
+        //         $scope.fillingPercentageList.push(i);
+        //     }
+        // }
 
         function showList(item) {
             $scope.active[item] = !$scope.active[item];
@@ -432,11 +427,11 @@
             })
         }
 
-        function loadUsers() {
-            Restangular.all('users').getList().then(function (data) {
-                $scope.users = data;
-            })
-        }
+        // function loadUsers() {
+        //     Restangular.all('users').getList().then(function (data) {
+        //         $scope.users = data;
+        //     })
+        // }
 
         function checkCollection(collectionName) {
             if ($scope.checkAllElements[collectionName]) {
@@ -518,7 +513,7 @@
                     alert.containerAddress = container.address;
                     alert.sensor = sensor;
                     alert.errorCode = ec;
-                    alert.errorMessage = $scope.propsInVariable[ec];
+                    alert.errorMessage = propsInVariable[ec];
                     $scope.alerts.push(alert);
                 }
             }
