@@ -7,12 +7,14 @@ package pl.edu.agh.sogo.web.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Route;
 import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.persistence.ContainerRepository;
+import pl.edu.agh.sogo.security.SecurityConstants;
 import pl.edu.agh.sogo.service.RouteService;
 
 import java.util.List;
@@ -48,6 +50,7 @@ public class RouteController {
 
     @ResponseBody
     @RequestMapping(value = "/generate", method = RequestMethod.POST)
+    @Secured(SecurityConstants.ADMIN)
     public void generateRoutes() {
         log.info("[POST][/api/routes/generate] generateRoutes()");
         List<String> availableContainers = containerRepository.findAll().stream().map(Container::getId).collect(Collectors.toList());

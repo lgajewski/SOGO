@@ -7,9 +7,11 @@ package pl.edu.agh.sogo.web.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Truck;
+import pl.edu.agh.sogo.security.SecurityConstants;
 import pl.edu.agh.sogo.service.RouteService;
 import pl.edu.agh.sogo.service.TruckService;
 
@@ -48,6 +50,7 @@ public class TruckController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
+    @Secured(SecurityConstants.SYSTEM_MANAGER)
     public void addTruck(@RequestBody Truck truck) {
         log.info("[POST][/api/trucks/] addTruck()");
         truckService.add(truck);
@@ -55,6 +58,7 @@ public class TruckController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT)
+    @Secured(SecurityConstants.SYSTEM_MANAGER)
     public void updateTruck(@RequestBody Truck truck) {
         log.info("[PUT][/api/trucks/] updateTruck()");
         truckService.update(truck);
@@ -62,6 +66,7 @@ public class TruckController {
 
     @ResponseBody
     @RequestMapping(value = "/{registration}", method = RequestMethod.DELETE)
+    @Secured(SecurityConstants.SYSTEM_MANAGER)
     public void deleteTruck(@PathVariable(value = "registration") String registration) {
         log.info("[DELETE][/api/trucks/" + registration + "] deleteTruck(" + registration + ")");
         truckService.delete(registration);
@@ -69,6 +74,7 @@ public class TruckController {
 
     @ResponseBody
     @RequestMapping(value = "/{registration}", method = RequestMethod.PATCH)
+    @Secured(SecurityConstants.SYSTEM_MANAGER)
     public void updateLocation(@PathVariable(value = "registration") String registration, @RequestBody Location location) {
         log.info("[PATCH][/api/trucks/" + registration + "] updateLocation(" + registration + ")");
 

@@ -22,10 +22,12 @@ public class MongoInitialSetup {
     private static final Logger log = LoggerFactory.getLogger(MongoInitialSetup.class);
 
     private static final Authority USER_AUTHORITY = new Authority(SecurityConstants.USER);
+    private static final Authority SYSTEM_MANAGER_AUTHORITY = new Authority(SecurityConstants.SYSTEM_MANAGER);
     private static final Authority ADMIN_AUTHORITY = new Authority(SecurityConstants.ADMIN);
 
     private static final Set<Authority> userAuthorities = new HashSet<>(Collections.singletonList(USER_AUTHORITY));
-    private static final Set<Authority> adminAuthorities = new HashSet<>(Arrays.asList(USER_AUTHORITY, ADMIN_AUTHORITY));
+    private static final Set<Authority> systemManagerAuthorities = new HashSet<>(Arrays.asList(USER_AUTHORITY, SYSTEM_MANAGER_AUTHORITY));
+    private static final Set<Authority> adminAuthorities = new HashSet<>(Arrays.asList(USER_AUTHORITY, SYSTEM_MANAGER_AUTHORITY, ADMIN_AUTHORITY));
 
     @Autowired
     private AuthorityRepository authorityRepository;
@@ -42,16 +44,20 @@ public class MongoInitialSetup {
 
     private void addAuthorities() {
         authorityRepository.save(USER_AUTHORITY);
+        authorityRepository.save(SYSTEM_MANAGER_AUTHORITY);
         authorityRepository.save(ADMIN_AUTHORITY);
     }
 
     private void addUsers() {
         User admin = createUser("user-0", "admin", "$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC",
             "admin", "Administrator", "admin@localhost", true, adminAuthorities);
-        User user = createUser("user-1", "user", "$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K",
+        User manager = createUser("user-1", "manager", "$2a$10$8gBhAGP6pstQxYsyxyH9cukhkj/Ez8pNEj32cwM5fRtwHs4ulCwOC",
+            "manager", "Manager", "manager@localhost", true, systemManagerAuthorities);
+        User user = createUser("user-2", "user", "$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K",
             "", "User", "user@localhost", true, userAuthorities);
 
         userRepository.save(admin);
+        userRepository.save(manager);
         userRepository.save(user);
     }
 

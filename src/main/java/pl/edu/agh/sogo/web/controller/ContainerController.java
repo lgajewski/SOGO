@@ -7,12 +7,13 @@ package pl.edu.agh.sogo.web.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Sensor;
+import pl.edu.agh.sogo.security.SecurityConstants;
 import pl.edu.agh.sogo.service.ContainerService;
 import pl.edu.agh.sogo.service.RouteService;
-import pl.edu.agh.sogo.service.SseService;
 
 import java.util.Collection;
 
@@ -44,6 +45,7 @@ public class ContainerController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
+    @Secured(SecurityConstants.SYSTEM_MANAGER)
     public void addContainer(@RequestBody Container container) {
         log.info("[POST][/api/containers] addContainer()");
         containerService.add(container);
@@ -52,6 +54,7 @@ public class ContainerController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT)
+    @Secured(SecurityConstants.SYSTEM_MANAGER)
     public void updateContainer(@RequestBody Container container) {
         log.info("[PUT][/api/containers] updateContainer(" + container + ")");
         containerService.update(container);
@@ -61,6 +64,7 @@ public class ContainerController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @Secured(SecurityConstants.SYSTEM_MANAGER)
     public void deleteContainer(@PathVariable(value = "id") String id) {
         log.info("[DELETE][/api/containers/" + id + "] deleteContainer(" + id + ")");
         containerService.delete(id);
@@ -69,6 +73,7 @@ public class ContainerController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+    @Secured(SecurityConstants.SYSTEM_MANAGER)
     public void addSensor(@PathVariable(value = "id") String id, @RequestBody Sensor sensor, @RequestBody String sensorName) {
         containerService.addSensor(id, sensorName, sensor);
         log.info("[PATCH][/api/containers/" + id + "] addSensor(" + id + ", " + sensorName + ")");
