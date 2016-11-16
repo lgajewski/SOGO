@@ -16,12 +16,16 @@ $(function() {
             $("#page-wrapper").css("min-height", (height) + "px");
         }
 
-        $("ul.side-nav li:first").addClass("active").show();
-        $("ul.side-nav li").click(function() {
-            $("ul.side-nav li").removeClass("active");
-        });
-        $(".navbar-brand").click(function() {
-            $("ul.side-nav li:first").addClass("active");
+    });
+
+    angular.element('[ng-app=sogo]').scope().$on('$stateChangeSuccess', function(event, toState) {
+        $('ul.side-nav a').each(function (i, el) {
+            var parent = $(this).parent();
+            if(el.href.includes(toState.name)) {
+                parent.addClass("active");
+            } else {
+                parent.removeClass("active");
+            }
         });
     });
 });
