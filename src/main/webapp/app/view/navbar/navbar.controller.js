@@ -5,72 +5,40 @@
         .module('sogo')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$rootScope', '$http', 'currentUser', 'errorCodes', 'brokenContainers', 'Auth' , 'Restangular'];
+    NavbarController.$inject = ['$scope', '$rootScope', 'currentUser', 'errorCodes', 'brokenContainers', 'notificationsRead',  'Auth'];
 
-    function NavbarController($scope, $rootScope, $http, currentUser, errorCodes, brokenContainers, Auth, Restangular) {
+    function NavbarController($scope, $rootScope, currentUser, errorCodes, brokenContainers, notificationsRead, Auth) {
         this.logout = Auth.logout;
-        $scope.brokenContainers = [];
+        $scope.notificationsRead = notificationsRead;
         $scope.errorsCounter = 0;
+        $scope.markAsRead = markAsRead;
         $rootScope.currentUser = currentUser;
         $scope.errorCodeDescriptions = errorCodes;
         $scope.brokenContainers = brokenContainers;
-        loadContainers();
 
         $scope.$on('$viewContentLoaded', function(){
             $scope.$emit('onNavbarLoaded');
         });
 
-        $(function () {
-            var navMain = $("#nav-main");
-            navMain.on("click", "a", null, function () {
-                navMain.collapse('hide');
-            });
-        });
+        // $(function () {
+        //     var navMain = $("#nav-main");
+        //     navMain.on("click", "a", null, function () {
+        //         navMain.collapse('hide');
+        //     });
+        // });
 
-        // function getCurrentUser(){
-        //     Restangular.all('auth').get('user').then(function (resp) {
-        //         $rootScope.currentUser = resp.plain();
-        //     })
-        // }
-
-        function loadContainers() {
-            $scope.brokenContainers = [];
-            Restangular.all('containers').getList().then(function (resp) {
-                for (var i = 0; i < resp.length; i++) {
-                    var container = {
-                        id: 0,
-                        address: {},
-                        type: "",
-                        sensors: {},
-                        errorMessages: []
-                    };
-                    container.id = resp[i].id;
-                    container.type = resp[i].type;
-                    container.sensors = resp[i].sensors;
-                    container.address = resp[i].address;
-                    for(var sensor in container.sensors){
-                        if(container.sensors[sensor].errorCode > 0){
-                            var errorMessage = {
-                                sensor: sensor,
-                                errorCode: container.sensors[sensor].errorCode,
-                                message: $scope.errorCodeDescriptions[container.sensors[sensor].errorCode]
-                            };
-                            container.errorMessages.push(errorMessage);
-                        }
-                    }
-
-                    if(container.errorMessages.length > 0){
-                        $scope.brokenContainers.push(container);
-                    }
-
-                }
-            })
+        function markAsRead(container){
+            var index = $scope.brokenContainers.indexOf(container);
+            if(!localStorage.notificationsRead){
+                localStorage.notificationsRead = [];
+            }
+            if(index > -1) {
+                $scope.brokenContainers.splice(index, 1);
+                $scope.notificationsRead.push(container);
+                sessionStorage.setItem("notificationsRead", JSON.stringify($scope.notificationsRead));
+            }
         }
 
-        // function errorCodes() {
-        //     $http.get('resources/errorcodes.properties').then(function (response) {
-        //         $scope.errorCodeDesciptions = response.data;
-        //     });
-        // }
+
     }
 })();

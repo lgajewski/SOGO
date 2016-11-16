@@ -102,5 +102,6 @@
     "EMPTY_CONTAINERS": "Empty containers",
     "ROUTES": "Routes",
     "SELECT_ROUTE": "Select route",
-    "CURRENT_ROUTE": "Selected routes"
+    "CURRENT_ROUTE": "Selected routes",
+    "REPAIR_CONTAINERS": "Containers to repair"
 }

@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('ContainersController', ContainersController);
 
-    ContainersController.$inject = ['$scope', 'containers', 'repairers', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
+    ContainersController.$inject = ['$scope', 'containers', 'repairers', 'containersToRepair', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
 
-    function ContainersController($scope, containers, repairers, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
+    function ContainersController($scope, containers, repairers, containersToRepair, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
         $scope.items = containers;
         $scope.setActiveObject = setActiveObject;
         $scope.editContainer = editContainer;
@@ -20,6 +20,9 @@
         $scope.activeObject = ActiveItemService.getObject();
         // $scope.getContainers();
         $scope.containerToAdd = {};
+        $scope.containerToEdit = {};
+        $scope.repairContainer = repairContainer;
+        $scope.containersToRepair = containersToRepair;
         $scope.containerToAdd.type = 'blue';
         $scope.containerToAdd.sensors = {
             load: {
@@ -93,7 +96,7 @@
         });
 
         $scope.$watch('containerToEdit.sensors.load.value', function(){
-            if($scope.containerToEdit){
+            if($scope.containerToEdit && $scope.containerToEdit.sensors){
 
                 $scope.containerToEdit.sensors.load.value = parseFloat($scope.containerToEdit.sensors.load.value);
             }
@@ -249,12 +252,16 @@
 
         function setContainerToEdit(container) {
             $scope.containerToEdit = _.cloneDeep(container);
+            $('#repairersSelectPicker').selectpicker('refresh');
+
+
         }
 
 
         function editContainer(container){
             Restangular.all('containers').customPUT(container).then(function () {
                 $scope.getContainers();
+
             })
         }
 
@@ -271,6 +278,7 @@
                 for(var i=0;i<$scope.items.length;i++){
                     $scope.items[i].sensors.load.value = parseFloat($scope.items[i].sensors.load.value);
                 }
+
             })
         }
 
@@ -281,6 +289,19 @@
             else {
                 $scope.active = null;
             }
+        }
+
+        function repairContainer(container){
+            Restangular.all('containers/' + container.id + '/repair').customPOST().then(function (data) {
+                getContainersToRepair();
+            })
+        }
+
+        function getContainersToRepair(){
+            Restangular.all('containers/toRepair').getList().then(function (data) {
+                $scope.containersToRepair = data;
+
+            });
         }
 
     }

@@ -15,11 +15,10 @@
                         repairers: function($q, Restangular) {
                             var deferred = $q.defer();
                             Restangular.all('users/ROLE_USER').getList().then(function (data) {
-                                var repairers = [];
+                                var repairers = [null];
                                 for(var i=0; i<data.length;i++){
                                     repairers.push(data[i]);
                                 }
-                                console.log(repairers);
                                 deferred.resolve(repairers);
                             });
                             return deferred.promise;
@@ -31,6 +30,14 @@
                                 for(var i=0;i<items.length;i++){
                                     items[i].sensors.load.value = parseFloat(items[i].sensors.load.value);
                                 }
+                                deferred.resolve(items);
+                            });
+                            return deferred.promise;
+                        },
+                        containersToRepair: function($q, Restangular){
+                            var deferred = $q.defer();
+                            Restangular.all('containers/toRepair').getList().then(function (data) {
+                                var items = data;
                                 deferred.resolve(items);
                             });
                             return deferred.promise;
