@@ -102,5 +102,6 @@
     "EMPTY_CONTAINERS": "Opróżnij kontenery",
     "ROUTES": "Trasy",
     "SELECT_ROUTE": "Wybierz trasę",
-    "CURRENT_ROUTE": "Wybrane trasy"
+    "CURRENT_ROUTE": "Wybrane trasy",
+    "REPAIR_CONTAINERS": "Kontenery do naprawienia"
 }
