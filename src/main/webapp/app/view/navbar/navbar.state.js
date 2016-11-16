@@ -29,7 +29,16 @@
 
                             return deferred.promise;
                         },
-                        brokenContainers: function($q, Restangular, errorCodes) {
+                        notificationsRead: function($q){
+                            var deferred = $q.defer();
+                            var itemName = "notificationsRead";
+                            if(sessionStorage.getItem(itemName) == null){
+                                sessionStorage.setItem(itemName, JSON.stringify([]));
+                            }
+                            deferred.resolve(JSON.parse(sessionStorage.getItem(itemName)));
+                            return deferred.promise;
+                        },
+                        brokenContainers: function($q, Restangular, errorCodes, notificationsRead) {
                             var deferred = $q.defer();
                             var brokenContainers = [];
                             Restangular.all('containers').getList().then(function (resp) {
@@ -56,7 +65,10 @@
                                         }
                                     }
 
-                                    if(container.errorMessages.length > 0){
+                                    if(container.errorMessages.length > 0 && JSON.parse(sessionStorage.getItem("notificationsRead")).map(function(v){
+                                            return v.id;
+                                        }).indexOf(container.id) < 0) {
+
                                         brokenContainers.push(container);
                                     }
 
