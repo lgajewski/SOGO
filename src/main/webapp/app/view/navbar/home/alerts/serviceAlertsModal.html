@@ -9,10 +9,7 @@
 <div class="modal-body" id="ViewDetailsModalBody">
     <table id="brokenContainersTable" class="table table-striped table-bordered table-hover">
         <tr ng-repeat="item in brokenContainers">
-            <!--<ul>-->
-            <td style="vertical-align:middle" ng-click="openContainerStatusModal(item)"><img ng-src="{{item.options.icon.url}}" style="margin: 0px 20px 0px 0px"/> {{item.address}}</td>
-            <!--<div ng-repeat="alert in alerts" ng-if="alert.containerAddress == item.address"><li>{{alert.sensor}} sensor reported error {{alert.errorCode}} ({{alert.errorMessage}})</li></div>-->
-            <!--</ul>-->
+            <td class="alertsTable" ng-click="openContainerStatusModal(item)"><img ng-src="{{item.options.icon.url}}" style="margin: 0px 20px 0px 0px"/> {{item.address}}</td>
         </tr>
     </table>
 </div>
