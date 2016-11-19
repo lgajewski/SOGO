@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['user', 'Account', 'Notification'];
+    ProfileController.$inject = ['user', 'Account', '$rootScope'];
 
-    function ProfileController(user, Account, Notification) {
+    function ProfileController(user, Account, $rootScope) {
         var vm = this;
 
         vm.alert = null;
@@ -19,6 +19,7 @@
             var onSuccess = function () {
                 vm.success = true;
                 vm.alert = null;
+
             };
 
             var onFailure = function (error) {
@@ -30,7 +31,7 @@
             Account.update(vm.user)
                 .then(function () {
                     onSuccess();
-
+                    $rootScope.currentUser = vm.user;
                     // change password if necessary
                     if (vm.newPassword) {
                         Account.changePassword(vm.newPassword)
