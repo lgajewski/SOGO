@@ -42,9 +42,16 @@
                     </div>
                 </div>
             </div>
-            <a href="">
+            <a restrict access="ROLE_ADMIN ROLE_SYSTEM_MANAGER" href="">
                 <div class="panel-footer" data-toggle="modal" data-target="#myAddTruckModalLabel">
-                    <span class="pull-left" translate="ADD_TRUCK"></span>
+                        <span class="pull-left" translate="ADD_TRUCK"></span>
+                    <span class="pull-right"><i class="fa fa-plus"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+            <a restrict access="ROLE_USER" ui-sref="trucks">
+                <div class="panel-footer">
+                    <span class="pull-left" translate="DISPLAY_TRUCKS"></span>
                     <span class="pull-right"><i class="fa fa-plus"></i></span>
                     <div class="clearfix"></div>
                 </div>
@@ -64,9 +71,16 @@
                     </div>
                 </div>
             </div>
-            <a href="">
+            <a restrict access="ROLE_SYSTEM_MANAGER ROLE_ADMIN" href="">
                 <div class="panel-footer" data-toggle="modal" data-target="#myAddContainerModalLabel">
                     <span class="pull-left" translate="ADD_CONTAINER"></span>
+                    <span class="pull-right"><i class="fa fa-plus"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+            <a restrict access="ROLE_USER" ui-sref="containers">
+                <div class="panel-footer">
+                    <span class="pull-left" translate="DISPLAY_CONTAINERS"></span>
                     <span class="pull-right"><i class="fa fa-plus"></i></span>
                     <div class="clearfix"></div>
                 </div>

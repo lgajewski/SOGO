@@ -84,10 +84,10 @@
                 <li>
                     <a ui-sref="containers" translate="CONTAINERS"><i class="fa fa-fw fa-trash-o"></i></a>
                 </li>
-                <li>
+                <li restrict access="ROLE_ADMIN">
                     <a ui-sref="users" translate="USERS"><i class="fa fa-fw fa-users"></i></a>
                 </li>
-                <li>
+                <li restrict access="ROLE_ADMIN">
                     <a ui-sref="simulator" translate="SIMULATOR"><i class="fa fa-fw fa-users"></i></a>
                 </li>
             </ul>

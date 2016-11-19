@@ -5,16 +5,15 @@
         .module('sogo')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$rootScope', 'currentUser', 'errorCodes', 'savePropsToVariable',
+    NavbarController.$inject = ['$scope', '$rootScope', 'errorCodes', 'savePropsToVariable',
         'brokenContainers', 'notificationsRead',  'Auth', '$uibModal', 'Restangular', '$q'];
 
-    function NavbarController($scope, $rootScope, currentUser, errorCodes, savePropsToVariable,
+    function NavbarController($scope, $rootScope, errorCodes, savePropsToVariable,
                               brokenContainers, notificationsRead, Auth, $uibModal, Restangular, $q) {
         this.logout = Auth.logout;
         $scope.notificationsRead = notificationsRead;
         $scope.errorsCounter = 0;
         $scope.markAsRead = markAsRead;
-        $rootScope.currentUser = currentUser;
         $scope.errorCodeDescriptions = errorCodes;
         $scope.brokenContainers = brokenContainers;
         $rootScope.propsInVariable = savePropsToVariable;

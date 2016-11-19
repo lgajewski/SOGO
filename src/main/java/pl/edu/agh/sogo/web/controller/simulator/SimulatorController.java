@@ -3,9 +3,11 @@ package pl.edu.agh.sogo.web.controller.simulator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Truck;
+import pl.edu.agh.sogo.security.SecurityConstants;
 import pl.edu.agh.sogo.service.ContainerService;
 import pl.edu.agh.sogo.service.TruckService;
 import pl.edu.agh.sogo.service.simulator.ContainerSimulator;
@@ -61,6 +63,7 @@ public class SimulatorController {
 
     @ResponseBody
     @RequestMapping(value = "/containers", method = RequestMethod.POST)
+    @Secured(SecurityConstants.ADMIN)
     public void createContainers(@RequestBody Integer numberOfContainers){
         log.info("[POST][/api/containers] createContainers("+numberOfContainers+")");
         List<Container> containers = simulatorService.createContainers(numberOfContainers);
@@ -71,6 +74,7 @@ public class SimulatorController {
 
     @ResponseBody
     @RequestMapping(value = "/containers", method = RequestMethod.PUT)
+    @Secured(SecurityConstants.ADMIN)
     public void emptyContainers(){
         log.info("[PUT][/api/containers] emptyContainers()");
         List<Container> containers = new ArrayList<>(containerService.getContainers());
@@ -82,6 +86,7 @@ public class SimulatorController {
 
     @ResponseBody
     @RequestMapping(value = "/containers/simulate", method = RequestMethod.POST)
+    @Secured(SecurityConstants.ADMIN)
     public void simulateContainers(){
             if (!isContainerSimulationRunning) {
                 isContainerSimulationRunning = !isContainerSimulationRunning;
@@ -101,6 +106,7 @@ public class SimulatorController {
 
     @ResponseBody
     @RequestMapping(value = "/containers", method = RequestMethod.GET)
+    @Secured(SecurityConstants.ADMIN)
     public String getContainersSimulatorState(){
         log.info("[GET][/api/simulator/containers] getContainersSimulatorState() returned " + isContainerSimulationRunning);
         return "{\"state\":"+isContainerSimulationRunning+"}";
@@ -108,6 +114,7 @@ public class SimulatorController {
 
     @ResponseBody
     @RequestMapping(value = "/trucks", method = RequestMethod.POST)
+    @Secured(SecurityConstants.ADMIN)
     public void createTrucks(@RequestBody Integer numberOfTrucks){
         log.info("[POST][/api/trucks] createTrucks("+numberOfTrucks+")");
         List<Truck> trucks = simulatorService.createTrucks(numberOfTrucks);
@@ -118,6 +125,7 @@ public class SimulatorController {
 
     @ResponseBody
     @RequestMapping(value = "/trucks/simulate", method = RequestMethod.POST)
+    @Secured(SecurityConstants.ADMIN)
     public void simulateTrucks(){
         log.info("[POST][/api/simulator/trucks/simulate] simulateTrucks()");
         log.info(truckSimulatorThread.getState().name());
@@ -140,6 +148,7 @@ public class SimulatorController {
 
     @ResponseBody
     @RequestMapping(value = "/trucks", method = RequestMethod.GET)
+    @Secured(SecurityConstants.ADMIN)
     public String getTrucksSimulatorState(){
         log.info("[GET][/api/simulator/trucks/] getTrucksSimulatorState() returned " + isTruckSimulationRunning);
         return "{\"state\":"+isTruckSimulationRunning+"}";
@@ -147,6 +156,7 @@ public class SimulatorController {
 
     @ResponseBody
     @RequestMapping(value = "/trucks", method = RequestMethod.PUT)
+    @Secured(SecurityConstants.ADMIN)
     public void emptyTrucks(){
         log.info("[PUT][/api/trucks] emptyTrucks()");
         List<Truck> trucks = new ArrayList<>(truckService.getTrucks());

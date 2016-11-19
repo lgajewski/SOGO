@@ -28,11 +28,12 @@
                             });
                             return deferred.promise;
                         },
-                        currentUser: function($q, Restangular) {
+                        currentUser: function($q, Restangular, $rootScope) {
                             var deferred = $q.defer();
                             Restangular.all('auth').get('user').then(function (resp) {
                                 var currentUser = resp.plain();
                                 deferred.resolve(currentUser);
+                                $rootScope.currentUser = currentUser;
                             });
 
                             return deferred.promise;

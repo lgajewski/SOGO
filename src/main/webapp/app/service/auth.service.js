@@ -12,7 +12,8 @@
             login: login,
             logout: logout,
             authorize: authorize,
-            isAuthenticated: isAuthenticated
+            isAuthenticated: isAuthenticated,
+            getUser: getUser
         };
 
         function isAuthenticated() {
@@ -55,6 +56,11 @@
         function logout() {
             // logout from the server
             return Restangular.all("logout").post();
+        }
+
+        function getUser() {
+            return Restangular.one("auth/user").get();
+            // return $rootScope.currentUser;
         }
     }
 })();
