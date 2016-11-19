@@ -1,4 +1,4 @@
-<<div class="modal-header">
+<div class="modal-header">
     <button type="button" class="close" ng-click="closeModal()">
         <span aria-hidden="true">X</span>
         <span class="sr-only" translate="CLOSE"></span>
@@ -21,6 +21,7 @@
             <th translate="SENSOR"></th>
             <th translate="VALUE"></th>
             <th translate="ERROR_CODE"></th>
+            <th>Error message</th>
         </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
             <td>{{sensorName}}</td>
             <td>{{sensor.value}}</td>
             <td>{{sensor.errorCode}}</td>
+            <td>{{sensor.message}}</td>
         </tr>
         </tbody>
     </table>

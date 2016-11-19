@@ -1,17 +1,17 @@
 {
 "load":[
   {"1": "Sensor broken"},
-  {"2": "Container smells"},
+  {"2": "Sensor timeout"},
   {"3": "Container full"}
 ],
 "smell":[
   {"1": "Sensor broken"},
-  {"2": "Container smells"},
-  {"3": "Container full"}
+  {"2": "Sensor timeout"},
+  {"3": "Container smells"}
 ],
 "device":[
   {"1": "Sensor broken"},
-  {"2": "Container smells"},
-  {"3": "Container full"}
+  {"2": "Sensor timeout"},
+  {"3": "Device broken"}
 ]
 }

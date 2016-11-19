@@ -334,7 +334,6 @@
                  console.log('Modal dismissed at: ' + new Date());
             });
         };
-
     }
 
 })();

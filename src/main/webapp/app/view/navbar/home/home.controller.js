@@ -15,7 +15,6 @@
         $scope.mapOptions = getMap();
         $scope.selection = trucks;
         $scope.showRoute = showRoute;
-        $scope.errorCodes = errorCodes;
         $scope.checkAllElements = {'trucks':true, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = ['yellow', 'green', 'blue'];
@@ -524,30 +523,5 @@
                 toggleSelection($scope.items[collectionName][i]);
             }
         }
-
-        function errorCodes(container) {
-            for(var sensor in container.sensors){
-                var ec = container.sensors[sensor].errorCode;
-
-                if(ec != 0){
-                    var alert = {
-                        containerId: 0,
-                        containerAddress: "",
-                        sensor: "",
-                        errorCode: 0,
-                        errorMessage: ""
-                    };
-
-                    alert.containerId = container.id;
-                    alert.containerAddress = container.address;
-                    alert.sensor = sensor;
-                    alert.errorCode = ec;
-                    alert.errorMessage = propsInVariable[ec];
-                    $scope.alerts.push(alert);
-                }
-            }
-        }
-
-
     }
 })();

@@ -12,6 +12,14 @@
                     controller: 'NavbarController',
                     controllerAs: 'vm',
                     resolve: {
+                        savePropsToVariable: ['$http', function ($http) {
+                            return $http
+                                .get('resources/errorcodes.json')
+                                .then(function (response) {
+
+                                    return response.data;
+                                });
+                        }],
                         errorCodes: function($q, $http) {
                             var deferred = $q.defer();
                             $http.get('resources/errorcodes.json').then(function (response) {

@@ -5,10 +5,10 @@
         .module('sogo')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$rootScope', 'currentUser', 'errorCodes',
+    NavbarController.$inject = ['$scope', '$rootScope', 'currentUser', 'errorCodes', 'savePropsToVariable',
         'brokenContainers', 'notificationsRead',  'Auth', '$uibModal', 'Restangular', '$q'];
 
-    function NavbarController($scope, $rootScope, currentUser, errorCodes,
+    function NavbarController($scope, $rootScope, currentUser, errorCodes, savePropsToVariable,
                               brokenContainers, notificationsRead, Auth, $uibModal, Restangular, $q) {
         this.logout = Auth.logout;
         $scope.notificationsRead = notificationsRead;
@@ -17,6 +17,7 @@
         $rootScope.currentUser = currentUser;
         $scope.errorCodeDescriptions = errorCodes;
         $scope.brokenContainers = brokenContainers;
+        $rootScope.propsInVariable = savePropsToVariable;
 
         $scope.$on('$viewContentLoaded', function(){
             $scope.$emit('onNavbarLoaded');
