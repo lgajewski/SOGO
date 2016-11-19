@@ -13,7 +13,7 @@
                     resolve: {
                         savePropsToVariable: ['$http', function ($http) {
                             return $http
-                                .get('resources/errorcodes.properties')
+                                .get('resources/errorcodes.json')
                                 .then(function (response) {
                                     return response.data;
                             });

@@ -14,7 +14,7 @@
                     resolve: {
                         errorCodes: function($q, $http) {
                             var deferred = $q.defer();
-                            $http.get('resources/errorcodes.properties').then(function (response) {
+                            $http.get('resources/errorcodes.json').then(function (response) {
                                 var errorCodeDescriptions = response.data;
                                 deferred.resolve(errorCodeDescriptions);
                             });

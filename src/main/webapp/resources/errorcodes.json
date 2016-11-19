@@ -1,0 +1,17 @@
+{
+"load":[
+  {"1": "Sensor broken"},
+  {"2": "Container smells"},
+  {"3": "Container full"}
+],
+"smell":[
+  {"1": "Sensor broken"},
+  {"2": "Container smells"},
+  {"3": "Container full"}
+],
+"device":[
+  {"1": "Sensor broken"},
+  {"2": "Container smells"},
+  {"3": "Container full"}
+]
+}
