@@ -13,15 +13,23 @@
         $scope.brokenContainers = brokenContainers;
 
 
-        function editContainer(container){
+        function editContainer(container) {
             Restangular.all('containers').customPUT(container).then(function () {
-                Notification.success('Container ' + container.id +  ' edited');
+                Notification.success('Container ' + container.id + ' edited');
                 // $scope.getContainers();
 
             })
         }
 
+        function getContainers() {
+            Restangular.all('containers').getList().then(function (data) {
+                $scope.items = data;
+                for (var i = 0; i < $scope.items.length; i++) {
+                    $scope.items[i].sensors.load.value = parseFloat($scope.items[i].sensors.load.value);
+                }
 
+            });
+        }
 
         $scope.openContainerStatusModal = function (containerToEdit) {
 
