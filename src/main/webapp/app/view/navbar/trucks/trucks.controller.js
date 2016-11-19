@@ -5,9 +5,11 @@
         .module('sogo')
         .controller('TrucksController', TrucksController);
 
-    TrucksController.$inject = ['$scope', 'trucks', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
+    TrucksController.$inject = ['$scope', 'trucks', 'Restangular', 'ActiveItemService',
+        'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter', 'Notification'];
 
-    function TrucksController($scope, trucks, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
+    function TrucksController($scope, trucks, Restangular, ActiveItemService,
+                              DTOptionsBuilder, DTColumnDefBuilder, $filter, Notification) {
         $scope.items = trucks;
         $scope.getTrucks = getTrucks;
         $scope.deleteTruck = deleteTruck;
@@ -191,6 +193,7 @@
 
         function addTruck(truck){
             Restangular.all('trucks').customPOST(truck).then(function () {
+                Notification.success('Truck added');
                 $scope.getTrucks();
                 if(marker != null){
                     marker.setMap(null);
@@ -203,12 +206,14 @@
         function editTruck(truck){
             Restangular.all('trucks').customPUT(truck).then(function () {
                 $scope.getTrucks();
+                Notification.success('Truck ' + truck.registration +  ' edited');
             })
         }
 
         function deleteTruck(truck) {
             Restangular.all('trucks').one(truck.registration).remove().then(function () {
                 $scope.getTrucks();
+                Notification.success('Truck ' + truck.registration +  ' deleted');
             })
         }
 

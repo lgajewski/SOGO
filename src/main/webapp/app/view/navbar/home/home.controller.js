@@ -6,10 +6,10 @@
         .controller('HomeController', HomeController);
 
     HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$filter',
-        'savePropsToVariable', 'containers', 'trucks', 'fillingPercentageList'];
+        'savePropsToVariable', 'containers', 'trucks', 'fillingPercentageList', 'Notification'];
 
     function HomeController($scope, Restangular, SseService, DirectionsService, $filter,
-                            savePropsToVariable, containers, trucks, fillingPercentageList) {
+                            savePropsToVariable, containers, trucks, fillingPercentageList, Notification) {
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
@@ -182,6 +182,7 @@
 
         function addContainer(container){
             Restangular.all('containers').customPOST(container).then(function () {
+                Notification.success('Container added');
                 loadContainers();
                 marker.setMap(null);
                 $scope.containerToAdd = {};
@@ -196,6 +197,7 @@
 
         function addTruck(truck){
             Restangular.all('trucks').customPOST(truck).then(function () {
+                Notification.success('Truck added');
                 loadTrucks();
                 marker.setMap(null);
                 $scope.truckToAdd = {};
@@ -518,5 +520,7 @@
                 }
             }
         }
+
+
     }
 })();

@@ -24,7 +24,8 @@
     "angular-translate-loader-static-files": "2.12.1",
     "angular-translate-handler-log": "2.12.1",
     "flag-icon-css": "2.6.0",
-    "bootstrap-select": "1.11.2"
+    "bootstrap-select": "1.11.2",
+    "angular-ui-notification":"0.2.0"
   },
   "resolutions": {
     "angular": "1.5.8"

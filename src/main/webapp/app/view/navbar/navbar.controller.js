@@ -5,9 +5,11 @@
         .module('sogo')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$rootScope', 'currentUser', 'errorCodes', 'brokenContainers', 'notificationsRead',  'Auth'];
+    NavbarController.$inject = ['$scope', '$rootScope', 'currentUser', 'errorCodes',
+        'brokenContainers', 'notificationsRead',  'Auth'];
 
-    function NavbarController($scope, $rootScope, currentUser, errorCodes, brokenContainers, notificationsRead, Auth) {
+    function NavbarController($scope, $rootScope, currentUser, errorCodes,
+                              brokenContainers, notificationsRead, Auth) {
         this.logout = Auth.logout;
         $scope.notificationsRead = notificationsRead;
         $scope.errorsCounter = 0;

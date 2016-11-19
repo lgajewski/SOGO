@@ -5,9 +5,11 @@
         .module('sogo')
         .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$scope', 'authorities', 'Restangular', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
+    UsersController.$inject = ['$scope', 'authorities', 'Restangular', 'DTOptionsBuilder',
+        'DTColumnDefBuilder', 'Notification'];
 
-    function UsersController($scope, authorities, Restangular, DTOptionsBuilder, DTColumnDefBuilder) {
+    function UsersController($scope, authorities, Restangular, DTOptionsBuilder,
+                             DTColumnDefBuilder, Notification) {
 
         $scope.requests = [];
         $scope.users = [];
@@ -28,12 +30,14 @@
         $scope.acceptUser = function (user) {
             Restangular.one('users', user.login).post('activate').then(function () {
                 $scope.getUsers();
+                Notification.success('User account activated');
             });
         };
 
         $scope.disableUser = function (user) {
             Restangular.one('users', user.login).post('deactivate').then(function () {
                 $scope.getUsers();
+                Notification.success('User account disabled');
             });
         };
 
@@ -42,11 +46,10 @@
             if(user.authorities.length > 0) {
                 Restangular.one('users').customPUT(user).then(function () {
                     $scope.getUsers();
-
-
+                    Notification.success('User account updated');
                 });
             } else {
-                console.log('User must have at least 1 role');
+                Notification.error('User must have at least 1 role');
             }
         };
 
@@ -78,6 +81,8 @@
                 $scope.active = null;
             }
         };
+
+
 
 
         //

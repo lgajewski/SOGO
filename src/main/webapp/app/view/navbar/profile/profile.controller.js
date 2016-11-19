@@ -5,9 +5,9 @@
         .module('sogo')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['user', 'Account'];
+    ProfileController.$inject = ['user', 'Account', 'Notification'];
 
-    function ProfileController(user, Account) {
+    function ProfileController(user, Account, Notification) {
         var vm = this;
 
         vm.alert = null;

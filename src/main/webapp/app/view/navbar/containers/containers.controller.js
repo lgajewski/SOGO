@@ -5,9 +5,13 @@
         .module('sogo')
         .controller('ContainersController', ContainersController);
 
-    ContainersController.$inject = ['$scope', 'containers', 'repairers', 'containersToRepair', 'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter'];
+    ContainersController.$inject = ['$scope', 'containers', 'repairers', 'containersToRepair',
+        'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
+        '$filter' , 'Notification'];
 
-    function ContainersController($scope, containers, repairers, containersToRepair, Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder, $filter) {
+    function ContainersController($scope, containers, repairers, containersToRepair,
+                                  Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder,
+                                  $filter, Notification) {
         $scope.items = containers;
         $scope.setActiveObject = setActiveObject;
         $scope.editContainer = editContainer;
@@ -228,6 +232,7 @@
 
         function addContainer(container){
             Restangular.all('containers').customPOST(container).then(function () {
+                Notification.success('Container added');
                 getContainers();
                 if(marker != null){
                     marker.setMap(null);
@@ -248,6 +253,7 @@
             $scope.activeObject.map.center.latitude = item.location.latitude;
             $scope.activeObject.map.center.longitude = item.location.longitude;
             $scope.activeObject.options.icon = 'assets/images/ic_map_trash_' + item.type + '.png';
+
         }
 
         function setContainerToEdit(container) {
@@ -260,6 +266,7 @@
 
         function editContainer(container){
             Restangular.all('containers').customPUT(container).then(function () {
+                Notification.success('Container ' + container.id +  ' edited');
                 $scope.getContainers();
 
             })
@@ -269,6 +276,7 @@
         function deleteContainer(container) {
             Restangular.all('containers').one(container.id).remove().then(function () {
                 $scope.getContainers();
+                Notification.success('Container ' + container.id + ' deleted');
             })
         }
 
@@ -294,6 +302,7 @@
         function repairContainer(container){
             Restangular.all('containers/' + container.id + '/repair').customPOST().then(function (data) {
                 getContainersToRepair();
+                Notification.success('Container repaired');
             })
         }
 
@@ -303,6 +312,8 @@
 
             });
         }
+
+
 
     }
 
