@@ -39,7 +39,7 @@ public class SimulatorService {
             container.setAddress(null);
             Sensor loadSensor = new Sensor<Double>();
             int errorCodeRange = 1;
-            if(r.nextInt(2) > 0){
+            if(r.nextDouble() > 0.1){
                 errorCodeRange = 4;
             }
             loadSensor.setErrorCode(r.nextInt(errorCodeRange));

@@ -51,17 +51,21 @@ public class ContainerService {
             throw new ObjectNotFoundException("Container", " with device " + container);
         } else {
             try {
+                if(container.getLocation() == null){
+                    throw new ObjectNotFoundException("Location", container.getId());
+                }
                 if(Math.abs(oldContainer.getLocation().getLatitude() - container.getLocation().getLatitude()) > 0.0001 || Math.abs(oldContainer.getLocation().getLongitude() - container.getLocation().getLongitude()) > 0.0001){
                     container.setAddress(googleMapsReverseGeocoder.reverseGeocode(container.getLocation().getLatitude(), container.getLocation().getLongitude()));
                 } else {
                     container.setAddress(oldContainer.getAddress());
                 }
+
+                containerRepository.save(container);
+                // emit updated container to browsers that subscribe on SSE
+                sseService.emit("container", container);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            containerRepository.save(container);
-            // emit updated container to browsers that subscribe on SSE
-            sseService.emit("container", container);
         }
     }
 

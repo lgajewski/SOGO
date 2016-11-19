@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.sogo.domain.Container;
+import pl.edu.agh.sogo.domain.Sensor;
 import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.security.SecurityConstants;
 import pl.edu.agh.sogo.service.ContainerService;
@@ -17,6 +18,7 @@ import pl.edu.agh.sogo.service.simulator.TruckSimulator;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/simulator")
@@ -80,6 +82,19 @@ public class SimulatorController {
         List<Container> containers = new ArrayList<>(containerService.getContainers());
         for (Container container : containers){
             container.getSensors().get("load").setValue(0d);
+            containerService.update(container);
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/containers/repair", method = RequestMethod.POST)
+    public void repairAllContainers(){
+        log.info("[PUT][/api/containers/repair] repairAllContainers()");
+        List<Container> containers = new ArrayList<>(containerService.getContainers());
+        for (Container container : containers){
+            for (Map.Entry<String, Sensor> sensorEntry : container.getSensors().entrySet()){
+                sensorEntry.getValue().setErrorCode(0);
+            }
             containerService.update(container);
         }
     }

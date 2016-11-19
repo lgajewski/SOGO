@@ -67,7 +67,7 @@
             modalInstance.result.then(function () {
                 console.log('Modal ??? at: ' + new Date());
             }, function () {
-                getContainers();
+                loadContainers();
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
