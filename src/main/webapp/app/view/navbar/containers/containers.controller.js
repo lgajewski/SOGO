@@ -315,7 +315,7 @@
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 ariaLabelledBy: 'myContainerStatusModalLabel',
-                templateUrl: 'app/view/navbar/containers/containerStatusModal.html',
+                templateUrl: 'app/view/navbar/containers/status/containerStatusModal.html',
                 controller: 'StatusController',
                 resolve: {
                     containerToEdit: function () {
