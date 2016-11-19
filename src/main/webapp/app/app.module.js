@@ -22,7 +22,11 @@
     function run(stateHandler, Restangular, Notification) {
         stateHandler.initialize();
         Restangular.setErrorInterceptor(function(response){
-            Notification.error(response.data.description + '(' + response.status + ')');
+            if ( response.status == 401 ) {
+                Notification.error("Sign in to access the site.");
+            } else {
+                Notification.error(response.data.description + '(' + response.status + ')');
+            }
         })
     }
 })();
