@@ -6,10 +6,10 @@
         .controller('HomeController', HomeController);
 
     HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$filter',
-        'savePropsToVariable', 'containers', 'trucks', 'fillingPercentageList', 'Notification'];
+        'savePropsToVariable', 'containers', 'trucks', 'fillingPercentageList', 'Notification', '$uibModal'];
 
     function HomeController($scope, Restangular, SseService, DirectionsService, $filter,
-                            savePropsToVariable, containers, trucks, fillingPercentageList, Notification) {
+                            savePropsToVariable, containers, trucks, fillingPercentageList, Notification, $uibModal) {
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
@@ -47,6 +47,41 @@
         var propsInVariable = savePropsToVariable;
         var marker;
         var mapCenter = new google.maps.LatLng($scope.mapOptions.center.latitude, $scope.mapOptions.center.longitude);
+
+
+
+        $scope.animationsEnabled = true;
+        $scope.open = function (containerToEdit) {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                ariaLabelledBy: 'myContainerStatusModalLabel',
+                templateUrl: 'app/view/navbar/containers/containerStatusModal.html',
+                controller: 'StatusController',
+                resolve: {
+                    containerToEdit: function () {
+                        return containerToEdit;
+                    },
+                    repairers: function($q, Restangular) {
+                        var deferred = $q.defer();
+                        Restangular.all('users/ROLE_USER').getList().then(function (data) {
+                            var repairers = [null];
+                            for(var i=0; i<data.length;i++){
+                                repairers.push(data[i]);
+                            }
+                            deferred.resolve(repairers);
+                        });
+                        return deferred.promise;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                console.log('Modal ??? at: ' + new Date());
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
+        };
+
 
         var mapProp = {
             center: mapCenter,

@@ -7,11 +7,11 @@
 
     ContainersController.$inject = ['$scope', 'containers', 'repairers', 'containersToRepair',
         'Restangular', 'ActiveItemService', 'DTOptionsBuilder', 'DTColumnDefBuilder',
-        '$filter' , 'Notification'];
+        '$filter' , 'Notification', '$uibModal'];
 
     function ContainersController($scope, containers, repairers, containersToRepair,
                                   Restangular, ActiveItemService, DTOptionsBuilder, DTColumnDefBuilder,
-                                  $filter, Notification) {
+                                  $filter, Notification, $uibModal) {
         $scope.items = containers;
         $scope.setActiveObject = setActiveObject;
         $scope.editContainer = editContainer;
@@ -259,10 +259,7 @@
         function setContainerToEdit(container) {
             $scope.containerToEdit = _.cloneDeep(container);
             $('#repairersSelectPicker').selectpicker('refresh');
-
-
         }
-
 
         function editContainer(container){
             Restangular.all('containers').customPUT(container).then(function () {
@@ -313,7 +310,29 @@
             });
         }
 
+        $scope.animationsEnabled = true;
+        $scope.open = function () {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                ariaLabelledBy: 'myContainerStatusModalLabel',
+                templateUrl: 'app/view/navbar/containers/containerStatusModal.html',
+                controller: 'StatusController',
+                resolve: {
+                    containerToEdit: function () {
+                        return $scope.containerToEdit;
+                    },
+                    repairers: function() {
+                        return $scope.repairers;
+                    }
+                }
+            });
 
+            modalInstance.result.then(function (selectedItem) {
+                console.log('Modal xxx at: ' + new Date());
+            }, function () {
+                 console.log('Modal dismissed at: ' + new Date());
+            });
+        };
 
     }
 

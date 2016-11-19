@@ -352,7 +352,7 @@
                 <table id="brokenContainersTable" class="table table-striped table-bordered table-hover">
                     <tr ng-repeat="item in items.broken">
                         <!--<ul>-->
-                        <td style="vertical-align:middle"><img ng-src="{{item.options.icon.url}}" style="margin: 0px 20px 0px 0px"/> {{item.address}}</td>
+                        <td style="vertical-align:middle" ng-click="open(item)"><img ng-src="{{item.options.icon.url}}" style="margin: 0px 20px 0px 0px"/> {{item.address}}</td>
                             <!--<div ng-repeat="alert in alerts" ng-if="alert.containerAddress == item.address"><li>{{alert.sensor}} sensor reported error {{alert.errorCode}} ({{alert.errorMessage}})</li></div>-->
                         <!--</ul>-->
                     </tr>

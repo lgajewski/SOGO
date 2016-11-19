@@ -13,7 +13,8 @@
             'checklist-model',
             'datatables',
             'pascalprecht.translate',
-            'ui-notification'
+            'ui-notification',
+            'ui.bootstrap'
         ])
         .run(run);
 
