@@ -25,6 +25,7 @@ public class RouteService {
 
     private static final Logger log = LoggerFactory.getLogger(RouteService.class);
 
+    private int CONTAINERS_LIMIT = 8;
     @Autowired
     private RouteRepository routeRepository;
 
@@ -88,7 +89,7 @@ public class RouteService {
             } while (i < nearestContainersToStartingLocation.size());
         }
         if (container != null) {
-            while (truckCapacity - truck.getLoad() > (container.getCapacity() * ((double) container.getSensors().get("load").getValue()) / 100) && !availableContainers.isEmpty()) {
+            while (truckCapacity - truck.getLoad() > (container.getCapacity() * ((double) container.getSensors().get("load").getValue()) / 100) && !availableContainers.isEmpty() && locations.size() < CONTAINERS_LIMIT) {
                 availableContainers.remove(container.getId());
                 locations.add(container.getLocation());
                 truckCapacity -= (container.getCapacity() * ((double) container.getSensors().get("load").getValue()) / 100);

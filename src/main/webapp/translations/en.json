@@ -105,5 +105,6 @@
     "ROUTES": "Routes",
     "SELECT_ROUTE": "Select route",
     "CURRENT_ROUTE": "Selected routes",
-    "REPAIR_CONTAINERS": "Containers to repair"
+    "REPAIR_CONTAINERS": "Containers to repair",
+    "REPAIR_CONTAINERS_FROM_SIMULATOR": "Repair all containers"
 }

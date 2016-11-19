@@ -19,6 +19,7 @@
         $scope.emptyTrucks = emptyTrucks;
         $scope.createContainers = createContainers;
         $scope.emptyContainers = emptyContainers;
+        $scope.repairContainers = repairContainers;
         $scope.trucksNo = 1;
         $scope.containersNo = 1;
         $scope.isTrucksSimulatorRunning = trucksSimulatorState;
@@ -47,6 +48,12 @@
         function emptyContainers(){
             Restangular.all('simulator/containers').customPUT().then(function (data) {
                 Notification.success('Containers emptied');
+            })
+        }
+
+        function repairContainers(){
+            Restangular.all('simulator/containers/repair').customPOST().then(function (data) {
+                Notification.success('Containers repaired');
             })
         }
 

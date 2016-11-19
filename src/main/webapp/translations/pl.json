@@ -105,5 +105,6 @@
     "ROUTES": "Trasy",
     "SELECT_ROUTE": "Wybierz trasę",
     "CURRENT_ROUTE": "Wybrane trasy",
-    "REPAIR_CONTAINERS": "Kontenery do naprawienia"
+    "REPAIR_CONTAINERS": "Kontenery do naprawienia",
+    "REPAIR_CONTAINERS_FROM_SIMULATOR": "Napraw wszystkie kontenery"
 }

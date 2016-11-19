@@ -41,6 +41,9 @@ public class TruckService {
             throw new ObjectAlreadyExistsException("Truck", truck.getRegistration());
         } else {
             try {
+                if(truck.getLocation() == null){
+                    throw new ObjectNotFoundException("Location", truck.getRegistration());
+                }
                 truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -56,15 +59,21 @@ public class TruckService {
             throw new ObjectNotFoundException("Truck", truck.getRegistration());
         } else {
             try {
-                if (Math.abs(oldTruck.getLocation().getLatitude() - truck.getLocation().getLatitude()) > 0.0001 || Math.abs(oldTruck.getLocation().getLongitude() - truck.getLocation().getLongitude()) > 0.0001) {
+
+                if(truck.getLocation() == null){
+                    throw new ObjectNotFoundException("Location", truck.getRegistration());
+                }
+                if(Math.abs(oldTruck.getLocation().getLatitude() - truck.getLocation().getLatitude()) > 0.0001 || Math.abs(oldTruck.getLocation().getLongitude() - truck.getLocation().getLongitude()) > 0.0001){
+
                     truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
                 } else {
                     truck.setAddress(oldTruck.getAddress());
                 }
-            } catch (Exception e) {
+
+                truckRepository.save(truck);
+             } catch (Exception e) {
                 e.printStackTrace();
             }
-            truckRepository.save(truck);
         }
     }
 
@@ -82,11 +91,15 @@ public class TruckService {
         } else {
             truck.setLocation(location);
             try {
+                if(truck.getLocation() == null){
+                    throw new ObjectNotFoundException("Location", truck.getRegistration());
+                }
                 truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
+
+                truckRepository.save(truck);
             } catch (Exception e) {
                 log.debug("GoogleMapsReverseGeocoder: " + e.getMessage());
             }
-            truckRepository.save(truck);
 
             // emit updated truck to browsers that subscribe on SSE
             sseService.emit("truck", truck);

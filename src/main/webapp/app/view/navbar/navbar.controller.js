@@ -31,8 +31,8 @@
 
         function markAsRead(container){
             var index = $scope.brokenContainers.indexOf(container);
-            if(!localStorage.notificationsRead){
-                localStorage.notificationsRead = [];
+            if(!sessionStorage.notificationsRead){
+                sessionStorage.notificationsRead = [];
             }
             if(index > -1) {
                 $scope.brokenContainers.splice(index, 1);
