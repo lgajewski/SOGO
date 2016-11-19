@@ -11,6 +11,9 @@
     function HomeController($scope, Restangular, SseService, DirectionsService, $filter,
                             savePropsToVariable, containers, trucks, fillingPercentageList, Notification) {
         // TODO replace with Auth service with Principal
+        $scope.helloWorld = function(){
+            console.log("dzien dobry");
+        };
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
         $scope.selection = trucks;

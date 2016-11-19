@@ -468,3 +468,11 @@ ul.alert-dropdown {
     color: #fff;
     background-color: #337ab7;
 }
+
+.alertsTable{
+    vertical-align:middle;
+}
+
+[ng-click]{
+    cursor: pointer;
+}
