@@ -47,8 +47,10 @@
                                         }
                                     };
                                     container.id = resp[i].id;
-                                    container.coords.latitude = resp[i].location.latitude;
-                                    container.coords.longitude = resp[i].location.longitude;
+                                    // if(resp[i].location){
+                                        container.coords.latitude = resp[i].location.latitude;
+                                        container.coords.longitude = resp[i].location.longitude;
+                                    // }
                                     container.address = resp[i].address;
                                     container.type = resp[i].type;
                                     container.capacity = resp[i].capacity;

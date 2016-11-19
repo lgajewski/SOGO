@@ -11,9 +11,6 @@
     function HomeController($scope, Restangular, SseService, DirectionsService, $filter,
                             savePropsToVariable, containers, trucks, fillingPercentageList, Notification, $uibModal) {
         // TODO replace with Auth service with Principal
-        $scope.helloWorld = function(){
-            console.log("dzien dobry");
-        };
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
         $scope.selection = trucks;
@@ -54,26 +51,16 @@
 
 
         $scope.animationsEnabled = true;
-        $scope.open = function (containerToEdit) {
+
+        $scope.openServiceAlertsModal = function(){
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                ariaLabelledBy: 'myContainerStatusModalLabel',
-                templateUrl: 'app/view/navbar/containers/containerStatusModal.html',
-                controller: 'StatusController',
+                ariaLabelledBy: 'myServiceAlertsModalLabel',
+                templateUrl: 'app/view/navbar/home/alerts/serviceAlertsModal.html',
+                controller: 'AlertsController',
                 resolve: {
-                    containerToEdit: function () {
-                        return containerToEdit;
-                    },
-                    repairers: function($q, Restangular) {
-                        var deferred = $q.defer();
-                        Restangular.all('users/ROLE_USER').getList().then(function (data) {
-                            var repairers = [null];
-                            for(var i=0; i<data.length;i++){
-                                repairers.push(data[i]);
-                            }
-                            deferred.resolve(repairers);
-                        });
-                        return deferred.promise;
+                    brokenContainers: function(){
+                        return $scope.items.broken
                     }
                 }
             });
@@ -81,9 +68,11 @@
             modalInstance.result.then(function () {
                 console.log('Modal ??? at: ' + new Date());
             }, function () {
+                getContainers();
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
+
 
 
         var mapProp = {

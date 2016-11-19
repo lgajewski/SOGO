@@ -27,9 +27,8 @@
                         <!--<td>{{item.id}}</td>-->
                         <td>{{item.address}}</td>
                         <td>
-                            <!--<button ng-if="isError(item)" type="button" ng-click="setContainerToEdit(item);getRepairers();setActiveObject(item);containerToEdit.broken=true;" class="btn btn-danger" data-toggle="modal" data-target=".status-modal"><i class="fa fa-warning" aria-hidden="true"></i></button>-->
-                            <!--<button ng-if="!isError(item)" type="button" ng-click="setContainerToEdit(item);setActiveObject(item);containerToEdit.broken=false;" class="btn btn-success" data-toggle="modal" data-target=".status-modal"><i class="fa fa-check" aria-hidden="true"></i></button>-->
-                        <button ng-click="setContainerToEdit(item);open()" class="btn btn-primary"></button>
+                            <button ng-if="isError(item)" type="button" ng-click="setContainerToEdit(item);open();getRepairers();containerToEdit.broken=true;" class="btn btn-danger"><i class="fa fa-warning" aria-hidden="true"></i></button>
+                            <button ng-if="!isError(item)" type="button" ng-click="setContainerToEdit(item);open();getRepairers();containerToEdit.broken=false;" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i></button>
                         </td>
                         <td>{{item.type}}</td>
                         <td>{{item.capacity}}</td>

@@ -330,6 +330,7 @@
             modalInstance.result.then(function (selectedItem) {
                 console.log('Modal xxx at: ' + new Date());
             }, function () {
+                getContainers();
                  console.log('Modal dismissed at: ' + new Date());
             });
         };
