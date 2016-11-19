@@ -20,7 +20,6 @@ public class SseService {
 
     public SseEmitter provide() {
         final SseEmitter sseEmitter = new SseEmitter();
-        sseEmitter.onCompletion(() -> cache.remove(sseEmitter));
         sseEmitter.onTimeout(sseEmitter::complete);
 
         cache.add(sseEmitter);
@@ -35,10 +34,10 @@ public class SseService {
                 SseEmitter sseEmitter = it.next();
                 try {
                     sseEmitter.send(SseEmitter.event().name(eventName).data(object));
-                } catch (IOException | IllegalStateException e) {
-                    log.warn("Unable to emit: " + e.getMessage());
+                } catch (Exception e) {
+                    log.info("Instance of SseEmitter is no longer usable. Unable to emit: " + e.getMessage());
 
-                    // remove from cache onError
+                    // remove from cache
                     it.remove();
                 }
             }
