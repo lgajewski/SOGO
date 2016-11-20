@@ -8,7 +8,7 @@ import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.persistence.TruckRepository;
 import pl.edu.agh.sogo.service.TruckService;
-import pl.edu.agh.sogo.web.controller.simulator.SimulatorController;
+import pl.edu.agh.sogo.web.controller.SimulatorController;
 
 import java.util.List;
 import java.util.Random;

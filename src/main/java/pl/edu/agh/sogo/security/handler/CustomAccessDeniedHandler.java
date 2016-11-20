@@ -41,15 +41,4 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         accessDeniedHandlerImpl.handle(request, response, accessDeniedException);
     }
 
-    /**
-     * The error page to use. Must begin with a "/" and is interpreted relative to the current context root.
-     *
-     * @param errorPage the dispatcher path to display
-     *
-     * @throws IllegalArgumentException if the argument doesn't comply with the above limitations
-     * @see AccessDeniedHandlerImpl#setErrorPage(String)
-     */
-    public void setErrorPage(String errorPage) {
-        accessDeniedHandlerImpl.setErrorPage(errorPage);
-    }
 }
