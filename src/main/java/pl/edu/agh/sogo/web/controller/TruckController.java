@@ -49,6 +49,13 @@ public class TruckController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/user/{user}", method = RequestMethod.GET)
+    public Truck getTruckByUser(@PathVariable(value = "user") String login) {
+        log.info("[GET][/api/trucks/" + login + "] getTruck(" + login + ")");
+        return truckService.findTruckByUser(login);
+    }
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     @Secured(SecurityConstants.SYSTEM_MANAGER)
     public void addTruck(@RequestBody Truck truck) {

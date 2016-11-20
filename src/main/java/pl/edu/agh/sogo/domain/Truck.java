@@ -1,6 +1,7 @@
 package pl.edu.agh.sogo.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "trucks")
@@ -14,8 +15,8 @@ public class Truck {
 
     private String registration;
 
-//    @DBRef
-//    private User user;
+    @DBRef
+    private User user;
 
     private Location location;
 
@@ -27,6 +28,7 @@ public class Truck {
         this.registration = registration;
         this.capacity = capacity;
         this.load = 0;
+        this.user = null;
     }
 
     public String getId() {
@@ -49,14 +51,6 @@ public class Truck {
         this.load = load;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
-
     public String getRegistration() {
         return registration;
     }
@@ -69,6 +63,22 @@ public class Truck {
         this.location = location;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String toString(){
         return "{id = " + id +
             ", registration = " + registration +
@@ -76,13 +86,5 @@ public class Truck {
             ", load = " + load +
             ", address = "+ address +
             "}";
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }

@@ -18,6 +18,21 @@
                                 deferred.resolve(items);
                             });
                             return deferred.promise;
+                        },
+                        users: function($q, Restangular){
+                            var deferred = $q.defer();
+                            Restangular.all('users/ROLE_USER').getList()
+                                .then(function (data) {
+                                    var repairers = [null];
+                                    for (var i = 0; i < data.length; i++) {
+                                        repairers.push(data[i]);
+                                    }
+                                    deferred.resolve(repairers);
+                                })
+                                .catch(function () {
+                                    deferred.resolve([]);
+                                });
+                            return deferred.promise;
                         }
                     }
                 })

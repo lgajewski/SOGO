@@ -16,6 +16,7 @@
                         <th translate="CAPACITY"></th>
                         <th translate="LOAD"></th>
                         <th translate="LOCATION"></th>
+                        <th translate="USER"></th>
                         <th translate="OPTIONS"></th>
                     </tr>
                     </thead>
@@ -26,6 +27,7 @@
                         <td>{{item.capacity}}</td>
                         <td>{{item.load}}</td>
                         <td>{{item.address}}</td>
+                        <td>{{item.user.login}}</td>
                         <td>
                             <button type="button" ng-click="setTruckToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".show-modal" class="btn btn-primary">
                                 <i class="fa fa-map-marker"></i>
@@ -64,6 +66,10 @@
             <div class="modal-body">
                 <label translate="REGISTRATION"></label>
                 <input class="form-control" ng-model="truckToAdd.registration">
+                <label translate="USER"></label>
+                <select id="truckUserAddSelectPicker" class="selectpicker form-control" data-live-search="true" ng-model="truckToAdd.user"
+                        ng-options="user as user.firstName + ' ' + user.lastName for user in users track by user.id">
+                </select>
                 <label translate="LOCATION"></label>
                 <div id="map-canvas-addtruck" class="angular-google-map-container"></div>
                 <label translate="CAPACITY"></label>
@@ -91,6 +97,10 @@
             <div class="modal-body">
                 <label translate="REGISTRATION"></label>
                 <input class="form-control" ng-model="truckToEdit.registration">
+                <label translate="USER"></label>
+                <select id="truckUserEditSelectPicker" class="selectpicker form-control"   data-live-search="true" ng-model="truckToEdit.user"
+                        ng-options="user as user.firstName + ' ' + user.lastName for user in users track by user.id">
+                </select>
                 <label translate="LOCATION"></label>
                 <div id="map-canvas-edittruck" class="angular-google-map-container"></div>
                 <label translate="CAPACITY"></label>
@@ -123,3 +133,10 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+    });
+</script>

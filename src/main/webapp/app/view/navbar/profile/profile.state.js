@@ -15,11 +15,15 @@
                         user: function($q, Restangular) {
                             var deferred = $q.defer();
                             Restangular.all('auth').get('user').then(function (user) {
-                                deferred.resolve(user.plain());
+                                var tempUser = user.plain();
+                                Restangular.all('trucks/user').get(user.login).then(function (truck) {
+                                    tempUser.truckRegistration = truck.registration;
+                                    deferred.resolve(tempUser);
+                                });
                             });
 
                             return deferred.promise;
-                        }
+                        },
                     }
                 })
         })
