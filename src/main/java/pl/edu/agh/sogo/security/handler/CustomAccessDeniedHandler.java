@@ -21,9 +21,7 @@ import java.io.IOException;
  *
  * @see AccessDeniedHandlerImpl
  */
-public class CustomAccessDeniedHandler implements AccessDeniedHandler {
-
-    private AccessDeniedHandlerImpl accessDeniedHandlerImpl = new AccessDeniedHandlerImpl();
+public class CustomAccessDeniedHandler extends AccessDeniedHandlerImpl {
 
     public void handle(HttpServletRequest request, HttpServletResponse response,
             AccessDeniedException accessDeniedException) throws IOException, ServletException {
@@ -38,7 +36,19 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
             response.addCookie(cookie);
         }
 
-        accessDeniedHandlerImpl.handle(request, response, accessDeniedException);
+        super.handle(request, response, accessDeniedException);
+    }
+
+    /**
+     * The error page to use. Must begin with a "/" and is interpreted relative to the current context root.
+     *
+     * @param errorPage the dispatcher path to display
+     *
+     * @throws IllegalArgumentException if the argument doesn't comply with the above limitations
+     * @see AccessDeniedHandlerImpl#setErrorPage(String)
+     */
+    public void setErrorPage(String errorPage) {
+        super.setErrorPage(errorPage);
     }
 
 }
