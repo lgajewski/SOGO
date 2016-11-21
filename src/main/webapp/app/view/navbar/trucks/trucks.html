@@ -26,14 +26,14 @@
                         <td>{{item.capacity}}</td>
                         <td>{{item.load}}</td>
                         <td>{{item.address}}</td>
-                        <td>
-                            <button type="button" ng-click="setTruckToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".show-modal" class="btn btn-primary">
+                        <td class="fit">
+                            <button type="button" ng-click="setTruckToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".show-modal" class="btn btn-primary btn-table">
                                 <i class="fa fa-map-marker"></i>
                              </button>
-                            <button restrict access="ROLE_ADMIN ROLE_SYSTEM_MANAGER" type="button" ng-click="setTruckToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".edit-modal" class="btn btn-warning">
+                            <button restrict access="ROLE_ADMIN ROLE_SYSTEM_MANAGER" type="button" ng-click="setTruckToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".edit-modal" class="btn btn-warning btn-table">
                                 <i class="fa fa-edit"></i>
                             </button>
-                            <button restrict access="ROLE_ADMIN ROLE_SYSTEM_MANAGER" type="button" ng-click="deleteTruck(item)" class="btn btn-danger">
+                            <button restrict access="ROLE_ADMIN ROLE_SYSTEM_MANAGER" type="button" ng-click="deleteTruck(item)" class="btn btn-danger btn-table">
                                 <i class="fa fa-trash-o"></i>
                             </button>
                         </td>

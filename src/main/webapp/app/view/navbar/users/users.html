@@ -24,16 +24,15 @@
                         <td>{{request.firstName + ' ' + request.lastName}}</td>
                         <td>{{request.login}}</td>
                         <td>{{request.email}}</td>
-                        <td>
+                        <td class="fit">
                             <select class="selectpicker" multiple data-selected-text-format="count" ng-model="request.authorities" ng-options="role for role in authorities">
                             </select>
-
                         </td>
-                        <td>
-                            <button type="button" ng-click="updateUser(request)" class="btn btn-primary"> <i class="fa fa-save"></i> </button>
+                        <td class="fit">
+                            <button type="button" ng-click="updateUser(request)" class="btn btn-primary btn-table"> <i class="fa fa-save"></i> </button>
                         </td>
-                        <td>
-                            <button type="button" ng-click="acceptUser(request)"class="btn btn-success"><i class="fa fa-check"></i></button>
+                        <td class="fit">
+                            <button type="button" ng-click="acceptUser(request)"class="btn btn-success btn-table"><i class="fa fa-check"></i></button>
                         </td>
                     </tr>
                     </tbody>
@@ -72,16 +71,16 @@
                         <td>{{user.firstName + ' ' + user.lastName}}</td>
                         <td>{{user.login}}</td>
                         <td>{{user.email}}</td>
-                        <td>
+                        <td class="fit">
                             <select class="selectpicker" multiple data-selected-text-format="count" ng-model="user.authorities" ng-options="role for role in authorities">
                             </select>
 
                         </td>
-                        <td>
-                            <button type="button" ng-click="updateUser(user)" class="btn btn-primary"> <i class="fa fa-save"></i> </button>
+                        <td class="fit">
+                            <button type="button" ng-click="updateUser(user)" class="btn btn-primary btn-table"> <i class="fa fa-save"></i> </button>
                         </td>
-                        <td>
-                            <button type="button" ng-click="disableUser(user)" class="btn btn-danger"><i class="fa fa-close"></i></button>
+                        <td class="fit">
+                            <button type="button" ng-click="disableUser(user)" class="btn btn-danger btn-table"><i class="fa fa-close"></i></button>
                         </td>
                     </tr>
                     </tbody>

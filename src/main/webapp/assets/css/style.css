@@ -476,3 +476,14 @@ ul.alert-dropdown {
 [ng-click]{
     cursor: pointer;
 }
+
+.btn-table{
+    width: 38px;
+    padding: 8px;
+    margin: 0 3px;
+}
+
+.fit{
+    width:1%;
+    white-space:nowrap;
+}

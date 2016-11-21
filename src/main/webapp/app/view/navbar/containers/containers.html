@@ -26,18 +26,18 @@
                     <tr ng-repeat="item in items">
                         <!--<td>{{item.id}}</td>-->
                         <td>{{item.address}}</td>
-                        <td>
-                            <button ng-if="isError(item)" type="button" ng-click="setContainerToEdit(item);open();getRepairers();containerToEdit.broken=true;" class="btn btn-danger"><i class="fa fa-warning" aria-hidden="true"></i></button>
-                            <button ng-if="!isError(item)" type="button" ng-click="setContainerToEdit(item);open();getRepairers();containerToEdit.broken=false;" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i></button>
+                        <td class="fit">
+                            <button ng-if="isError(item)" type="button" ng-click="setContainerToEdit(item);open();getRepairers();containerToEdit.broken=true;" class="btn btn-danger btn-table"><i class="fa fa-warning" aria-hidden="true"></i></button>
+                            <button ng-if="!isError(item)" type="button" ng-click="setContainerToEdit(item);open();getRepairers();containerToEdit.broken=false;" class="btn btn-success btn-table"><i class="fa fa-check" aria-hidden="true"></i></button>
                         </td>
                         <td>{{item.type}}</td>
                         <td>{{item.capacity}}</td>
                         <td>{{item.sensors.load.value.toFixed(2)}}%</td>
-                        <td>
-                            <button type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".show-modal" class="btn btn-primary"><i class="fa fa-map-marker"></i></button>
+                        <td class="fit">
+                            <button type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".show-modal" class="btn btn-primary btn-table"><i class="fa fa-map-marker"></i></button>
                             <!--<button type="button" ng-click="setToRepair(item);" data-toggle="modal" data-target=".repair-modal" class="btn btn-info"><i class="fa fa-plus-circle"></i></button>-->
-                            <button restrict access="ROLE_ADMIN ROLE_SYSTEM_MANAGER" type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".edit-modal" class="btn btn-warning"><i class="fa fa-edit"></i></button>
-                            <button restrict access="ROLE_ADMIN ROLE_SYSTEM_MANAGER" type="button" ng-click="deleteContainer(item)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                            <button restrict access="ROLE_ADMIN ROLE_SYSTEM_MANAGER" type="button" ng-click="setContainerToEdit(item);setActiveObject(item);" data-toggle="modal" data-target=".edit-modal" class="btn btn-warning btn-table"><i class="fa fa-edit"></i></button>
+                            <button restrict access="ROLE_ADMIN ROLE_SYSTEM_MANAGER" type="button" ng-click="deleteContainer(item)" class="btn btn-danger btn-table"><i class="fa fa-trash-o"></i></button>
                         </td>
                     </tr>
                     </tbody>
@@ -67,17 +67,13 @@
             <div class="modal-body">
                 <label translate="TYPE"></label>
                 <div class="radio">
-                    <label>
+                    <label class="radio-inline">
                         <input type="radio" name="optionsRadios" id="optionsRadiosAdd1" value="blue"  ng-model="containerToAdd.type"> {{'BLUE'|translate}}
                     </label>
-                </div>
-                <div class="radio">
-                    <label>
+                    <label class="radio-inline">
                         <input type="radio" name="optionsRadios" id="optionsRadiosAdd2" value="green"  ng-model="containerToAdd.type"> {{'GREEN'|translate}}
                     </label>
-                </div>
-                <div class="radio">
-                    <label>
+                    <label class="radio-inline">
                         <input type="radio" name="optionsRadios" id="optionsRadiosAdd3" value="yellow" ng-model="containerToAdd.type"> {{'YELLOW'|translate}}
                     </label>
                 </div>
@@ -108,17 +104,13 @@
             <div class="modal-body">
                 <label translate="TYPE"></label>
                 <div class="radio">
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit1" value="blue" ng-model="containerToEdit.type"> {{'BLUE'|translate}}
+                    <label class="radio-inline">
+                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit1" value="blue"  ng-model="containerToEdit.type"> {{'BLUE'|translate}}
                     </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit2" value="green" ng-model="containerToEdit.type"> {{'GREEN'|translate}}
+                    <label class="radio-inline">
+                        <input type="radio" name="optionsRadios" id="optionsRadiosEdit2" value="green"  ng-model="containerToEdit.type"> {{'GREEN'|translate}}
                     </label>
-                </div>
-                <div class="radio">
-                    <label>
+                    <label class="radio-inline">
                         <input type="radio" name="optionsRadios" id="optionsRadiosEdit3" value="yellow" ng-model="containerToEdit.type"> {{'YELLOW'|translate}}
                     </label>
                 </div>
@@ -155,49 +147,6 @@
         </div>
     </div>
 </div>
-
-<!--<div id="myContainerStatusModalLabel" class="modal fade status-modal" tabindex="-1" role="dialog" aria-labelledby="myContainerStatusModalLabel"-->
-     <!--aria-hidden="true">-->
-    <!--<div class="modal-dialog">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal">-->
-                    <!--<span aria-hidden="true">X</span>-->
-                    <!--<span class="sr-only" translate="CLOSE"></span>-->
-                <!--</button>-->
-                <!--<h4 class="modal-title">-->
-                    <!--{{'CONTAINER_STATUS'|translate}} ({{containerToEdit.address}})-->
-                <!--</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-                <!--Repairer:-->
-                <!--<select id="repairersSelectPicker" class="selectpicker" data-live-search="true" ng-model="containerToEdit.repairer"-->
-                        <!--ng-options="user as user.firstName + ' ' + user.lastName for user in repairers track by user.id">-->
-                <!--</select>-->
-
-                <!--<button type="button" ng-click="editContainer(containerToEdit)" class="btn btn-primary"> <i class="fa fa-save"></i> </button>-->
-
-                <!--<table datatable="ng" dt-column-defs="dtColumnDefsSensors" width="100%" class="table table-striped table-bordered table-hover" id="sensors">-->
-                    <!--<thead>-->
-                    <!--<tr>-->
-                        <!--<th translate="SENSOR"></th>-->
-                        <!--<th translate="VALUE"></th>-->
-                        <!--<th translate="ERROR_CODE"></th>-->
-                    <!--</tr>-->
-                    <!--</thead>-->
-                    <!--<tbody>-->
-                    <!--<tr ng-repeat="(sensorName, sensor) in containerToEdit.sensors">-->
-                        <!--<td>{{sensorName}}</td>-->
-                        <!--<td>{{sensor.value}}</td>-->
-                        <!--<td>{{sensor.errorCode}}</td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                <!--</table>-->
-
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
 
 <div id="myRepairContainersModalLabel" class="modal fade repair-modal" tabindex="-1" role="dialog" aria-labelledby="myRepairContainersModalLabel"
      aria-hidden="true">
