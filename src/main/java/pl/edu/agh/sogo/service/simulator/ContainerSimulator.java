@@ -8,7 +8,7 @@ import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Sensor;
 import pl.edu.agh.sogo.persistence.ContainerRepository;
 import pl.edu.agh.sogo.service.ContainerService;
-import pl.edu.agh.sogo.web.controller.simulator.SimulatorController;
+import pl.edu.agh.sogo.web.controller.SimulatorController;
 
 import java.util.List;
 import java.util.Random;

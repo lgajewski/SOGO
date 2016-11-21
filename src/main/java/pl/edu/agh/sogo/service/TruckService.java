@@ -1,6 +1,5 @@
 package pl.edu.agh.sogo.service;
 
-import com.google.maps.errors.OverDailyLimitException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +33,15 @@ public class TruckService {
 
     public Truck findTruckByRegistration(String registration) {
         return truckRepository.findByRegistration(registration);
+    }
+
+    public Truck findTruckByUser(String login) {
+        Truck truck;
+        if((truck = truckRepository.findByUserLogin(login)) == null){
+            throw new ObjectNotFoundException("Truck", login);
+        } else {
+            return truck;
+        }
     }
 
     public void add(Truck truck) {

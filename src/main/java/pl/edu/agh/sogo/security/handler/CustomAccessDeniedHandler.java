@@ -21,9 +21,7 @@ import java.io.IOException;
  *
  * @see AccessDeniedHandlerImpl
  */
-public class CustomAccessDeniedHandler implements AccessDeniedHandler {
-
-    private AccessDeniedHandlerImpl accessDeniedHandlerImpl = new AccessDeniedHandlerImpl();
+public class CustomAccessDeniedHandler extends AccessDeniedHandlerImpl {
 
     public void handle(HttpServletRequest request, HttpServletResponse response,
             AccessDeniedException accessDeniedException) throws IOException, ServletException {
@@ -38,7 +36,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
             response.addCookie(cookie);
         }
 
-        accessDeniedHandlerImpl.handle(request, response, accessDeniedException);
+        super.handle(request, response, accessDeniedException);
     }
 
     /**
@@ -50,6 +48,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
      * @see AccessDeniedHandlerImpl#setErrorPage(String)
      */
     public void setErrorPage(String errorPage) {
-        accessDeniedHandlerImpl.setErrorPage(errorPage);
+        super.setErrorPage(errorPage);
     }
+
 }

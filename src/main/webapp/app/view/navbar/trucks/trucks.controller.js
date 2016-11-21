@@ -5,10 +5,10 @@
         .module('sogo')
         .controller('TrucksController', TrucksController);
 
-    TrucksController.$inject = ['$scope', 'trucks', 'Restangular', 'ActiveItemService',
+    TrucksController.$inject = ['$scope', 'trucks', 'users', 'Restangular', 'ActiveItemService',
         'DTOptionsBuilder', 'DTColumnDefBuilder', '$filter', 'Notification'];
 
-    function TrucksController($scope, trucks, Restangular, ActiveItemService,
+    function TrucksController($scope, trucks, users, Restangular, ActiveItemService,
                               DTOptionsBuilder, DTColumnDefBuilder, $filter, Notification) {
         $scope.items = trucks;
         $scope.getTrucks = getTrucks;
@@ -16,8 +16,10 @@
         $scope.addTruck = addTruck;
         $scope.showDetail = showDetail;
         $scope.setActiveObject = setActiveObject;
+        $scope.setTruckToAdd = setTruckToAdd;
         $scope.setTruckToEdit = setTruckToEdit;
         $scope.editTruck = editTruck;
+        $scope.users = users;
 
 
         $scope.dtOptions = DTOptionsBuilder.newOptions()
@@ -70,6 +72,7 @@
         $('#myAddModalLabel').on('show.bs.modal', function() {
             //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
             resizeMap($scope.truckAddMap);
+            $('#truckUserAddSelectPicker').selectpicker('refresh');
         });
 
         $('#myAddModalLabel').on('hidden.bs.modal', function() {
@@ -81,6 +84,7 @@
         $('#myEditModalLabel').on('show.bs.modal', function() {
             //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
             resizeMap($scope.truckEditMap);
+            $('#truckUserEditSelectPicker').selectpicker('refresh');
             var pos = new google.maps.LatLng($scope.truckToEdit.location.latitude, $scope.truckToEdit.location.longitude);
             addMarker(pos, 'assets/images/truck.png',
                 $scope.truckEditMap, $scope.truckToEdit);
@@ -92,6 +96,7 @@
             if(marker != null){
                 marker.setMap(null);
             }
+
         });
 
         $('#myShowLocationModalLabel').on('show.bs.modal', function() {
@@ -218,8 +223,12 @@
         }
 
         function setTruckToEdit(truck){
-            $scope.truckToEdit = _.clone(truck);
+            $scope.truckToEdit = _.cloneDeep(truck);
 
+        }
+        function setTruckToAdd(){
+            $scope.truckToAdd = {};
+            $scope.truckToAdd.load = 0;
         }
 
         function showDetail(item) {

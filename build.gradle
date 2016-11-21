@@ -94,6 +94,13 @@ dependencies {
     testCompile "junit:junit"
 }
 
+/** IDEA CONFIG */
+idea {
+    module {
+        excludeDirs += files("android", "node_modules", "simulator")
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'
 }

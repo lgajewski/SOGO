@@ -72,16 +72,6 @@ public class Container {
         sensors.put(sensorType, sensor);
     }
 
-    public String toString(){
-        return "{id = " + id +
-            ", type = " + type +
-            ", capacity = " + capacity +
-            ", location = "+ location +
-            ", address = "+ address +
-            ", repairer = "+ repairer +
-            ", sensors = {" + sensors.entrySet().stream().map(a ->a.getValue().toString()).collect(Collectors.joining(", ")) + "}}";
-    }
-
     public String getAddress() {
         return address;
     }
@@ -96,5 +86,16 @@ public class Container {
 
     public void setRepairer(User repairer) {
         this.repairer = repairer;
+    }
+
+
+    public String toString(){
+        return "{id = " + id +
+            ", type = " + type +
+            ", capacity = " + capacity +
+            ", location = "+ location +
+            ", address = "+ address +
+            ", repairer = "+ repairer +
+            ", sensors = {" + sensors.entrySet().stream().map(a ->a.getValue().toString()).collect(Collectors.joining(", ")) + "}}";
     }
 }
