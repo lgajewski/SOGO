@@ -11,7 +11,7 @@
                 verticalSpacing: 20,
                 horizontalSpacing: 20,
                 positionX: 'left',
-                positionY: 'top'
+                positionY: 'bottom'
             });
         });
 })();
