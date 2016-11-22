@@ -5,11 +5,12 @@
         .module('sogo')
         .controller('AlertsController', AlertsController);
 
-    AlertsController.$inject = ['$scope', 'Restangular', 'brokenContainers', 'Notification', '$uibModal'];
+    AlertsController.$inject = ['$scope', 'Restangular', 'brokenContainers', 'Notification', '$uibModal', '$uibModalInstance'];
 
-    function AlertsController($scope, Restangular, brokenContainers, Notification, $uibModal) {
-
+    function AlertsController($scope, Restangular, brokenContainers, Notification, $uibModal, $uibModalInstance) {
+        $scope.close = close;
         $scope.editContainer = editContainer;
+        $scope.openContainerStatusModal = openContainerStatusModal;
         $scope.brokenContainers = brokenContainers;
 
 
@@ -31,7 +32,7 @@
             });
         }
 
-        $scope.openContainerStatusModal = function (containerToEdit) {
+        function openContainerStatusModal(containerToEdit) {
 
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
@@ -63,5 +64,8 @@
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
+        function close() {
+            $uibModalInstance.close();
+        }
     }
 })();

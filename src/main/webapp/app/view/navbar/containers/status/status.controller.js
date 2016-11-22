@@ -5,12 +5,13 @@
         .module('sogo')
         .controller('StatusController', StatusController);
 
-    StatusController.$inject = ['$rootScope', '$scope', 'Restangular', 'containerToEdit', 'repairers', 'Notification'];
+    StatusController.$inject = ['$rootScope', '$scope', 'Restangular', 'containerToEdit', 'repairers', 'Notification' ,'$uibModalInstance'];
 
-    function StatusController($rootScope, $scope, Restangular, containerToEdit, repairers, Notification) {
+    function StatusController($rootScope, $scope, Restangular, containerToEdit, repairers, Notification, $uibModalInstance) {
         $scope.containerToEdit = containerToEdit;
         $scope.repairers = repairers;
         $scope.editContainer = editContainer;
+        $scope.close = close;
         errorCodes(containerToEdit);
 
         function editContainer(container){
@@ -31,6 +32,10 @@
                     container.sensors[sensor].message = "-";
                 }
             }
+        }
+
+        function close() {
+            $uibModalInstance.close();
         }
     }
 })();
