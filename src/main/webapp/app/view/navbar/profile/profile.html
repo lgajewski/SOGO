@@ -38,7 +38,7 @@
                             <input class="form-control" type="email" ng-model="vm.user.email">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-if="vm.user.truckRegistration">
                         <label class="col-lg-3 control-label" translate="TRUCK"></label>
                         <div class="col-lg-8">
                             <input class="form-control" type="text" ng-model="vm.user.truckRegistration" disabled>

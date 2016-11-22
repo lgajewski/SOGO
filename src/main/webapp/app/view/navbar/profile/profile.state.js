@@ -17,7 +17,9 @@
                             Restangular.all('auth').get('user').then(function (user) {
                                 var tempUser = user.plain();
                                 Restangular.all('trucks/user').get(user.login).then(function (truck) {
-                                    tempUser.truckRegistration = truck.registration;
+                                    if(truck){
+                                        tempUser.truckRegistration = truck.registration;
+                                    }
                                     deferred.resolve(tempUser);
                                 });
                             });
