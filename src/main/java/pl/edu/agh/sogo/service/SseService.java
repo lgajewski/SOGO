@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -35,7 +34,7 @@ public class SseService {
                 try {
                     sseEmitter.send(SseEmitter.event().name(eventName).data(object));
                 } catch (Exception e) {
-                    log.info("Instance of SseEmitter is no longer usable. Unable to emit: " + e.getMessage());
+                    log.debug("Instance of SseEmitter is no longer usable. Unable to emit: " + e.getMessage());
 
                     // remove from cache
                     it.remove();

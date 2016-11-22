@@ -11,7 +11,7 @@ import pl.edu.agh.sogo.service.exceptions.ObjectAlreadyExistsException;
 import pl.edu.agh.sogo.service.exceptions.ObjectNotFoundException;
 import pl.edu.agh.sogo.service.util.GoogleMapsReverseGeocoder;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class TruckService {
@@ -27,7 +27,7 @@ public class TruckService {
     @Autowired
     private GoogleMapsReverseGeocoder googleMapsReverseGeocoder;
 
-    public Collection<Truck> getTrucks() {
+    public List<Truck> getTrucks() {
         return truckRepository.findAll();
     }
 
@@ -37,7 +37,7 @@ public class TruckService {
 
     public Truck findTruckByUser(String login) {
         Truck truck;
-        if((truck = truckRepository.findByUserLogin(login)) == null){
+        if ((truck = truckRepository.findByUserLogin(login)) == null) {
             throw new ObjectNotFoundException("Truck", login);
         } else {
             return truck;
@@ -49,7 +49,7 @@ public class TruckService {
             throw new ObjectAlreadyExistsException("Truck", truck.getRegistration());
         } else {
             try {
-                if(truck.getLocation() == null){
+                if (truck.getLocation() == null) {
                     throw new ObjectNotFoundException("Location", truck.getRegistration());
                 }
                 truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
@@ -68,10 +68,10 @@ public class TruckService {
         } else {
             try {
 
-                if(truck.getLocation() == null){
+                if (truck.getLocation() == null) {
                     throw new ObjectNotFoundException("Location", truck.getRegistration());
                 }
-                if(Math.abs(oldTruck.getLocation().getLatitude() - truck.getLocation().getLatitude()) > 0.0001 || Math.abs(oldTruck.getLocation().getLongitude() - truck.getLocation().getLongitude()) > 0.0001){
+                if (Math.abs(oldTruck.getLocation().getLatitude() - truck.getLocation().getLatitude()) > 0.0001 || Math.abs(oldTruck.getLocation().getLongitude() - truck.getLocation().getLongitude()) > 0.0001) {
 
                     truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
                 } else {
@@ -79,7 +79,7 @@ public class TruckService {
                 }
 
                 truckRepository.save(truck);
-             } catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -99,10 +99,10 @@ public class TruckService {
         } else {
             truck.setLocation(location);
             try {
-                if(truck.getLocation() == null){
+                if (truck.getLocation() == null) {
                     throw new ObjectNotFoundException("Location", truck.getRegistration());
                 }
-                truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
+//                truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
 
                 truckRepository.save(truck);
             } catch (Exception e) {

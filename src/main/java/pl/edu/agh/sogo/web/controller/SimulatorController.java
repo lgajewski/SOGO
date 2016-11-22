@@ -5,20 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.sogo.domain.Container;
-import pl.edu.agh.sogo.domain.Sensor;
-import pl.edu.agh.sogo.domain.Truck;
 import pl.edu.agh.sogo.security.SecurityConstants;
 import pl.edu.agh.sogo.service.ContainerService;
+import pl.edu.agh.sogo.service.SimulatorService;
 import pl.edu.agh.sogo.service.TruckService;
-import pl.edu.agh.sogo.service.simulator.ContainerSimulator;
-import pl.edu.agh.sogo.service.simulator.SimulatorService;
-import pl.edu.agh.sogo.service.simulator.TruckSimulator;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/simulator")
@@ -35,152 +25,100 @@ public class SimulatorController {
     @Autowired
     private TruckService truckService;
 
-
-
-    public static Boolean isTruckSimulationRunning;
-    public static Boolean isContainerSimulationRunning;
-
-    private Thread truckSimulatorThread;
-    private Thread containerSimulatorThread;
-
-    @Autowired
-    private TruckSimulator truckSimulator;
-
-    @Autowired
-    private ContainerSimulator containerSimulator;
-
-    @PostConstruct
-    public void initController(){
-        isTruckSimulationRunning = false;
-        truckSimulatorThread = new Thread(truckSimulator);
-        truckSimulatorThread.start();
-
-        isContainerSimulationRunning = false;
-        containerSimulatorThread = new Thread(containerSimulator);
-        containerSimulatorThread.start();
-        log.info("SimulatorController initialized()");
-    }
-
+    /* delay in milliseconds between simulator updates */
+    private final static int DELAY = 1000;
 
 
     @ResponseBody
     @RequestMapping(value = "/containers", method = RequestMethod.POST)
     @Secured(SecurityConstants.ADMIN)
-    public void createContainers(@RequestBody Integer numberOfContainers){
-        log.info("[POST][/api/containers] createContainers("+numberOfContainers+")");
-        List<Container> containers = simulatorService.createContainers(numberOfContainers);
-        for (Container container : containers){
-            containerService.add(container);
-        }
+    public void createContainers(@RequestBody Integer numberOfContainers) {
+        log.info("[POST][/api/containers] createContainers(" + numberOfContainers + ")");
+        simulatorService.createContainers(numberOfContainers).forEach(container -> containerService.add(container));
     }
 
     @ResponseBody
     @RequestMapping(value = "/containers", method = RequestMethod.PUT)
     @Secured(SecurityConstants.ADMIN)
-    public void emptyContainers(){
+    public void emptyContainers() {
         log.info("[PUT][/api/containers] emptyContainers()");
-        List<Container> containers = new ArrayList<>(containerService.getContainers());
-        for (Container container : containers){
+        containerService.getContainers().forEach(container -> {
             container.getSensors().get("load").setValue(0d);
             containerService.update(container);
-        }
+        });
     }
 
     @ResponseBody
     @RequestMapping(value = "/containers/repair", method = RequestMethod.POST)
-    public void repairAllContainers(){
+    public void repairAllContainers() {
         log.info("[PUT][/api/containers/repair] repairAllContainers()");
-        List<Container> containers = new ArrayList<>(containerService.getContainers());
-        for (Container container : containers){
-            for (Map.Entry<String, Sensor> sensorEntry : container.getSensors().entrySet()){
-                sensorEntry.getValue().setErrorCode(0);
-            }
+        containerService.getContainers().forEach(container -> {
+            container.getSensors().forEach((key, sensor) -> sensor.setErrorCode(0));
             containerService.update(container);
-        }
+        });
     }
 
     @ResponseBody
     @RequestMapping(value = "/containers/simulate", method = RequestMethod.POST)
     @Secured(SecurityConstants.ADMIN)
-    public void simulateContainers(){
-            if (!isContainerSimulationRunning) {
-                isContainerSimulationRunning = !isContainerSimulationRunning;
-                if(containerSimulatorThread.getState().name().equalsIgnoreCase("terminated")){
-                    containerSimulatorThread = new Thread(containerSimulator);
-                    containerSimulatorThread.start();
-                } else {
-                    synchronized (containerSimulator) {
-                        containerSimulator.notify();
-                    }
-                }
-            } else {
-                isContainerSimulationRunning = !isContainerSimulationRunning;
-            }
-
+    public void simulateContainers() {
+        log.info("[POST][/api/simulator/trucks/simulate] simulateTrucks(), running: ");
+        if (simulatorService.isContainerSimulationRunning()) {
+            simulatorService.stopContainerSimulation();
+        } else {
+            simulatorService.startContainerSimulation(DELAY);    // delay in milliseconds
+        }
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/containers", method = RequestMethod.GET)
     @Secured(SecurityConstants.ADMIN)
-    public String getContainersSimulatorState(){
-        log.info("[GET][/api/simulator/containers] getContainersSimulatorState() returned " + isContainerSimulationRunning);
-        return "{\"state\":"+isContainerSimulationRunning+"}";
+    public String getContainersSimulatorState() {
+        log.info("[GET][/api/simulator/containers] getContainersSimulatorState() returned "
+            + simulatorService.isContainerSimulationRunning());
+
+        return "{\"state\":" + simulatorService.isContainerSimulationRunning() + "}";
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/trucks", method = RequestMethod.POST)
     @Secured(SecurityConstants.ADMIN)
-    public void createTrucks(@RequestBody Integer numberOfTrucks){
-        log.info("[POST][/api/trucks] createTrucks("+numberOfTrucks+")");
-        List<Truck> trucks = simulatorService.createTrucks(numberOfTrucks);
-        for(Truck truck : trucks){
-            truckService.add(truck);
-        }
+    public void createTrucks(@RequestBody Integer numberOfTrucks) {
+        log.info("[POST][/api/trucks] createTrucks(" + numberOfTrucks + ")");
+        simulatorService.createTrucks(numberOfTrucks).forEach(truck -> truckService.add(truck));
     }
 
-    @ResponseBody
     @RequestMapping(value = "/trucks/simulate", method = RequestMethod.POST)
     @Secured(SecurityConstants.ADMIN)
-    public void simulateTrucks(){
-        log.info("[POST][/api/simulator/trucks/simulate] simulateTrucks()");
-        log.info(truckSimulatorThread.getState().name());
-            if (!isTruckSimulationRunning) {
-                isTruckSimulationRunning = !isTruckSimulationRunning;
-                if(truckSimulatorThread.getState().name().equalsIgnoreCase("terminated")){
-                    truckSimulatorThread = new Thread(truckSimulator);
-                    truckSimulatorThread.start();
-                } else {
-                    synchronized (truckSimulator) {
-                        truckSimulator.notify();
-                    }
-                }
-
-            } else {
-                isTruckSimulationRunning = !isTruckSimulationRunning;
-            }
-
+    public void simulateTrucks() {
+        log.info("[POST][/api/simulator/trucks/simulate] simulateTrucks(), running: ");
+        if (simulatorService.isTruckSimulationRunning()) {
+            simulatorService.stopTruckSimulation();
+        } else {
+            simulatorService.startTruckSimulation(DELAY);    // delay in milliseconds
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "/trucks", method = RequestMethod.GET)
     @Secured(SecurityConstants.ADMIN)
-    public String getTrucksSimulatorState(){
-        log.info("[GET][/api/simulator/trucks/] getTrucksSimulatorState() returned " + isTruckSimulationRunning);
-        return "{\"state\":"+isTruckSimulationRunning+"}";
+    public String getTrucksSimulatorState() {
+        log.info("[GET][/api/simulator/trucks/] getTrucksSimulatorState()");
+        return "{\"state\":" + simulatorService.isTruckSimulationRunning() + "}";
     }
 
     @ResponseBody
     @RequestMapping(value = "/trucks", method = RequestMethod.PUT)
     @Secured(SecurityConstants.ADMIN)
-    public void emptyTrucks(){
+    public void emptyTrucks() {
         log.info("[PUT][/api/trucks] emptyTrucks()");
-        List<Truck> trucks = new ArrayList<>(truckService.getTrucks());
-        for (Truck truck : trucks){
+        truckService.getTrucks().forEach(truck -> {
             truck.setLoad(0);
             truckService.update(truck);
-        }
+        });
     }
-
 
 
 }

@@ -28,7 +28,7 @@ public class ContainerService {
     @Autowired
     private GoogleMapsReverseGeocoder googleMapsReverseGeocoder;
 
-    public Collection<Container> getContainers() {
+    public List<Container> getContainers() {
         return containerRepository.findAll();
     }
 

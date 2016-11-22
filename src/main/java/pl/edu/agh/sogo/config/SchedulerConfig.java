@@ -20,7 +20,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
     @Bean
     public TaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setThreadNamePrefix("sogo-scheduler-");
+        scheduler.setThreadNamePrefix("task-sched-");
         return scheduler;
     }
 }
