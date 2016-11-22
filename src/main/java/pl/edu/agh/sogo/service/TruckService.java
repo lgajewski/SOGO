@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Truck;
+import pl.edu.agh.sogo.domain.User;
 import pl.edu.agh.sogo.persistence.TruckRepository;
+import pl.edu.agh.sogo.persistence.UserRepository;
 import pl.edu.agh.sogo.service.exceptions.ObjectAlreadyExistsException;
 import pl.edu.agh.sogo.service.exceptions.ObjectNotFoundException;
 import pl.edu.agh.sogo.service.util.GoogleMapsReverseGeocoder;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TruckService {
@@ -23,6 +26,9 @@ public class TruckService {
 
     @Autowired
     private TruckRepository truckRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private GoogleMapsReverseGeocoder googleMapsReverseGeocoder;
@@ -37,9 +43,11 @@ public class TruckService {
 
     public Truck findTruckByUser(String login) {
         Truck truck;
-        if ((truck = truckRepository.findByUserLogin(login)) == null) {
-            throw new ObjectNotFoundException("Truck", login);
+        Optional<User> user = userRepository.findOneByLogin(login);
+        if (!user.isPresent()) {
+            throw new ObjectNotFoundException("User", login);
         } else {
+            truck = truckRepository.findByUser(user.get());
             return truck;
         }
     }
