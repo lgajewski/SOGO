@@ -84,7 +84,7 @@ public class ContainerController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}/repair", method = RequestMethod.POST)
-    @Secured(SecurityConstants.ADMIN)
+    @Secured(SecurityConstants.USER)
     public void repairContainer(@PathVariable(value = "id") String id, Principal principal) {
         containerService.repairContainer(id, principal.getName());
         log.info("[POST][/api/containers/" + id + "/repair] repairContainer(" + id + ", " + principal.getName()+ ")");
@@ -93,7 +93,7 @@ public class ContainerController {
 
     @ResponseBody
     @RequestMapping(value = "/toRepair", method = RequestMethod.GET)
-    @Secured(SecurityConstants.ADMIN)
+    @Secured(SecurityConstants.USER)
     public List<Container> getContainersToRepair(Principal principal) {
         List<Container> containers = containerService.getContainersToRepair(principal.getName());
         log.info("[GET][/api/containers/toRepair] getContainersToRepair(" + principal.getName()+ ")");

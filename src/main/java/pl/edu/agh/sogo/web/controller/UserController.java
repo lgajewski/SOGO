@@ -237,7 +237,7 @@ public class UserController {
      * @return the ResponseEntity with status 200 (OK) and with body selected users
      */
     @RequestMapping(value="/{role}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured(SecurityConstants.ADMIN)
+    @Secured(SecurityConstants.SYSTEM_MANAGER)
     public ResponseEntity<List<ManagedUserDTO>> getAllUsersWithRole(@PathVariable(value = "role") Authority role) {
         List<User> users = userRepository.findAll();
         List<ManagedUserDTO> managedUserDTOs = users.stream().filter(u -> u.getAuthorities().contains(role))
