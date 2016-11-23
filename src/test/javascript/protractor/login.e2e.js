@@ -8,6 +8,7 @@ describe('login', function () {
     var logout = element(by.id('logout'));
 
     beforeEach(function () {
+        browser.manage().deleteAllCookies();
         browser.get(browser.baseUrl);
     });
 
@@ -25,8 +26,7 @@ describe('login', function () {
         password.sendKeys('admin');
 
         login.click();
-        var el = element(by.id('login-success'));
-        browser.wait(protractor.ExpectedConditions.presenceOf(el), 10000);
-        expect(el.getText()).toMatch(/You are logged in/);
+        browser.waitForAngular();
+        expect(element(by.css('.alert-success')).getText()).toMatch(/You are logged in/);
     });
 });
