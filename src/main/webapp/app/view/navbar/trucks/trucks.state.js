@@ -11,32 +11,15 @@
                     templateUrl: 'app/view/navbar/trucks/trucks.html',
                     controller: 'TrucksController',
                     resolve: {
-                        trucks: function($q, Restangular){
-                            var deferred = $q.defer();
-                            Restangular.all('trucks').getList().then(function (data) {
-                                var items = data;
-                                deferred.resolve(items);
-                            });
-                            return deferred.promise;
+                        trucks: function (Restangular) {
+                            return Restangular.all('trucks').getList();
                         },
-                        users: function($q, Restangular, $rootScope){
-                            var deferred = $q.defer();
-                            if($rootScope.currentUser.authorities.indexOf('ROLE_SYSTEM_MANAGER') > -1) {
-                                Restangular.all('users/ROLE_USER').getList()
-                                    .then(function (data) {
-                                        var repairers = [null];
-                                        for (var i = 0; i < data.length; i++) {
-                                            repairers.push(data[i]);
-                                        }
-                                        deferred.resolve(repairers);
-                                    })
-                                    .catch(function () {
-                                        deferred.resolve([]);
-                                    });
+                        users: function (currentUser, Restangular) {
+                            if (currentUser.authorities.indexOf('ROLE_SYSTEM_MANAGER') > -1) {
+                                return Restangular.all('users/ROLE_USER').getList();
                             } else {
-                                deferred.resolve([]);
+                                return Promise.resolve([]);
                             }
-                            return deferred.promise;
                         }
                     }
                 })
