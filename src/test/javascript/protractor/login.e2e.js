@@ -25,8 +25,8 @@ describe('login', function () {
         password.sendKeys('admin');
 
         login.click();
-        browser.driver.sleep(1);
-        browser.waitForAngular();
-        expect(element(by.id('login-success')).getText()).toMatch(/You are logged in/);
+        var el = element(by.id('login-success'));
+        browser.wait(protractor.ExpectedConditions.presenceOf(el), 10000);
+        expect(el.getText()).toMatch(/You are logged in/);
     });
 });
