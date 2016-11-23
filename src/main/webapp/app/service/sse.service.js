@@ -5,13 +5,6 @@
         .module('sogo')
         .factory('SseService', SseService);
 
-    class SseEntry {
-        constructor(eventSource, callback) {
-            this.eventSource = eventSource;
-            this.callback = callback;
-        }
-    }
-
     function SseService() {
         var cache = [];
 
@@ -27,8 +20,11 @@
             } else {
                 var source = new EventSource("/api/sse");
                 source.addEventListener(eventName, callback);
-                
-                cache.push(new SseEntry(source, callback));
+
+                cache.push({
+                    eventSource: source,
+                    callback: callback
+                })
             }
         }
 
