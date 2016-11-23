@@ -26,8 +26,8 @@ describe('login', function () {
 
         login.click().then(function(){
                 browser.waitForAngular();
-                expect(browser.driver.getCurrentUrl()).toMatch('/home');
-                // expect(element(by.css('.alert-success')).getText()).toMatch(/You are logged in/);
+                // expect(browser.driver.getCurrentUrl()).toMatch('/home');
+                expect(element(by.css('.alert-success')).getText()).toMatch(/You are logged in/);
         });
 
     });
