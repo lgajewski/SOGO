@@ -25,6 +25,8 @@ describe('login', function () {
         password.sendKeys('admin');
 
         login.click();
-        expect(element(by.css('.alert-danger')).getText()).toMatch(/Failed to sign in!/);
+        browser.driver.sleep(1);
+        browser.waitForAngular();
+        expect(element(by.css('.alert-success')).getText()).toMatch(/You are logged in/);
     });
 });
