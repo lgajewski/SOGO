@@ -21,14 +21,12 @@ public class Container {
     @GeoSpatialIndexed
     private Location location;
 
-    private String address;
-
     @DBRef
     private User repairer;
 
     private Map<String, Sensor> sensors;
 
-    public Container(){
+    public Container() {
         this.sensors = new HashMap<>();
     }
 
@@ -68,17 +66,10 @@ public class Container {
         this.sensors = sensors;
     }
 
-    public void addSensor(String sensorType, Sensor sensor){
+    public void addSensor(String sensorType, Sensor sensor) {
         sensors.put(sensorType, sensor);
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public User getRepairer() {
         return repairer;
@@ -89,13 +80,12 @@ public class Container {
     }
 
 
-    public String toString(){
+    public String toString() {
         return "{id = " + id +
             ", type = " + type +
             ", capacity = " + capacity +
-            ", location = "+ location +
-            ", address = "+ address +
-            ", repairer = "+ repairer +
-            ", sensors = {" + sensors.entrySet().stream().map(a ->a.getValue().toString()).collect(Collectors.joining(", ")) + "}}";
+            ", location = " + location +
+            ", repairer = " + repairer +
+            ", sensors = {" + sensors.entrySet().stream().map(a -> a.getValue().toString()).collect(Collectors.joining(", ")) + "}}";
     }
 }

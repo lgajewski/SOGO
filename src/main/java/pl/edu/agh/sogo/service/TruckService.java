@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 public class TruckService {
 
-    private final Logger log = LoggerFactory.getLogger(TruckService.class);
+    private static final Logger log = LoggerFactory.getLogger(TruckService.class);
 
     @Autowired
     private SseService sseService;
@@ -42,13 +42,11 @@ public class TruckService {
     }
 
     public Truck findTruckByUser(String login) {
-        Truck truck;
         Optional<User> user = userRepository.findOneByLogin(login);
         if (!user.isPresent()) {
             throw new ObjectNotFoundException("User", login);
         } else {
-            truck = truckRepository.findByUser(user.get());
-            return truck;
+            return truckRepository.findByUser(user.get());
         }
     }
 
@@ -56,14 +54,10 @@ public class TruckService {
         if (truckRepository.findByRegistration(truck.getRegistration()) != null) {
             throw new ObjectAlreadyExistsException("Truck", truck.getRegistration());
         } else {
-            try {
                 if (truck.getLocation() == null) {
                     throw new ObjectNotFoundException("Location", truck.getRegistration());
                 }
                 truck.setAddress(googleMapsReverseGeocoder.reverseGeocode(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
             truckRepository.save(truck);
         }

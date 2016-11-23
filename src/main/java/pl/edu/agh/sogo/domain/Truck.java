@@ -20,9 +20,7 @@ public class Truck {
 
     private Location location;
 
-    private String address;
-
-    public Truck(){}
+    public Truck() {}
 
     public Truck(String registration, int capacity) {
         this.registration = registration;
@@ -63,14 +61,6 @@ public class Truck {
         this.location = location;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public User getUser() {
         return user;
     }
@@ -79,12 +69,11 @@ public class Truck {
         this.user = user;
     }
 
-    public String toString(){
+    public String toString() {
         return "{id = " + id +
             ", registration = " + registration +
             ", capacity = " + capacity +
             ", load = " + load +
-            ", address = "+ address +
             "}";
     }
 }
