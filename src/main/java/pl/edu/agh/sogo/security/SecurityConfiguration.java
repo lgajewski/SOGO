@@ -12,10 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.csrf.CsrfFilter;
 import pl.edu.agh.sogo.security.filter.CsrfCookieGeneratorFilter;
-import pl.edu.agh.sogo.security.filter.CustomFilter;
 import pl.edu.agh.sogo.security.handler.*;
 
 import javax.inject.Inject;
