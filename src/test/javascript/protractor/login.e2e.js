@@ -11,6 +11,14 @@ describe('login', function () {
         browser.get(browser.baseUrl);
     });
 
+    it('should login successfully with admin account', function () {
+        username.sendKeys('admin');
+        password.sendKeys('admin');
+
+        login.click();
+        expect(element(by.css('.alert-success')).getText()).toMatch(/You are logged in/);
+    });
+
     it('should fail to login with bad password', function () {
         username.sendKeys('admin');
         password.sendKeys('foo');
@@ -19,12 +27,4 @@ describe('login', function () {
 
         expect(element(by.css('.alert-danger')).getText()).toMatch(/Failed to sign in!/);
     });
-
-    // it('should login successfully with admin account', function () {
-    //     username.sendKeys('admin');
-    //     password.sendKeys('admin');
-    //
-    //     login.click();
-    //     expect(element(by.css('.alert-danger')).getText()).toMatch(/Unknown error./);
-    // });
 });
