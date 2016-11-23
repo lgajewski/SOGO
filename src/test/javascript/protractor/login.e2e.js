@@ -27,7 +27,7 @@ describe('login', function () {
         login.click().then(function(){
                 browser.waitForAngular();
                 // expect(browser.driver.getCurrentUrl()).toMatch('/home');
-                expect(element(by.css('.panel-green')).isPresent()).toMatch(true);
+                expect(element(by.css('.panel-green')).isPresent()).toBe(true);
         });
 
     });
