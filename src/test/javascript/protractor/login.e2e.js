@@ -25,7 +25,6 @@ describe('login', function () {
         password.sendKeys('admin');
 
         login.click();
-
-        expect(element(by.css('.alert-success')).getText()).toMatch(/You are logged in/);
+        expect(element(by.css('.alert-danger')).getText()).toMatch(/Unknown error./);
     });
 });
