@@ -27,6 +27,6 @@ describe('login', function () {
         login.click();
         browser.driver.sleep(1);
         browser.waitForAngular();
-        expect(element(by.css('.alert-success')).getText()).toMatch(/You are logged in/);
+        expect(element(by.id('login-success')).getText()).toMatch(/You are logged in/);
     });
 });

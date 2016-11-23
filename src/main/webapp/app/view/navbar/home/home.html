@@ -9,7 +9,7 @@
 <!-- /.row -->
 
 <div ng-switch="isAuthenticated()">
-    <div class="alert alert-success alert-dismissable" ng-switch-when="true">
+    <div id="login-success" class="alert alert-success alert-dismissable" ng-switch-when="true">
         <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <!--You are logged in as user "{{vm.account.login}}".-->
         <p translate="LOGGED_IN"></p>
