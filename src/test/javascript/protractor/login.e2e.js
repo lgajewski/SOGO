@@ -20,11 +20,11 @@ describe('login', function () {
         expect(element(by.css('.alert-danger')).getText()).toMatch(/Failed to sign in!/);
     });
 
-    it('should login successfully with admin account', function () {
-        username.sendKeys('admin');
-        password.sendKeys('admin');
-
-        login.click();
-        expect(element(by.css('.alert-danger')).getText()).toMatch(/Unknown error./);
-    });
+    // it('should login successfully with admin account', function () {
+    //     username.sendKeys('admin');
+    //     password.sendKeys('admin');
+    //
+    //     login.click();
+    //     expect(element(by.css('.alert-danger')).getText()).toMatch(/Unknown error./);
+    // });
 });
