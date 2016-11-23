@@ -26,6 +26,8 @@ before_install:
     - node -v
     - npm -v
     - bower -v
+    - protractor --version
+    - webdriver-manager version
     - java -version
 install: npm install
 before_script:
