@@ -35,10 +35,10 @@ public class UpdateEventListener implements ApplicationListener<UpdateEvent> {
     @Scheduled(initialDelay = INITIAL_DELAY, fixedDelay = DELAY)
     public void scheduleTrucksGeocode() {
         truckService.getTrucks().stream()
-            .filter(truck -> truck.getLocation().getAddress() == null)
+            .filter(truck -> truck.getAddress() == null)
             .forEach(truck -> {
                 Location loc = truck.getLocation();
-                loc.setAddress(geocoder.reverseGeocode(loc.getLatitude(), loc.getLongitude()));
+                truck.setAddress(geocoder.reverseGeocode(loc.getLatitude(), loc.getLongitude()));
                 truckService.update(truck);
             });
     }

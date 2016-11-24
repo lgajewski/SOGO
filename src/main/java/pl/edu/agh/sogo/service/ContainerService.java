@@ -55,8 +55,8 @@ public class ContainerService {
 
     private void checkGeocode(Container container) {
         Location loc = container.getLocation();
-        if (loc.getAddress() == null) {
-            loc.setAddress(geocoder.reverseGeocode(loc.getLatitude(), loc.getLongitude()));
+        if (container.getAddress() == null) {
+            container.setAddress(geocoder.reverseGeocode(loc.getLatitude(), loc.getLongitude()));
         }
     }
 

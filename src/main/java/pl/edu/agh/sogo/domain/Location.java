@@ -6,8 +6,6 @@ public class Location {
 
     private double longitude;
 
-    private String address;
-
     public Location() {}
 
     public Location(double latitude, double longitude) {
@@ -31,20 +29,12 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     @Override
     public String toString() {
         return "Location{" +
             "latitude=" + latitude +
             ", longitude=" + longitude +
-            ", address='" + address + '\'' +
             '}';
     }
 }

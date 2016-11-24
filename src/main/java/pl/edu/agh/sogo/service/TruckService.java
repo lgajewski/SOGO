@@ -77,6 +77,7 @@ public class TruckService {
         }
 
         truck.setLocation(location);
+        truck.setAddress(null);
         update(truck);
     }
 }

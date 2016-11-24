@@ -26,6 +26,8 @@ public class Container {
 
     private Map<String, Sensor> sensors;
 
+    private String address;
+
     public Container() {
         this.sensors = new HashMap<>();
     }
@@ -70,6 +72,13 @@ public class Container {
         sensors.put(sensorType, sensor);
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public User getRepairer() {
         return repairer;
@@ -86,6 +95,7 @@ public class Container {
             ", capacity = " + capacity +
             ", location = " + location +
             ", repairer = " + repairer +
+            ", address = " + address +
             ", sensors = {" + sensors.entrySet().stream().map(a -> a.getValue().toString()).collect(Collectors.joining(", ")) + "}}";
     }
 }
