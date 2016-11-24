@@ -28,9 +28,6 @@ public class ContainerController {
     @Autowired
     private ContainerService containerService;
 
-//    @Autowired
-//    private SseService sseService;
-
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
     public Collection<Container> getContainers() {
@@ -51,7 +48,6 @@ public class ContainerController {
     public void addContainer(@RequestBody Container container) {
         log.info("[POST][/api/containers] addContainer()");
         containerService.add(container);
-        return;
     }
 
     @ResponseBody
@@ -60,8 +56,6 @@ public class ContainerController {
     public void updateContainer(@RequestBody Container container) {
         log.info("[PUT][/api/containers] updateContainer(" + container + ")");
         containerService.update(container);
-
-
     }
 
     @ResponseBody
@@ -70,7 +64,6 @@ public class ContainerController {
     public void deleteContainer(@PathVariable(value = "id") String id) {
         log.info("[DELETE][/api/containers/" + id + "] deleteContainer(" + id + ")");
         containerService.delete(id);
-        return;
     }
 
     @ResponseBody
@@ -79,7 +72,6 @@ public class ContainerController {
     public void addSensor(@PathVariable(value = "id") String id, @RequestBody Sensor sensor, @RequestBody String sensorName) {
         containerService.addSensor(id, sensorName, sensor);
         log.info("[PATCH][/api/containers/" + id + "] addSensor(" + id + ", " + sensorName + ")");
-        return;
     }
 
     @ResponseBody
@@ -88,7 +80,6 @@ public class ContainerController {
     public void repairContainer(@PathVariable(value = "id") String id, Principal principal) {
         containerService.repairContainer(id, principal.getName());
         log.info("[POST][/api/containers/" + id + "/repair] repairContainer(" + id + ", " + principal.getName()+ ")");
-        return;
     }
 
     @ResponseBody

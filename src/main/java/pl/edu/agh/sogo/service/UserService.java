@@ -1,5 +1,6 @@
 package pl.edu.agh.sogo.service;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.sogo.domain.User;
 import pl.edu.agh.sogo.persistence.AuthorityRepository;
 import pl.edu.agh.sogo.persistence.UserRepository;
-import pl.edu.agh.sogo.service.util.RandomUtil;
 import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
 
 import javax.inject.Inject;
@@ -47,7 +47,7 @@ public class UserService {
             .collect(Collectors.toSet()));
 
         user.setPassword(passwordEncoder.encode(managedUserDTO.getPassword()));
-        user.setResetKey(RandomUtil.generateResetKey());
+        user.setResetKey(generateResetKey());
         user.setResetDate(System.currentTimeMillis());
         user.setActivated(false);
         userRepository.save(user);
@@ -128,7 +128,7 @@ public class UserService {
         return userRepository.findOneByEmail(mail)
             .filter(User::isActivated)
             .map(user -> {
-                user.setResetKey(RandomUtil.generateResetKey());
+                user.setResetKey(generateResetKey());
                 user.setResetDate(System.currentTimeMillis());
                 userRepository.save(user);
                 return user;
@@ -146,5 +146,9 @@ public class UserService {
                 userRepository.save(user);
                 return user;
             });
+    }
+
+    private static String generateResetKey() {
+        return RandomStringUtils.randomNumeric(20);
     }
 }

@@ -1,4 +1,4 @@
-package pl.edu.agh.sogo.service.util;
+package pl.edu.agh.sogo.service.geocoder;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
