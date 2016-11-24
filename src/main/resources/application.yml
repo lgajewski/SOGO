@@ -7,6 +7,9 @@ spring:
 server:
     port: 8080
 
+
 logging:
     level:
-        ROOT: INFO
+        ROOT: INFO                  # application log level
+        com.google.maps: ERROR      # disable logging for Google Maps Services
+
