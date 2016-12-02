@@ -13,9 +13,9 @@
         // TODO replace with Auth service with Principal
         $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
-        $scope.selection = trucks;
+        $scope.selection = [];
         $scope.showRoute = showRoute;
-        $scope.checkAllElements = {'trucks':true, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
+        $scope.checkAllElements = {'trucks':false, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = ['yellow', 'green', 'blue'];
         $scope.checkCollection = checkCollection;
