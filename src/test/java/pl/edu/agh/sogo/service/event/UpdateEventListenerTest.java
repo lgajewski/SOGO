@@ -42,10 +42,7 @@ public class UpdateEventListenerTest {
         String name = "name";
         Object obj = new Object();
 
-        UpdateEvent updateEvent = mock(UpdateEvent.class);
-        when(updateEvent.getName()).thenReturn(name);
-        when(updateEvent.getObject()).thenReturn(obj);
-
+        UpdateEvent updateEvent = new UpdateEvent(this, name, obj);
         updateEventListener.onApplicationEvent(updateEvent);
 
         verify(sseService).emit(name, obj);
@@ -54,7 +51,7 @@ public class UpdateEventListenerTest {
     @Test
     public void scheduleTrucksGeocode() throws Exception {
         // GIVEN
-        
+
         // create sample locations
         Location loc1 = new Location(1, 2);
         Location loc2 = new Location(2, 7);
