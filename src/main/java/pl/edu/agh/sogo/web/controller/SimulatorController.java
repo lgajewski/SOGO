@@ -40,6 +40,7 @@ public class SimulatorController {
     @ResponseBody
     @RequestMapping(value = "/containers", method = RequestMethod.PUT)
     @Secured(SecurityConstants.ADMIN)
+    @SuppressWarnings("unchecked")
     public void emptyContainers() {
         log.info("[PUT][/api/containers] emptyContainers()");
         containerService.getContainers().forEach(container -> {
