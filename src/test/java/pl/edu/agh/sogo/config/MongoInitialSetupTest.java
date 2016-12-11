@@ -1,18 +1,16 @@
-package pl.edu.agh.sogo.integration;
+package pl.edu.agh.sogo.config;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.edu.agh.sogo.domain.Authority;
 import pl.edu.agh.sogo.domain.User;
 import pl.edu.agh.sogo.persistence.AuthorityRepository;
-import pl.edu.agh.sogo.persistence.UserRepository;
 import pl.edu.agh.sogo.security.SecurityConstants;
+import pl.edu.agh.sogo.service.UserService;
 
+import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,21 +22,11 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MongoInitialSetupTest {
 
-    @Autowired
+    @Inject
     private AuthorityRepository authorityRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Before
-    public void setUp() throws Exception {
-        // setUp method
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        // tearDown method
-    }
+    @Inject
+    private UserService userService;
 
     @Test
     public void testAuthoritiesExist() {
@@ -64,7 +52,7 @@ public class MongoInitialSetupTest {
             "user"
         );
 
-        List<String> users = userRepository.findAll()
+        List<String> users = userService.getAllUsers()
             .stream().map(User::getLogin).collect(Collectors.toList());
 
         assertTrue(users.size() >= expectedLogins.size());

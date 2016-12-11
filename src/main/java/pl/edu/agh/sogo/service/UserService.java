@@ -11,10 +11,7 @@ import pl.edu.agh.sogo.persistence.UserRepository;
 import pl.edu.agh.sogo.web.dto.ManagedUserDTO;
 
 import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -99,6 +96,10 @@ public class UserService {
                 userRepository.save(user);
                 log.debug("Activated user: {}", user);
             });
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     public Optional<User> getUserByLogin(String login) {
