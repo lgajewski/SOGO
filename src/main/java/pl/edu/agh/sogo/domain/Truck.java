@@ -55,6 +55,10 @@ public class Truck {
         return registration;
     }
 
+    public void setRegistration(String registration) {
+        this.registration = registration;
+    }
+
     public Location getLocation() {
         return location;
     }
