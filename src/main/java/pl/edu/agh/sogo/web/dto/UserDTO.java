@@ -87,6 +87,34 @@ public class UserDTO {
         return authorities;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public void setLangKey(String langKey) {
+        this.langKey = langKey;
+    }
+
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
