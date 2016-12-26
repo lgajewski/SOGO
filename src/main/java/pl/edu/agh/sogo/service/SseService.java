@@ -2,6 +2,7 @@ package pl.edu.agh.sogo.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 public class SseService {
@@ -17,8 +19,11 @@ public class SseService {
 
     private final List<SseEmitter> cache = Collections.synchronizedList(new ArrayList<>());
 
+    @Autowired
+    private Supplier<SseEmitter> sseEmitterSupplier;
+
     public SseEmitter provide() {
-        final SseEmitter sseEmitter = new SseEmitter();
+        SseEmitter sseEmitter = sseEmitterSupplier.get();
         sseEmitter.onTimeout(sseEmitter::complete);
 
         cache.add(sseEmitter);
