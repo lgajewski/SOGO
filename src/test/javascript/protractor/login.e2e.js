@@ -26,6 +26,6 @@ describe('login', function () {
 
         login.click();
 
-        expect(element(by.css('.alert-success')).getText()).toMatch(/You are logged in/);
+        expect(element(by.css('.breadcrumb')).getText()).toMatch(/Home/);
     });
 });
