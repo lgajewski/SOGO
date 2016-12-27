@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href ui-sref="home"><img id="logo" src="../../../assets/images/web_logo.png"/></a>
+            <a class="navbar-brand" ui-sref="home"><img id="logo" src="/assets/images/web_logo.png"/></a>
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
@@ -33,26 +33,12 @@
                     </div>
                     <li class="divider"></li>
                     <div class="notifications-wrapper">
-                        <!--<a class="content" href="" ng-repeat="container in brokenContainers">-->
                             <div class="notification-item" ng-repeat="container in brokenContainers">
                                 <h4 class="item-title">{{'CONTAINER'|translate}} <b>{{container.id}}</b> {{'ERROR_REPORT'|translate}} <i class="fa fa-bell-slash" ng-click="markAsRead(container)"></i></h4>
                                 <p class="item-info">({{'LOCATION'|translate}}: {{container.address}})</p>
 
                             </div>
-                        <!--</a>-->
                     </div>
-                     <!--<li ng-repeat="container in brokenContainers">-->
-                        <!--<a href="">-->
-                        <!--<div>-->
-                            <!--<div class="col-xs-2" ><span class="label label-danger" align="center">error</span></div>-->
-                            <!--Container at <b>{{container.address}}</b> reported an error!-->
-                        <!--</div>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li class="divider"></li>-->
-                    <!--<li>-->
-                        <!--<a href="">View All</a>-->
-                    <!--</li>-->
                 </ul>
             </li>
             <li class="dropdown">
@@ -76,19 +62,19 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse" id="nav-main">
             <ul class="nav navbar-nav side-nav">
                 <li id="focus">
-                    <a ui-sref="home" translate="HOME"><i class="fa fa-fw fa-home"></i></a>
+                    <a ui-sref="home"><i class="fa fa-fw fa-home"></i> {{'HOME'|translate}}</a>
                 </li>
                 <li>
-                    <a ui-sref="trucks" translate="TRUCKS"><i class="fa fa-fw fa-truck"></i></a>
+                    <a ui-sref="trucks"><i class="fa fa-fw fa-truck"></i> {{'TRUCKS'|translate}}</a>
                 </li>
                 <li>
-                    <a ui-sref="containers" translate="CONTAINERS"><i class="fa fa-fw fa-trash-o"></i></a>
+                    <a ui-sref="containers"><i class="fa fa-fw fa-trash-o"></i> {{'CONTAINERS'|translate}}</a>
                 </li>
                 <li restrict access="ROLE_ADMIN">
-                    <a ui-sref="users" translate="USERS"><i class="fa fa-fw fa-users"></i></a>
+                    <a ui-sref="users"><i class="fa fa-fw fa-users"></i> {{'USERS'|translate}}</a>
                 </li>
                 <li restrict access="ROLE_ADMIN">
-                    <a ui-sref="simulator" translate="SIMULATOR"><i class="fa fa-fw fa-users"></i></a>
+                    <a ui-sref="simulator"><i class="fa fa-fw fa-wrench"></i> {{'SIMULATOR'|translate}}</a>
                 </li>
             </ul>
         </div>
