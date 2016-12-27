@@ -10,12 +10,10 @@
 
     function HomeController($scope, Restangular, SseService, DirectionsService, $filter,
                             savePropsToVariable, containers, trucks, fillingPercentageList, Notification, $uibModal) {
-        // TODO replace with Auth service with Principal
-        $scope.isAuthenticated = () => true;
         $scope.mapOptions = getMap();
         $scope.selection = [];
         $scope.showRoute = showRoute;
-        $scope.checkAllElements = {'trucks':false, 'yellow':false, 'blue':false, 'green':false, 'broken':false};
+        $scope.checkAllElements = {'trucks':true, 'yellow':true, 'blue':true, 'green':true, 'broken':true};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = ['yellow', 'green', 'blue'];
         $scope.checkCollection = checkCollection;
@@ -43,11 +41,11 @@
         $scope.truckToAdd.load = 0;
         $scope.fillingPercentageList = fillingPercentageList;
 
-        var propsInVariable = savePropsToVariable;
+        loadTrucks();
+        loadContainers();
+
         var marker;
         var mapCenter = new google.maps.LatLng($scope.mapOptions.center.latitude, $scope.mapOptions.center.longitude);
-
-
 
         $scope.animationsEnabled = true;
 
@@ -84,7 +82,6 @@
                 idle: function () {}
             }
         };
-        var geocoder = new google.maps.Geocoder();
 
         $scope.displayInfoWindow = function displayInfoWindow(selectedMarker, event, selectedItem){
             // var latlng = new google.maps.LatLng(selectedItem.coords.latitude, selectedItem.coords.longitude);
@@ -455,11 +452,6 @@
             })
         }
 
-        // function loadUsers() {
-        //     Restangular.all('users').getList().then(function (data) {
-        //         $scope.users = data;
-        //     })
-        // }
 
         function checkCollection(collectionName) {
             if ($scope.checkAllElements[collectionName]) {
