@@ -14,6 +14,7 @@ import com.graphhopper.jsprit.core.util.Solutions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Location;
@@ -120,5 +121,9 @@ public class RouteService {
         }
     }
 
+    @Scheduled(cron = "0 0 6 * * *")
+    public void scheduleGenerateRoutes() {
+        generateRoutes();
+    }
 
 }
