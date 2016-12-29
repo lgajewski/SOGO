@@ -23,16 +23,9 @@
         $scope.isError = isError;
         $scope.activeObject = ActiveItemService.getObject();
         // $scope.getContainers();
-        $scope.containerToAdd = {};
         $scope.containerToEdit = {};
         $scope.repairContainer = repairContainer;
         $scope.containersToRepair = containersToRepair;
-        $scope.containerToAdd.type = 'blue';
-        $scope.containerToAdd.sensors = {
-            load: {
-                value: 0.0
-            }
-        };
         $scope.repairers = repairers;
 
 
@@ -68,28 +61,15 @@
             }
         };
 
-        $scope.containerAddMap = new google.maps.Map(document.getElementById("map-canvas-addcontainer"), $scope.defaultMapProperties);
         $scope.containerEditMap = new google.maps.Map(document.getElementById("map-canvas-editcontainer"), $scope.defaultMapProperties);
         $scope.containerShowMap = new google.maps.Map(document.getElementById("map-canvas-showcontainer"), $scope.defaultMapProperties);
 
         var marker;
 
 
-        google.maps.event.addListener($scope.containerAddMap, 'click', function(event){
-            addMarker(event.latLng, 'assets/images/ic_map_trash_' + $scope.containerToAdd.type + '.png',
-                $scope.containerAddMap, $scope.containerToAdd);
-        });
-
         google.maps.event.addListener($scope.containerEditMap, 'click', function(event){
             addMarker(event.latLng, 'assets/images/trash' + parseInt($scope.containerToEdit.sensors.load.value / 10) + '_' + $scope.containerToEdit.type + '.png',
                 $scope.containerEditMap, $scope.containerToEdit);
-        });
-
-        $scope.$watch('containerToAdd.type', function(){
-            if(marker != null){
-                addMarker(marker.position, 'assets/images/ic_map_trash_' + $scope.containerToAdd.type + '.png',
-                    $scope.containerAddMap, $scope.containerToAdd);
-            }
         });
 
         $scope.$watch('containerToEdit.type', function(){
@@ -107,17 +87,6 @@
             if(marker != null){
                 addMarker(marker.position, 'assets/images/trash' + parseInt($scope.containerToEdit.sensors.load.value / 10) + '_' + $scope.containerToEdit.type + '.png',
                     $scope.containerEditMap, $scope.containerToEdit);
-            }
-        });
-
-        $('#myAddModalLabel').on('show.bs.modal', function() {
-            //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
-            resizeMap($scope.containerAddMap);
-        });
-
-        $('#myAddModalLabel').on('hidden.bs.modal', function() {
-            if(marker != null){
-                marker.setMap(null);
             }
         });
 
@@ -332,6 +301,25 @@
             }, function () {
                 getContainers();
                  console.log('Modal dismissed at: ' + new Date());
+            });
+        };
+
+
+        $scope.openContainerAddModal = function () {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                ariaLabelledBy: 'myAddContainerModalLabel',
+                templateUrl: 'app/view/modal/container.add.html',
+                controller: 'ContainerAddController',
+                resolve: {
+                    mapProp: function () {
+                        return $scope.defaultMapProperties;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                getContainers();
             });
         };
     }

@@ -52,8 +52,8 @@
                     </div>
                 </div>
             </div>
-            <a restrict access="ROLE_SYSTEM_MANAGER ROLE_ADMIN" href="">
-                <div class="panel-footer" data-toggle="modal" data-target="#myAddContainerModalLabel">
+            <a restrict access="ROLE_SYSTEM_MANAGER ROLE_ADMIN" href="" ng-click="openContainerAddModal()">
+                <div class="panel-footer">
                     <span class="pull-left" translate="ADD_CONTAINER"></span>
                     <span class="pull-right"><i class="fa fa-plus"></i></span>
                     <div class="clearfix"></div>
@@ -256,49 +256,6 @@
             <div class="modal-footer">
                 <button type="button" id="btn-cancelAddTruck" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addTruck(truckToAdd)" translate="ADD"></button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="myAddContainerModalLabel" class="modal fade add-modal" tabindex="-1" role="dialog" aria-labelledby="myAddContainerModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">X</span>
-                    <span class="sr-only" translate="CLOSE"></span>
-                </button>
-                <h4 class="modal-title" translate="ADD_CONTAINER"></h4>
-            </div>
-            <div class="modal-body">
-                <label translate="TYPE"></label>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd1" value="blue"  ng-model="containerToAdd.type"> {{'BLUE'|translate}}
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd2" value="green"  ng-model="containerToAdd.type"> {{'GREEN'|translate}}
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadiosAdd3" value="yellow" ng-model="containerToAdd.type"> {{'YELLOW'|translate}}
-                    </label>
-                </div>
-                <label translate="LOCATION"></label>
-                <div id="map-canvas-addcontainer" class="angular-google-map-container">
-
-                </div>
-                <label translate="CAPACITY"></label>
-                <input class="form-control" ng-model="containerToAdd.capacity">
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btn-cancelAddContainer" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addContainer(containerToAdd)" translate="ADD"></button>
             </div>
         </div>
     </div>

@@ -6,14 +6,14 @@
         .controller('HomeController', HomeController);
 
     HomeController.$inject = ['$scope', 'Restangular', 'SseService', 'DirectionsService', '$filter',
-        'savePropsToVariable', 'containers', 'trucks', 'fillingPercentageList', 'Notification', '$uibModal'];
+        'containers', 'trucks', 'fillingPercentageList', 'Notification', '$uibModal'];
 
     function HomeController($scope, Restangular, SseService, DirectionsService, $filter,
-                            savePropsToVariable, containers, trucks, fillingPercentageList, Notification, $uibModal) {
+                            containers, trucks, fillingPercentageList, Notification, $uibModal) {
         $scope.mapOptions = getMap();
         $scope.selection = [];
         $scope.showRoute = showRoute;
-        $scope.checkAllElements = {'trucks':true, 'yellow':true, 'blue':true, 'green':true, 'broken':true};
+        $scope.checkAllElements = {'trucks': true, 'yellow': true, 'blue': true, 'green': true, 'broken': true};
         $scope.toggleCollection = toggleCollection;
         $scope.collectionsAvailable = ['yellow', 'green', 'blue'];
         $scope.checkCollection = checkCollection;
@@ -25,18 +25,10 @@
             broken: containers.broken
         };
         $scope.alerts = [];
-        $scope.active = {'trucks': false, 'yellow': false, 'blue':false, 'green':false};
+        $scope.active = {'trucks': false, 'yellow': false, 'blue': false, 'green': false};
         $scope.showList = showList;
         $scope.selectContainers = selectContainers;
-        $scope.addContainer = addContainer;
         $scope.addTruck = addTruck;
-        $scope.containerToAdd = {};
-        $scope.containerToAdd.type = 'blue';
-        $scope.containerToAdd.sensors = {
-            load: {
-                value: 0.0
-            }
-        };
         $scope.truckToAdd = {};
         $scope.truckToAdd.load = 0;
         $scope.fillingPercentageList = fillingPercentageList;
@@ -46,17 +38,27 @@
 
         var marker;
         var mapCenter = new google.maps.LatLng($scope.mapOptions.center.latitude, $scope.mapOptions.center.longitude);
+        var mapProp = {
+            center: mapCenter,
+            zoom: 14,
+            draggable: true,
+            scrollwheel: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            events: {
+                idle: function () {
+                }
+            }
+        };
 
         $scope.animationsEnabled = true;
-
-        $scope.openServiceAlertsModal = function(){
+        $scope.openServiceAlertsModal = function () {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 ariaLabelledBy: 'myServiceAlertsModalLabel',
                 templateUrl: 'app/view/modal/service.alerts.html',
                 controller: 'AlertsController',
                 resolve: {
-                    brokenContainers: function(){
+                    brokenContainers: function () {
                         return $scope.items.broken
                     }
                 }
@@ -70,20 +72,25 @@
             });
         };
 
+        $scope.openContainerAddModal = function () {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                ariaLabelledBy: 'myAddContainerModalLabel',
+                templateUrl: 'app/view/modal/container.add.html',
+                controller: 'ContainerAddController',
+                resolve: {
+                    mapProp: function () {
+                        return mapProp;
+                    }
+                }
+            });
 
-
-        var mapProp = {
-            center: mapCenter,
-            zoom: 14,
-            draggable: true,
-            scrollwheel: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            events: {
-                idle: function () {}
-            }
+            modalInstance.result.then(function () {
+                loadContainers();
+            });
         };
 
-        $scope.displayInfoWindow = function displayInfoWindow(selectedMarker, event, selectedItem){
+        $scope.displayInfoWindow = function displayInfoWindow(selectedMarker, event, selectedItem) {
             // var latlng = new google.maps.LatLng(selectedItem.coords.latitude, selectedItem.coords.longitude);
             // var address = "";
             // geocoder.geocode({'latLng':latlng}, function(results, status){
@@ -117,7 +124,7 @@
                 "</tr>" +
                 "<tr>" +
                 "<td>" + $filter('translate')('LOAD') + ":</td>" +
-                "<td>" + selectedItem.load + (selectedItem.type == 'truck' ? 'kg':'%') + "</td>" +
+                "<td>" + selectedItem.load + (selectedItem.type == 'truck' ? 'kg' : '%') + "</td>" +
                 "</tr>" +
                 "</tbody>" +
                 "</table>"
@@ -126,57 +133,30 @@
         };
 
 
-        $scope.containerMap = new google.maps.Map(document.getElementById("map-canvas-addcontainer"), mapProp);
         $scope.truckMap = new google.maps.Map(document.getElementById("map-canvas-addtruck"), mapProp);
 
-        google.maps.event.addListener($scope.containerMap, 'click', function(event){
-            addMarker(event.latLng, 'assets/images/ic_map_trash_' + $scope.containerToAdd.type + '.png',
-                $scope.containerMap, $scope.containerToAdd);
-        });
-
-        google.maps.event.addListener($scope.truckMap, 'click', function(event){
+        google.maps.event.addListener($scope.truckMap, 'click', function (event) {
             addMarker(event.latLng, 'assets/images/truck.png', $scope.truckMap, $scope.truckToAdd);
         });
 
-
-
-        $scope.$watch('containerToAdd.type', function(){
-            if(marker != null){
-                addMarker(marker.position, 'assets/images/ic_map_trash_' + $scope.containerToAdd.type + '.png',
-                    $scope.containerMap, $scope.containerToAdd);
-            }
-        });
-
-        $('#myAddTruckModalLabel').on('show.bs.modal', function() {
+        $('#myAddTruckModalLabel').on('show.bs.modal', function () {
             //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
             resizeMap($scope.truckMap);
         });
 
-        $('#myAddTruckModalLabel').on('hidden.bs.modal', function() {
-            if(marker != null){
+        $('#myAddTruckModalLabel').on('hidden.bs.modal', function () {
+            if (marker != null) {
                 marker.setMap(null);
             }
         });
-
-        $('#myAddContainerModalLabel').on('show.bs.modal', function() {
-            //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
-            resizeMap($scope.containerMap);
-        });
-
-        $('#myAddContainerModalLabel').on('hidden.bs.modal', function() {
-            if(marker != null){
-                marker.setMap(null);
-            }
-        });
-
 
         // Server Side Events
         configureSse();
 
 
-        function addMarker(latLng, icon, map, item){
+        function addMarker(latLng, icon, map, item) {
             //clear the previous marker and circle.
-            if(marker != null){
+            if (marker != null) {
                 marker.setMap(null);
             }
 
@@ -192,33 +172,20 @@
         }
 
         function resizeMap(map) {
-            if(typeof map == "undefined") return;
-            setTimeout( function(){resizingMap(map);} , 400);
+            if (typeof map == "undefined") return;
+            setTimeout(function () {
+                resizingMap(map);
+            }, 400);
         }
 
         function resizingMap(map) {
-            if(typeof map == "undefined") return;
+            if (typeof map == "undefined") return;
             var center = map.getCenter();
             google.maps.event.trigger(map, "resize");
             map.setCenter(center);
         }
 
-        function addContainer(container){
-            Restangular.all('containers').customPOST(container).then(function () {
-                Notification.success('Container added');
-                loadContainers();
-                marker.setMap(null);
-                $scope.containerToAdd = {};
-                $scope.containerToAdd.type = 'blue';
-                $scope.containerToAdd.sensors = {
-                    load: {
-                        value: 0.0
-                    }
-                };
-            })
-        }
-
-        function addTruck(truck){
+        function addTruck(truck) {
             Restangular.all('trucks').customPOST(truck).then(function () {
                 Notification.success('Truck added');
                 loadTrucks();
@@ -228,9 +195,9 @@
             })
         }
 
-        function isError(container){
-            for(var sensor in container.sensors){
-                if(container.sensors[sensor].errorCode != 0){
+        function isError(container) {
+            for (var sensor in container.sensors) {
+                if (container.sensors[sensor].errorCode != 0) {
                     return true;
                 }
             }
@@ -238,10 +205,10 @@
         }
 
 
-        function selectContainers(col, value){
-            for(var i=0; i< $scope.items[col].length; i++){
-                var x = parseFloat($scope.items[col][i].load.substr(0,$scope.items[col][i].load.length-1));
-                if(x > (parseInt(value)-10) && x <= parseInt(value)){
+        function selectContainers(col, value) {
+            for (var i = 0; i < $scope.items[col].length; i++) {
+                var x = parseFloat($scope.items[col][i].load.substr(0, $scope.items[col][i].load.length - 1));
+                if (x > (parseInt(value) - 10) && x <= parseInt(value)) {
                     toggleSelection($scope.items[col][i]);
                 }
             }
@@ -276,7 +243,7 @@
             var onContainerUpdated = function (event) {
                 var updatedContainer = JSON.parse(event.data);
                 var load_value = parseFloat(updatedContainer.sensors.load.value).toFixed(2);
-                var num = parseInt(load_value/10);
+                var num = parseInt(load_value / 10);
 
                 $scope.$apply(function () {
                     // var updatedContainer = JSON.parse(event.data);
@@ -291,8 +258,8 @@
                         container.sensors = updatedContainer.sensors;
                         container.options.icon.url = 'assets/images/trash' + num + '_' + updatedContainer.type + '.png';
 
-                        if(isError(container)){
-                            if(!$scope.items['broken'].find(c => c.id === updatedContainer.id)){
+                        if (isError(container)) {
+                            if (!$scope.items['broken'].find(c => c.id === updatedContainer.id)) {
                                 $scope.items['broken'].push(container);
                             }
                             container.options.icon.url = 'assets/images/trash_' + updatedContainer.type + '_error.png';
@@ -306,7 +273,7 @@
             SseService.register("container", onContainerUpdated);
 
             // unregister on exit
-            $scope.$on("$destroy", function(){
+            $scope.$on("$destroy", function () {
                 SseService.unregister(onTruckUpdated);
                 SseService.unregister(onContainerUpdated);
             });
@@ -328,7 +295,7 @@
                     maxZoom: 22,
                     minZoom: 0,
                     cluster: {
-                        minimumClusterSize : 5,
+                        minimumClusterSize: 5,
                         zoomOnClick: true,
                         // styles: [{
                         //     url: "assets/images/ic_map_trash_blue.png",
@@ -347,7 +314,8 @@
                 refresh: false,
                 bounds: {},
                 events: {
-                    idle: function () {}
+                    idle: function () {
+                    }
                 }
             }
         }
@@ -408,7 +376,7 @@
             Restangular.all('containers').getList().then(function (resp) {
                 var num;
                 for (var i = 0; i < resp.length; i++) {
-                    num = parseInt((parseFloat(resp[i].sensors.load.value))/10);
+                    num = parseInt((parseFloat(resp[i].sensors.load.value)) / 10);
 
                     var container = {
                         id: 0,
@@ -436,14 +404,14 @@
                     container.sensors = resp[i].sensors;
                     $scope.items[resp[i].type].push(container);
 
-                    if(isError(container)){
+                    if (isError(container)) {
                         $scope.items['broken'].push(container);
                         container.options.icon.url = 'assets/images/trash_' + resp[i].type + '_error.png';
                     }
 
                     if (($scope.checkAllElements['yellow'] && container.type == 'yellow')
                         || ($scope.checkAllElements['green'] && container.type == 'green')
-                    ||  ($scope.checkAllElements['blue'] && container.type == 'blue')){
+                        || ($scope.checkAllElements['blue'] && container.type == 'blue')) {
                         // select automatically
                         $scope.selection.push(container);
                     }
@@ -470,10 +438,10 @@
                     $scope.selection.push($scope.items[collectionName][i]);
                 }
             }
-            if(collectionName != 'trucks' && collectionName != 'broken'){
-                for(var j=10; j<=100; j+=10){
-                    var elem = document.getElementById(collectionName+'_'+j);
-                    if(!elem.checked){
+            if (collectionName != 'trucks' && collectionName != 'broken') {
+                for (var j = 10; j <= 100; j += 10) {
+                    var elem = document.getElementById(collectionName + '_' + j);
+                    if (!elem.checked) {
                         elem.checked = true;
                     }
                 }
@@ -488,10 +456,10 @@
                     $scope.selection.splice(idx, 1);
                 }
             }
-            if(collectionName != 'trucks' && collectionName != 'broken'){
-                for(var j=10; j<=100; j+=10){
-                    var elem = document.getElementById(collectionName+'_'+j);
-                    if(elem.checked){
+            if (collectionName != 'trucks' && collectionName != 'broken') {
+                for (var j = 10; j <= 100; j += 10) {
+                    var elem = document.getElementById(collectionName + '_' + j);
+                    if (elem.checked) {
                         elem.checked = false;
                     }
                 }
