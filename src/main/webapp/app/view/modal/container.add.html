@@ -7,29 +7,29 @@
 </div>
 <div class="modal-body">
     <label translate="TYPE"></label>
-    <div class="radio">
-        <label>
-            <input type="radio" name="optionsRadios" id="optionsRadiosAdd1" value="blue"  ng-model="containerToAdd.type"> {{'BLUE'|translate}}
+    <br/>
+    <div class="btn-group btn-group-justified btn-group-lg">
+        <label class="btn btn-primary" uib-btn-radio="'blue'" ng-model="containerToAdd.type">
+            {{'BLUE'|translate}} <span class="glyphicon glyphicon-trash"></span>
+        </label>
+        <label class="btn btn-success" uib-btn-radio="'green'" ng-model="containerToAdd.type">
+            {{'GREEN'|translate}} <span class="glyphicon glyphicon-trash"></span>
+        </label>
+        <label class="btn btn-warning" uib-btn-radio="'yellow'" ng-model="containerToAdd.type">
+            {{'YELLOW'|translate}} <span class="glyphicon glyphicon-trash"></span>
         </label>
     </div>
-    <div class="radio">
-        <label>
-            <input type="radio" name="optionsRadios" id="optionsRadiosAdd2" value="green"  ng-model="containerToAdd.type"> {{'GREEN'|translate}}
-        </label>
-    </div>
-    <div class="radio">
-        <label>
-            <input type="radio" name="optionsRadios" id="optionsRadiosAdd3" value="yellow" ng-model="containerToAdd.type"> {{'YELLOW'|translate}}
-        </label>
-    </div>
+    <br/>
     <label translate="LOCATION"></label>
-    <div id="map-canvas-addcontainer" class="angular-google-map-container" ng-init="initMap()">
+    <div id="map-canvas-addcontainer" class="angular-google-map-container" ng-init="initMap()"></div>
 
-    </div>
+    <br/>
     <label translate="CAPACITY"></label>
     <input class="form-control" ng-model="containerToAdd.capacity">
 </div>
+
 <div class="modal-footer">
-    <button type="button" id="btn-cancelAddContainer" class="btn btn-default" ng-click="close()" translate="CANCEL"></button>
+    <button type="button" id="btn-cancelAddContainer" class="btn btn-default" ng-click="close()"
+            translate="CANCEL"></button>
     <button type="button" class="btn btn-success" ng-click="addContainer(containerToAdd)" translate="ADD"></button>
 </div>
