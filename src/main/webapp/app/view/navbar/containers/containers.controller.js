@@ -281,7 +281,7 @@
 
         $scope.animationsEnabled = true;
         $scope.open = function () {
-            var modalInstance = $uibModal.open({
+            $uibModal.open({
                 animation: $scope.animationsEnabled,
                 ariaLabelledBy: 'myContainerStatusModalLabel',
                 templateUrl: 'app/view/modal/container.status.html',
@@ -294,13 +294,6 @@
                         return $scope.repairers;
                     }
                 }
-            });
-
-            modalInstance.result.then(function (selectedItem) {
-                console.log('Modal xxx at: ' + new Date());
-            }, function () {
-                getContainers();
-                 console.log('Modal dismissed at: ' + new Date());
             });
         };
 
