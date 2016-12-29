@@ -47,7 +47,7 @@
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 ariaLabelledBy: 'myServiceAlertsModalLabel',
-                templateUrl: 'app/view/navbar/home/alerts/serviceAlertsModal.html',
+                templateUrl: 'app/view/modal/service.alerts.html',
                 controller: 'AlertsController',
                 resolve: {
                     brokenContainers: function(){
