@@ -9,7 +9,6 @@ import com.graphhopper.jsprit.core.problem.solution.route.VehicleRoute;
 import com.graphhopper.jsprit.core.problem.vehicle.VehicleImpl;
 import com.graphhopper.jsprit.core.problem.vehicle.VehicleTypeImpl;
 import com.graphhopper.jsprit.core.reporting.SolutionPrinter;
-import com.graphhopper.jsprit.core.util.Coordinate;
 import com.graphhopper.jsprit.core.util.Solutions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +43,9 @@ public class RouteService {
 
     @Autowired
     private ContainerRepository containerRepository;
+
+    private Location startingLocation = new Location(50.0707312, 20.0073595);
+    private Location depotLocation = new Location(49.9841951, 20.0044851);
 
     public Map<Truck, Route> getRoutes() {
         List<Route> routes = routeRepository.findAll();
@@ -83,8 +85,7 @@ public class RouteService {
             // specify vehicle1 with different start and end locations
             VehicleImpl vehicle1 = VehicleImpl.Builder.newInstance(truck.getRegistration())
                 .setType(vehicleType)
-                .setStartLocation(com.graphhopper.jsprit.core.problem.Location.newInstance(truck.getLocation().getLatitude(), truck.getLocation().getLongitude()))
-                .setReturnToDepot(false)
+                .setStartLocation(com.graphhopper.jsprit.core.problem.Location.newInstance(startingLocation.getLatitude(), startingLocation.getLongitude()))
                 .build();
 
             vrpBuilder.addVehicle(vehicle1);
@@ -110,12 +111,12 @@ public class RouteService {
             Route truckRoute = new Route();
             List<Location> locations = new ArrayList<>();
             truckRoute.setTruck(truckRepository.findByRegistration(route.getVehicle().getId()));
-            Coordinate truckCoords = route.getVehicle().getStartLocation().getCoordinate();
-            locations.add(new Location(truckCoords.getX(), truckCoords.getY()));
+            locations.add(startingLocation);
             for (Job container : route.getTourActivities().getJobs()) {
                 Container cont = containerRepository.findOne(container.getId());
                 locations.add(cont.getLocation());
             }
+            locations.add(depotLocation);
             truckRoute.setRoute(locations);
             routeRepository.save(truckRoute);
         }

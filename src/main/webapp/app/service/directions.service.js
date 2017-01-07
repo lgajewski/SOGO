@@ -39,6 +39,7 @@
                 var subitemsCounter = 0;
 
                 for (var j = itemsCounter; j < route.length; j++) {
+                    // console.log(itemsCounter + subitemsCounter + ": " + route[j].latitude + ", " +  route[j].longitude);
                     subitemsCounter++;
                     subBatch.push({
                         location: new window.google.maps.LatLng(route[j].latitude, route[j].longitude),
@@ -64,8 +65,9 @@
             for (var k = 0; k < batches.length; k++) {
                 var lastIndex = batches[k].length - 1;
                 var start = batches[k][0].location;
+                // console.log("Start: " + start.lat() + ", " + start.lng());
                 var end = batches[k][lastIndex].location;
-
+                // console.log("End: " + end.lat() + ", " + end.lng());
                 // trim first and last entry from array
                 var waypts = [];
                 waypts = batches[k];
@@ -76,6 +78,7 @@
                     origin: start,
                     destination: end,
                     waypoints: waypts,
+                    optimizeWaypoints: false,
                     travelMode: window.google.maps.TravelMode.DRIVING
                 };
 
@@ -87,41 +90,45 @@
                 //         console.log('Directions request failed due to ' + status);
                 //     }
                 // });
+                (function (kk) {
+                    directionsService.route(request, function (result, status) {
 
-                directionsService.route(request, function (result, status) {
-                    if (status == window.google.maps.DirectionsStatus.OK) {
+                        if (status == window.google.maps.DirectionsStatus.OK) {
 
-                        var unsortedResult = {order: k, result: result};
-                        unsortedResults.push(unsortedResult);
+                            var unsortedResult = {order: kk, result: result};
+                            unsortedResults.push(unsortedResult);
 
-                        directionsResultsReturned++;
+                            directionsResultsReturned++;
 
-                        if (directionsResultsReturned == batches.length) // we've received all the results. put to map
-                        {
-                            var count = 0;
-                            for (var key in unsortedResults) {
-                                if (unsortedResults[key].result != null) {
-                                    if (unsortedResults.hasOwnProperty(key)) {
-                                        if (count == 0) // first results. new up the combinedResults object
-                                            combinedResults = unsortedResults[key].result;
-                                        else {
-                                            // only building up legs, overview_path, and bounds in my consolidated object. This is not a complete
-                                            // directionResults object, but enough to draw a path on the map, which is all I need
-                                            combinedResults.routes[0].legs = combinedResults.routes[0].legs.concat(unsortedResults[key].result.routes[0].legs);
-                                            combinedResults.routes[0].overview_path = combinedResults.routes[0].overview_path.concat(unsortedResults[key].result.routes[0].overview_path);
+                            if (directionsResultsReturned == batches.length) {
+                                unsortedResults.sort(function (a, b) {
+                                    return parseFloat(a.order) - parseFloat(b.order);
+                                });
+                                var count = 0;
+                                for (var key in unsortedResults) {
+                                    if (unsortedResults[key].result != null) {
+                                        if (unsortedResults.hasOwnProperty(key)) {
+                                            console.log(key);
+                                            console.log(unsortedResults[key].result.request.origin.lat());
+                                            if (count == 0)
+                                                combinedResults = unsortedResults[key].result;
+                                            else {
 
-                                            combinedResults.routes[0].bounds = combinedResults.routes[0].bounds.extend(unsortedResults[key].result.routes[0].bounds.getNorthEast());
-                                            combinedResults.routes[0].bounds = combinedResults.routes[0].bounds.extend(unsortedResults[key].result.routes[0].bounds.getSouthWest());
+                                                combinedResults.routes[0].legs = combinedResults.routes[0].legs.concat(unsortedResults[key].result.routes[0].legs);
+                                                combinedResults.routes[0].overview_path = combinedResults.routes[0].overview_path.concat(unsortedResults[key].result.routes[0].overview_path);
+
+                                                combinedResults.routes[0].bounds = combinedResults.routes[0].bounds.extend(unsortedResults[key].result.routes[0].bounds.getNorthEast());
+                                                combinedResults.routes[0].bounds = combinedResults.routes[0].bounds.extend(unsortedResults[key].result.routes[0].bounds.getSouthWest());
+                                            }
+                                            count++;
                                         }
-                                        count++;
                                     }
                                 }
+                                directionsDisplay.setDirections(combinedResults);
                             }
-                            directionsDisplay.setDirections(combinedResults);
                         }
-                    }
-                });
-
+                    });
+                })(k);
             }
         }
 
