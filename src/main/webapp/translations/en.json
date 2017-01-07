@@ -98,14 +98,20 @@
     "SIMULATE_TRUCKS": "Simulate trucks",
     "CREATE_CONTAINERS": "Create containers",
     "SIMULATE_CONTAINERS": "Simulate containers",
+    "OTHER_TOOLS": "Other tools",
     "CREATE": "Create",
     "GENERATE_ROUTES": "Generate routes",
+    "GENERATE_STUFF": "Generate stuff",
     "EMPTY_TRUCKS": "Empty trucks",
     "EMPTY_CONTAINERS": "Empty containers",
     "ROUTES": "Routes",
     "SELECT_ROUTE": "Select route",
     "CURRENT_ROUTE": "Selected routes",
     "REPAIR_CONTAINERS": "Containers to repair",
-    "REPAIR_CONTAINERS_FROM_SIMULATOR": "Repair all containers",
-    "DRIVER": "Driver"
+    "REPAIR_CONTAINERS_FROM_SIMULATOR": "Repair containers",
+    "DRIVER": "Driver",
+    "WATCH_OUT": "Watch out!",
+    "TRUCKS_OTHER_TOOLS": "You are able to iterate over all of the trucks in the application and clear their current load.",
+    "CONTAINERS_OTHER_TOOLS": "Here you can empty current load of each container.",
+    "CONTAINERS_OTHER_TOOLS_WATCH_OUT": "If you press \"Repair\" button, then every container will be marked as correct."
 }

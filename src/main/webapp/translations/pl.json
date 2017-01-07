@@ -98,14 +98,20 @@
     "SIMULATE_TRUCKS": "Symuluj ciężarówki",
     "CREATE_CONTAINERS": "Dodaj kontenery",
     "SIMULATE_CONTAINERS": "Symuluj kontenery",
+    "OTHER_TOOLS": "Inne narzędzia",
     "CREATE": "Dodaj",
     "GENERATE_ROUTES": "Generuj trasy",
+    "GENERATE_STUFF": "Wygeneruj dane",
     "EMPTY_TRUCKS": "Opróżnij ciężarówki",
     "EMPTY_CONTAINERS": "Opróżnij kontenery",
     "ROUTES": "Trasy",
     "SELECT_ROUTE": "Wybierz trasę",
     "CURRENT_ROUTE": "Wybrane trasy",
     "REPAIR_CONTAINERS": "Kontenery do naprawienia",
-    "REPAIR_CONTAINERS_FROM_SIMULATOR": "Napraw wszystkie kontenery",
-    "DRIVER": "Kierowca"
+    "REPAIR_CONTAINERS_FROM_SIMULATOR": "Napraw kontenery",
+    "DRIVER": "Kierowca",
+    "WATCH_OUT": "Uważaj!",
+    "TRUCKS_OTHER_TOOLS": "W celu opróżnienia wszystkich ciężarówek w aplikacji możesz nacisnąć poniższy przycisk.",
+    "CONTAINERS_OTHER_TOOLS": "Tutaj możesz wyczyścić obecne zapełnienie każdego z kontenerów.",
+    "CONTAINERS_OTHER_TOOLS_WATCH_OUT": "Jeśli naciśniesz przycisk \"Napraw\", to każdy kontener w aplikacji zostanie oznaczony jako poprawny."
 }

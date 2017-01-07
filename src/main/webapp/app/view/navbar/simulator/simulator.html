@@ -22,7 +22,7 @@
                     <div class="caption">
                         <div class="clearfix">
                             <h3>
-                                Simulate trucks
+                                {{'SIMULATE_TRUCKS'|translate}}
                                 <play-button class="btn btn-lg pull-right" ng-click="simulateTrucks()"
                                              ng-model="isTrucksSimulatorRunning"></play-button>
                             </h3>
@@ -37,7 +37,7 @@
                     <div class="caption">
                         <div class="clearfix">
                             <h3>
-                                Generate routes
+                                {{'GENERATE_ROUTES'|translate}}
                                 <button type="button" class="btn btn-primary btn-lg pull-right"
                                         ng-click="generateRoutes($event)">
                                     <i class="glyphicon glyphicon-random"></i></button>
@@ -54,7 +54,7 @@
                     <div class="caption">
                         <div class="clearfix">
                             <h3>
-                                Simulate containers
+                                {{'SIMULATE_TRUCKS'|translate}}
                                 <play-button class="btn btn-lg pull-right" ng-click="simulateContainers()"
                                              ng-model="isContainersSimulatorRunning"></play-button>
                             </h3>
@@ -70,7 +70,7 @@
     <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><i class="glyphicon glyphicon-stats"></i> Generate stuff</span>
+                <span><i class="glyphicon glyphicon-stats"></i> {{'GENERATE_STUFF'|translate}}</span>
             </div>
             <div class="panel-body text-center">
                 <div class="row">
@@ -80,7 +80,7 @@
                             <div class="caption">
                                 <button type="button" class="btn btn-labeled btn-primary" ng-click="createTrucks()">
                                     <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
-                                    Create trucks
+                                    {{'CREATE_TRUCKS'|translate}}
                                 </button>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                             <div class="caption">
                                 <button type="button" class="btn btn-labeled btn-success" ng-click="createContainers()">
                                     <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
-                                    Create containers
+                                    {{'CREATE_CONTAINERS'|translate}}
                                 </button>
                             </div>
                         </div>
@@ -103,23 +103,23 @@
     <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><i class="glyphicon glyphicon-th-list"></i> Other tools</span>
+                <span><i class="glyphicon glyphicon-th-list"></i> {{'OTHER_TOOLS'|translate}}</span>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-3 col-xs-3 text-center">
                         <img class="rounded-circle" src="/assets/images/img_sq_garbage_truck.jpg"
                              alt="Generic placeholder image" width="100">
-                        <h4>Trucks</h4>
+                        <h4>{{'TRUCKS'|translate}}</h4>
                     </div>
                     <div class="col-lg-9 col-xs-9">
                         <p class="lead">
-                            You are able to iterate over all of the trucks in the application and clear their current
-                            load.
+                            {{'TRUCKS_OTHER_TOOLS'|translate}}
                         </p>
                         <p class="pull-right">
                             <button type="button" class="btn btn-labeled btn-warning" ng-click="emptyTrucks()">
-                                <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>Empty trucks
+                                <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>
+                                {{'EMPTY_TRUCKS'|translate}}
                             </button>
                         </p>
                     </div>
@@ -129,26 +129,25 @@
                     <div class="col-lg-3 col-xs-3 text-center">
                         <img class="rounded-circle" src="/assets/images/img_sq_containers.jpg"
                              alt="Generic placeholder image" width="100">
-                        <h4>Containers</h4>
+                        <h4>{{'CONTAINERS'|translate}}</h4>
                     </div>
                     <div class="col-lg-9 col-xs-9">
                         <p class="lead">
-                            Here you can empty current load of each container.
+                            {{'CONTAINERS_OTHER_TOOLS'|translate}}
                         </p>
                         <p>
-                            <b>Watch out!</b> If you press "Repair" button, then every container will be marked as
-                            valid.
+                            <b>{{'WATCH_OUT'|translate}}</b> {{'CONTAINERS_OTHER_TOOLS_WATCH_OUT'|translate}}
                         </p>
                         <p class="pull-right">
                             <button type="button" class="btn btn-labeled btn-warning" ng-click="emptyContainers()">
                                 <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>
-                                Empty containers
+                                {{'EMPTY_CONTAINERS'|translate}}
                             </button>
                         </p>
                         <p>
                             <button type="button" class="btn btn-labeled btn-danger" ng-click="repairContainers()">
                                 <span class="btn-label"><i class="glyphicon glyphicon-wrench"></i></span>
-                                Repair containers
+                                {{'REPAIR_CONTAINERS_FROM_SIMULATOR'|translate}}
                             </button>
                         </p>
                     </div>
