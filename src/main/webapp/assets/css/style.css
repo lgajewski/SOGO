@@ -504,3 +504,42 @@ ul.alert-dropdown {
     width: 1%;
     white-space: nowrap;
 }
+
+.thumbnail hr {
+    padding: 0;
+    margin-top: 12px;
+}
+
+.thumbnail h3 {
+    margin-top: 0;
+}
+
+.btn-label {
+    position: relative;
+    left: -12px;
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px 0 0 3px;
+}
+
+.btn-labeled {
+    margin-top: 15px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.rounded-circle {
+    border-radius: 50%
+}
+
+/*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+}

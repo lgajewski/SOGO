@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <ol class="breadcrumb lead">
             <li>
-                <i class="fa fa-home"></i>  <a ui-sref="home">{{'HOME'|translate}}</a>
+                <i class="fa fa-home"></i> <a ui-sref="home">{{'HOME'|translate}}</a>
             </li>
             <li class="active">
                 <i class="fa fa-wrench"></i> {{'SIMULATOR'|translate}}
@@ -13,79 +13,188 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="thumbnail">
+                    <img alt="Garbage truck" class="img-responsive"
+                         src="/assets/images/img_garbage_truck.jpg">
+                    <hr/>
+                    <div class="caption">
+                        <div class="clearfix">
+                            <h3>
+                                Simulate trucks
+                                <button type="button" class="btn btn-success btn-lg pull-right" onclick="toggle(this)">
+                                    <i class="glyphicon glyphicon-play"></i></button>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="thumbnail">
+                    <img alt="Bootstrap Thumbnail Second" src="/assets/images/img_routes.jpg">
+                    <hr/>
+                    <div class="caption">
+                        <div class="clearfix">
+                            <h3>
+                                Generate routes
+                                <button type="button" class="btn btn-primary btn-lg pull-right" onclick="loading(this)">
+                                    <i class="glyphicon glyphicon-random"></i></button>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="thumbnail">
+                    <img alt="Bootstrap Thumbnail Third"
+                         src="/assets/images/img_containers.jpg">
+                    <hr/>
+                    <div class="caption">
+                        <div class="clearfix">
+                            <h3>
+                                Simulate containers
+                                <button type="button" class="btn btn-success btn-lg pull-right" onclick="toggle(this)">
+                                    <i class="glyphicon glyphicon-play"></i></button>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row">
+    <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                    {{'SIMULATOR'|translate}}
+                <span><i class="glyphicon glyphicon-cog"></i> Generate data</span>
             </div>
-
-            <!-- /.panel-heading -->
             <div class="panel-body">
-                <form name="createTrucksForm" class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" translate="CREATE_TRUCKS"></label>
-                        <div class="col-sm-2">
-                            <input class="form-control" type="number" min="0" ng-model="trucksNo">
-                        </div>
-                        <div class="col-sm-3">
-                            <button type="submit" class="btn btn-primary" ng-click="createTrucks()" translate="CREATE"></button>
-                        </div>
-                    </div>
-                </form>
-                <form name="simulateTrucksForm" class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" translate="SIMULATE_TRUCKS"></label>
-                        <div class="col-sm-2">
-                            <div class="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-click="simulateTrucks()" ng-checked="isTrucksSimulatorRunning">
-                                <label class="onoffswitch-label" for="myonoffswitch"></label>
+                <div class="col-lg-4">
+                    <input type="text" value="5" class="dial" title="asd" data-min="0" data-max="30"
+                           data-fgColor="#5cb85c" data-width="200" data-height="200">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span><i class="glyphicon glyphicon-cog"></i> Generate data</span>
+            </div>
+            <div class="panel-body text-center">
+                <div class="row">
+                    <div class="col-lg-6 col-xs-6">
+                        <div class="thumbnail" style="border: 0 none; box-shadow: none">
+                            <input type="text" value="5" class="knob" title="Trucks amount" data-min="0" data-max="30"
+                                   data-fgColor="#428bca" data-width="60%">
+                            <div class="caption">
+                                <button type="button" class="btn btn-labeled btn-primary">
+                                    <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>Add trucks
+                                </button>
                             </div>
                         </div>
                     </div>
-                </form>
-                <form name="createContainersForm" class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" translate="CREATE_CONTAINERS"></label>
-                        <div class="col-sm-2">
-                            <input class="form-control" type="number" min="0" ng-model="containersNo">
-                        </div>
-                        <div class="col-sm-3">
-                            <button type="submit" class="btn btn-primary" ng-click="createContainers()" translate="CREATE"></button>
-                        </div>
-                    </div>
-                </form>
-                <form name="simulateContainersForm" class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" translate="SIMULATE_CONTAINERS"></label>
-                        <div class="col-sm-2">
-                            <div class="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" ng-click="simulateContainers()" ng-checked="isContainersSimulatorRunning">
-                                <label class="onoffswitch-label" for="myonoffswitch2"></label>
+                    <div class="col-lg-6 col-xs-6">
+                        <div class="thumbnail" style="border: 0 none; box-shadow: none">
+                            <input type="text" value="5" class="knob" title="Containers amount" data-min="0"
+                                   data-max="30"
+                                   data-fgColor="#5cb85c" data-width="60%">
+                            <div class="caption">
+                                <button type="button" class="btn btn-labeled btn-success">
+                                    <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>Add
+                                    containers
+                                </button>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <div class="btn-group">
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" ng-click="generateRoutes()" translate="GENERATE_ROUTES"></button>
-                    </div>
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" ng-click="emptyTrucks()" translate="EMPTY_TRUCKS"></button>
-                    </div>
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" ng-click="emptyContainers()" translate="EMPTY_CONTAINERS"></button>
-                    </div>
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" ng-click="repairContainers()" translate="REPAIR_CONTAINERS_FROM_SIMULATOR"></button>
                     </div>
                 </div>
 
-
             </div>
-            <!-- /.panel-body -->
         </div>
-        <!-- /.panel -->
     </div>
-    <!-- /.col-lg-12 -->
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span><i class="glyphicon glyphicon-cog"></i> Other tools</span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-3 text-center">
+                        <img class="rounded-circle" src="/assets/images/img_sq_garbage_truck.jpg"
+                             alt="Generic placeholder image" width="100">
+                        <h4>Trucks</h4>
+                    </div>
+                    <div class="col-lg-9 col-xs-9">
+                        <p class="lead">
+                            You are able to iterate over all of the trucks in the application and clear their current
+                            load.
+                        </p>
+                        <p class="pull-right">
+                            <button type="button" class="btn btn-labeled btn-warning">
+                                <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>Empty trucks
+                            </button>
+                        </p>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-lg-3 col-xs-3 text-center">
+                        <img class="rounded-circle" src="/assets/images/img_sq_containers.jpg"
+                             alt="Generic placeholder image" width="100">
+                        <h4>Containers</h4>
+                    </div>
+                    <div class="col-lg-9 col-xs-9">
+                        <p class="lead">
+                            Here you can empty current load of each existing container.
+                        </p>
+                        <p>
+                            <b>Watch out!</b> If you press "Repair" button, then every container will be marked as valid.
+                        </p>
+                        <p class="pull-right">
+                            <button type="button" class="btn btn-labeled btn-warning">
+                                <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>
+                                Empty containers
+                            </button>
+                        </p>
+                        <p>
+                            <button type="button" class="btn btn-labeled btn-danger">
+                                <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>
+                                Repair containers
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- /.row -->
+
+
+<script>
+    $(".knob").knob();
+    function toggle(button) {
+        // change color
+        $(button).toggleClass("btn-success");
+        $(button).toggleClass("btn-danger");
+
+        // toggle button icon
+        var icon = $(button).find("i");
+        icon.toggleClass("glyphicon-play");
+        icon.toggleClass("glyphicon-stop");
+    }
+
+    function loading(button) {
+        var b = $(button);
+        b.button('loading');
+        setTimeout(function () {
+            b.button('reset');
+        }, 1500);
+    }
+</script>
