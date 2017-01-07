@@ -38,8 +38,8 @@
                         <div class="clearfix">
                             <h3>
                                 Generate routes
-                                <button type="button" class="btn btn-primary btn-lg pull-right" onclick="loading(this)"
-                                        ng-click="generateRoutes()">
+                                <button type="button" class="btn btn-primary btn-lg pull-right"
+                                        ng-click="generateRoutes($event)">
                                     <i class="glyphicon glyphicon-random"></i></button>
                             </h3>
                         </div>
@@ -77,8 +77,6 @@
                     <div class="col-lg-6 col-xs-6">
                         <div class="thumbnail" style="border: 0 none; box-shadow: none">
                             <ui-knob value="trucksNo" options="trucksKnob"></ui-knob>
-                            <!--<input type="text" value="1" class="knob" title="Trucks amount" data-min="0" data-max="30"-->
-                            <!--data-fgColor="#428bca" data-width="60%" ng-model="trucksNo">-->
                             <div class="caption">
                                 <button type="button" class="btn btn-labeled btn-primary" ng-click="createTrucks()">
                                     <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
@@ -90,8 +88,6 @@
                     <div class="col-lg-6 col-xs-6">
                         <div class="thumbnail" style="border: 0 none; box-shadow: none">
                             <ui-knob value="containersNo" options="containersKnob"></ui-knob>
-                            <!--<input type="text" value="1" class="knob" title="Containers amount" data-min="0"-->
-                            <!--data-max="30" data-fgColor="#5cb85c" data-width="60%" ng-model="containersNo">-->
                             <div class="caption">
                                 <button type="button" class="btn btn-labeled btn-success" ng-click="createContainers()">
                                     <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
@@ -161,25 +157,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    function toggle(button) {
-        // change color
-        $(button).toggleClass("btn-success");
-        $(button).toggleClass("btn-danger");
-
-        // toggle button icon
-        var icon = $(button).find("i");
-        icon.toggleClass("glyphicon-play");
-        icon.toggleClass("glyphicon-stop");
-    }
-
-    function loading(button) {
-        var b = $(button);
-        b.button('loading');
-        setTimeout(function () {
-            b.button('reset');
-        }, 1500);
-    }
-</script>

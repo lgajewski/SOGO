@@ -40,66 +40,72 @@
             max: 50
         };
 
-        function createTrucks(){
+        function createTrucks() {
             Restangular.all('simulator/trucks').customPOST($scope.trucksNo).then(function (data) {
-                Notification.success('Trucks created: '+ $scope.trucksNo);
+                Notification.success('Trucks created: ' + $scope.trucksNo);
             })
         }
 
-        function emptyTrucks(){
+        function emptyTrucks() {
             Restangular.all('simulator/trucks').customPUT().then(function (data) {
                 Notification.success('Trucks emptied');
             })
         }
 
-        function createContainers(){
+        function createContainers() {
             Restangular.all('simulator/containers').customPOST($scope.containersNo).then(function (data) {
-                Notification.success('Containers created: '+ $scope.containersNo);
+                Notification.success('Containers created: ' + $scope.containersNo);
             })
         }
 
-        function emptyContainers(){
+        function emptyContainers() {
             Restangular.all('simulator/containers').customPUT().then(function (data) {
                 Notification.success('Containers emptied');
             })
         }
 
-        function repairContainers(){
+        function repairContainers() {
             Restangular.all('simulator/containers/repair').customPOST().then(function (data) {
                 Notification.success('Containers repaired');
             })
         }
 
-        function simulateTrucks(){
+        function simulateTrucks() {
             Restangular.all('simulator/trucks/simulate').customPOST().then(function (data) {
                 getTrucksSimulatorState();
             })
         }
 
-        function getTrucksSimulatorState(){
+        function getTrucksSimulatorState() {
             Restangular.all('simulator/trucks').customGET().then(function (data) {
                 $scope.isTrucksSimulatorRunning = data.state;
                 Notification('Simulator running:' + $scope.isTrucksSimulatorRunning);
             })
         }
 
-        function simulateContainers(){
+        function simulateContainers() {
             Restangular.all('simulator/containers/simulate').customPOST().then(function (data) {
                 getContainersSimulatorState();
             })
         }
 
-        function getContainersSimulatorState(){
+        function getContainersSimulatorState() {
             Restangular.all('simulator/containers').customGET().then(function (data) {
                 $scope.isContainersSimulatorRunning = data.state;
                 Notification('Simulator running:' + $scope.isContainersSimulatorRunning);
             })
         }
 
-        function generateRoutes(){
+        function generateRoutes($event) {
+            var b = $(event.currentTarget);
+            b.button('loading');
             Restangular.all('routes/generate').customPOST()
-                .then(function (response) {
+                .then(function () {
                     Notification('Routes generated');
+                })
+                .finally(function () {
+                    b.button('reset');
+                    console.error("POPSOPA");
                 })
         }
 
