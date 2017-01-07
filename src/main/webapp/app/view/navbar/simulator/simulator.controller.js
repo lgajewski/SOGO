@@ -105,7 +105,6 @@
                 })
                 .finally(function () {
                     b.button('reset');
-                    console.error("POPSOPA");
                 })
         }
 
