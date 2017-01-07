@@ -21,14 +21,28 @@
         $scope.emptyContainers = emptyContainers;
         $scope.repairContainers = repairContainers;
         $scope.trucksNo = 1;
-        $scope.containersNo = 1;
+        $scope.containersNo = 5;
         $scope.isTrucksSimulatorRunning = trucksSimulatorState;
         $scope.isContainersSimulatorRunning = containersSimulatorState;
+
+        /** KNOB OPTIONS */
+        $scope.trucksKnob = {
+            barColor: "#428bca",
+            trackColor: "#f2f2f2",
+            min: 0,
+            max: 15
+        };
+
+        $scope.containersKnob = {
+            barColor: "#5cb85c",
+            trackColor: "#f2f2f2",
+            min: 0,
+            max: 50
+        };
 
         function createTrucks(){
             Restangular.all('simulator/trucks').customPOST($scope.trucksNo).then(function (data) {
                 Notification.success('Trucks created: '+ $scope.trucksNo);
-                $scope.trucksNo = 1;
             })
         }
 
@@ -41,7 +55,6 @@
         function createContainers(){
             Restangular.all('simulator/containers').customPOST($scope.containersNo).then(function (data) {
                 Notification.success('Containers created: '+ $scope.containersNo);
-                $scope.containersNo = 1;
             })
         }
 

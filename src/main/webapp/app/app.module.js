@@ -14,7 +14,8 @@
             'datatables',
             'pascalprecht.translate',
             'ui-notification',
-            'ui.bootstrap'
+            'ui.bootstrap',
+            'ui.knob'
         ])
         .run(run);
 
