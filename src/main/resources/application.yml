@@ -9,6 +9,7 @@ server:
 
 
 logging:
+    file: log.out
     level:
         ROOT: INFO                  # application log level
         com.google.maps: ERROR      # disable logging for Google Maps Services
