@@ -6,6 +6,7 @@ import com.graphhopper.jsprit.core.problem.VehicleRoutingProblem;
 import com.graphhopper.jsprit.core.problem.job.Job;
 import com.graphhopper.jsprit.core.problem.solution.VehicleRoutingProblemSolution;
 import com.graphhopper.jsprit.core.problem.solution.route.VehicleRoute;
+import com.graphhopper.jsprit.core.problem.solution.route.activity.TimeWindow;
 import com.graphhopper.jsprit.core.problem.vehicle.VehicleImpl;
 import com.graphhopper.jsprit.core.problem.vehicle.VehicleTypeImpl;
 import com.graphhopper.jsprit.core.reporting.SolutionPrinter;
@@ -72,6 +73,8 @@ public class RouteService {
                 .setName("container" + container.getId())
                 .addSizeDimension(0, (int) (container.getCapacity() * ((double) container.getSensors().get("load").getValue()) / 100))
                 .setLocation(com.graphhopper.jsprit.core.problem.Location.newInstance(container.getLocation().getLatitude(), container.getLocation().getLongitude()))
+                .setTimeWindow(TimeWindow.newInstance(0, (containers.size() / trucks.size()) + 1))
+                .setServiceTime(1)
                 .build();
             vrpBuilder.addJob(service);
         }
