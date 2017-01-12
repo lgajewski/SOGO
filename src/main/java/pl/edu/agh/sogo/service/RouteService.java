@@ -119,6 +119,9 @@ public class RouteService {
                 Container cont = containerRepository.findOne(container.getId());
                 locations.add(cont.getLocation());
             }
+
+            //TODO: LOCAL OPTIMIZATION
+
             locations.add(depotLocation);
             truckRoute.setRoute(locations);
             routeRepository.save(truckRoute);

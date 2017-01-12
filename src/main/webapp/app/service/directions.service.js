@@ -92,6 +92,8 @@
                 // });
                 (function (kk) {
                     directionsService.route(request, function (result, status) {
+                        var pointsArray = [];
+
 
                         if (status == window.google.maps.DirectionsStatus.OK) {
 

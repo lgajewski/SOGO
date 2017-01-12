@@ -1,5 +1,7 @@
 package pl.edu.agh.sogo.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
@@ -7,15 +9,22 @@ import pl.edu.agh.sogo.domain.Container;
 import pl.edu.agh.sogo.domain.Location;
 import pl.edu.agh.sogo.domain.Sensor;
 import pl.edu.agh.sogo.domain.Truck;
+import pl.edu.agh.sogo.persistence.RouteRepository;
+import pl.edu.agh.sogo.service.directions.DirectionsService;
+import pl.edu.agh.sogo.service.geocoder.GoogleMapsReverseGeocoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ScheduledFuture;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Service
 public class SimulatorService {
+
+    private static final Logger log = LoggerFactory.getLogger(GoogleMapsReverseGeocoder.class);
 
     @Autowired
     private TruckService truckService;
@@ -24,7 +33,13 @@ public class SimulatorService {
     private ContainerService containerService;
 
     @Autowired
+    private RouteRepository routeRepository;
+
+    @Autowired
     private TaskScheduler scheduler;
+
+    @Autowired
+    private DirectionsService directionsService;
 
     private Random random = new Random();
 
@@ -128,12 +143,20 @@ public class SimulatorService {
     }
 
     private class TruckSimulation implements Runnable {
+        Map<String, List<Location>> routes = truckService.getTrucks().stream().collect(
+            Collectors.toMap(Truck::getRegistration, x -> directionsService.getPath(routeRepository.findByTruck(x).getRoute())));
+
         @Override
         public void run() {
             truckService.getTrucks().forEach(truck -> {
-                Location location = new Location(truck.getLocation().getLatitude() + (Math.pow(-1, random.nextInt()) * 0.002976),
-                    truck.getLocation().getLongitude() + (Math.pow(-1, random.nextInt()) * 0.002976));
 
+                List<Location> locations = routes.get(truck.getRegistration());
+//                System.out.println(locations.size());
+                if(locations.isEmpty()){
+                    routes.put(truck.getRegistration(), directionsService.getPath(routeRepository.findByTruck(truck).getRoute()));
+                }
+                Location location = routes.get(truck.getRegistration()).remove(0);
+//                log.info(truck.getRegistration() + ": " + location);
                 truckService.updateLocation(truck.getRegistration(), location);
             });
         }
