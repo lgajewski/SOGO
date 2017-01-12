@@ -30,6 +30,9 @@ public class SimulatorService {
     private TruckService truckService;
 
     @Autowired
+    private RouteService routeService;
+
+    @Autowired
     private ContainerService containerService;
 
     @Autowired
@@ -143,20 +146,17 @@ public class SimulatorService {
     }
 
     private class TruckSimulation implements Runnable {
-        Map<String, List<Location>> routes = truckService.getTrucks().stream().collect(
+        Map<String, List<Location>> routes = routeService.getRoutes().keySet().stream().collect(
             Collectors.toMap(Truck::getRegistration, x -> directionsService.getPath(routeRepository.findByTruck(x).getRoute())));
 
         @Override
         public void run() {
-            truckService.getTrucks().forEach(truck -> {
-
+            routeService.getRoutes().keySet().forEach(truck -> {
                 List<Location> locations = routes.get(truck.getRegistration());
-//                System.out.println(locations.size());
                 if(locations.isEmpty()){
                     routes.put(truck.getRegistration(), directionsService.getPath(routeRepository.findByTruck(truck).getRoute()));
                 }
                 Location location = routes.get(truck.getRegistration()).remove(0);
-//                log.info(truck.getRegistration() + ": " + location);
                 truckService.updateLocation(truck.getRegistration(), location);
             });
         }
