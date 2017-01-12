@@ -27,6 +27,7 @@ before_install:
     - npm -v
     - bower -v
     - protractor --version
+    - webdriver-manager update
     - webdriver-manager version
     - java -version
 install: npm install
