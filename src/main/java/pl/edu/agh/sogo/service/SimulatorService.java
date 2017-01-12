@@ -88,7 +88,7 @@ public class SimulatorService {
             deviceSensor.setErrorCode(r.nextInt(errorCodeRange));
             deviceSensor.setValue(r.nextInt(100));
             container.addSensor("device", deviceSensor);
-            container.setLocation(new Location(50.047 + (r.nextDouble() * 24 / 1000), 19.915 + (r.nextDouble() * 54 / 1000)));
+            container.setLocation(new Location(49.99 + (r.nextDouble() / 8), 19.827 + (r.nextDouble() / 4)));
 
             containers.add(container);
         }

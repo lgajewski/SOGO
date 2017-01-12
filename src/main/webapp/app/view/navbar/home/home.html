@@ -187,7 +187,7 @@
                             </th>
                        </tr>
                         <tr ng-show="active[col]" ng-repeat="value in fillingPercentageList">
-                            <td><input id="{{col+'_'+value}}" type="checkbox" ng-click="selectContainers(col, value)"></td>
+                            <td><input id="{{col+'_'+value}}" type="checkbox" ng-click="selectContainers(col, value)" checked></td>
                             <td>{{value-10}}-{{value}}%</td>
                         </tr>
                    </table>

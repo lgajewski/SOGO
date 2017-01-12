@@ -26,7 +26,7 @@ public class SimulatorController {
     private TruckService truckService;
 
     /* delay in milliseconds between simulator updates */
-    private final static int DELAY = 5000;
+    private final static int DELAY = 2000;
 
 
     @ResponseBody
