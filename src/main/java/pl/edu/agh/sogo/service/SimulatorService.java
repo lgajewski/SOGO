@@ -46,8 +46,13 @@ public class SimulatorService {
 
     private Random random = new Random();
 
-    private SimulationHandler truckSimulationHandler = new SimulationHandler(TruckSimulation::new);
-    private SimulationHandler containerSimulationHandler = new SimulationHandler(ContainerSimulation::new);
+    private SimulationHandler truckSimulationHandler;
+    private SimulationHandler containerSimulationHandler;
+
+    public SimulatorService() {
+        this.truckSimulationHandler = new SimulationHandler(TruckSimulation::new);
+        this.containerSimulationHandler = new SimulationHandler(ContainerSimulation::new);
+    }
 
     public List<Truck> createTrucks(int number) {
         Random r = new Random();
@@ -146,8 +151,12 @@ public class SimulatorService {
     }
 
     private class TruckSimulation implements Runnable {
-        Map<String, List<Location>> routes = routeService.getRoutes().keySet().stream().collect(
-            Collectors.toMap(Truck::getRegistration, x -> directionsService.getPath(routeRepository.findByTruck(x).getRoute())));
+        Map<String, List<Location>> routes = getRoutes();
+
+        private Map<String, List<Location>> getRoutes() {
+            return routeService.getRoutes().keySet().stream().collect(
+                Collectors.toMap(Truck::getRegistration, x -> directionsService.getPath(routeRepository.findByTruck(x).getRoute())));
+        }
 
         @Override
         public void run() {

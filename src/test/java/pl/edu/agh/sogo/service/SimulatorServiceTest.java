@@ -4,19 +4,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.edu.agh.sogo.domain.Container;
-import pl.edu.agh.sogo.domain.Location;
-import pl.edu.agh.sogo.domain.Sensor;
-import pl.edu.agh.sogo.domain.Truck;
+import pl.edu.agh.sogo.domain.*;
+import pl.edu.agh.sogo.persistence.RouteRepository;
+import pl.edu.agh.sogo.service.directions.DirectionsService;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ScheduledFuture;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertFalse;
@@ -42,6 +43,15 @@ public class SimulatorServiceTest {
     @Mock
     private ScheduledFuture scheduledFuture;
 
+    @Mock
+    private RouteService routeService;
+
+    @Mock
+    private RouteRepository routeRepository;
+
+    @Mock
+    private DirectionsService directionsService;
+
     @Captor
     private ArgumentCaptor<Runnable> captor;
 
@@ -59,10 +69,22 @@ public class SimulatorServiceTest {
 
     @Test
     public void testTruckSimulation() {
-        List<Truck> trucks = Stream.generate(this::provideTruckMock)
-            .limit(10)
+        List<Truck> trucks = IntStream.range(0, 10)
+            .mapToObj(i -> provideTruckMock("ABC" + i))
             .collect(Collectors.toList());
         when(truckService.getTrucks()).thenReturn(trucks);
+
+        List<Location> locations = Arrays.asList(new Location(50, 20), new Location(50.2, 21.2));
+
+        Route route = new Route();
+        route.setRoute(locations);
+
+        Map<Truck, Route> routes = trucks.stream()
+            .collect(Collectors.toMap(Function.identity(), truck -> route));
+
+        when(routeService.getRoutes()).thenReturn(routes);
+        when(directionsService.getPath(anyListOf(Location.class))).thenAnswer(invocation -> new ArrayList<>(locations));
+        when(routeRepository.findByTruck(any(Truck.class))).thenReturn(route);
 
         // simulation should be stopped by default
         assertFalse(simulatorService.isTruckSimulationRunning());
@@ -79,13 +101,13 @@ public class SimulatorServiceTest {
         // simulate scheduler behaviour
         captor.getValue().run();
 
-        verify(truckService, times(10)).updateLocation(eq("ABC"), any(Location.class));
+        verify(truckService, times(10)).updateLocation(anyString(), any(Location.class));
     }
 
-    private Truck provideTruckMock() {
+    private Truck provideTruckMock(String registration) {
         Truck truck = mock(Truck.class);
         when(truck.getLocation()).thenReturn(new Location(50, 20));
-        when(truck.getRegistration()).thenReturn("ABC");
+        when(truck.getRegistration()).thenReturn(registration);
         return truck;
     }
 
