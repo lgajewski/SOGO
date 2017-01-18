@@ -8,6 +8,9 @@
 # Gradle Wrapper
 !gradle/wrapper/gradle-wrapper.jar
 
+# Logging
+log.out
+
 # Directories
 build/
 
