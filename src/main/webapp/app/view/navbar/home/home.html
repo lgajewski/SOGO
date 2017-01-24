@@ -161,7 +161,7 @@
                         </tr>
                         <tr ng-show="active['trucks']">
                             <td colspan="3">
-                                <input type="text" id="truckSearchInput" onkeyup="searchTrucks()" placeholder="Search for registrations..">
+                                <input class="col-lg-12" type="text" id="truckSearchInput" onkeyup="searchTrucks()" placeholder="Search for registrations..">
                             </td>
                         </tr>
 
@@ -170,7 +170,7 @@
                             <td width="10%">
                                 <input type="checkbox" class="checkbox-primary" checklist-model="selection" checklist-value="item">
                             </td>
-                            <td>{{item.registration}}</td>
+                            <td colspan="2">{{item.registration}}</td>
                             <!--<td><input type="radio" name="route" ng-click="showRoute(item.registration)"></td>-->
                         </tr>
                     </table>
@@ -188,7 +188,7 @@
                        </tr>
                         <tr ng-show="active[col]" ng-repeat="value in fillingPercentageList">
                             <td><input id="{{col+'_'+value}}" type="checkbox" ng-click="selectContainers(col, value)" checked></td>
-                            <td>{{value-10}}-{{value}}%</td>
+                            <td colspan="2">{{value-10}}-{{value}}%</td>
                         </tr>
                    </table>
                     <!--Broken devices-->
